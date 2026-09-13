@@ -1,6 +1,6 @@
 {
   "name": "cifi-ultimate-optimizer",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -11,7 +11,12 @@
     "start": "vinext start",
     "pages:dev": "vite --config vite.pages.config.ts",
     "pages:build": "vite build --config vite.pages.config.ts",
-    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "test": "npm run build && node scripts/run-tests.mjs",
+    "test:all": "node scripts/run-tests.mjs",
+    "typecheck": "tsc --noEmit",
+    "types:runtime": "wrangler types worker-configuration.d.ts --config dist/server/wrangler.json --include-env false",
+    "test:mod-tree": "node --experimental-strip-types --test tests/mod-tree-layout.test.mjs",
+    "test:optimizer": "node --experimental-strip-types tests/upgrade-optimizer.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern dist-pages --ignore-pattern .next --ignore-pattern .tmp-mtc-analysis",
     "db:generate": "drizzle-kit generate"
   },

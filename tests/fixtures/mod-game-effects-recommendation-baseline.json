@@ -1,0 +1,59 @@
+{
+  "capturedAt": "2026-09-13",
+  "purpose": "Protect the existing sheet recommendation model while game-facing effect presentation is replaced. These are local engine regression values, not measured in-game scores or a player save.",
+  "sourceSha256": "a720eeaab529cfb4bdd4038eae21e4b8c11404a8d24f71ba80d4f89264f1ca8b",
+  "sourceVersion": "v1.2.0.11",
+  "sha256": {
+    "recommendation-data.json": "5201561ae531f23ef8cbdc291fbf0b70303cc3bbccf98cb5eea933bb4bacdd5e",
+    "reference.json": "a6c15614d19a915bdbafcd436f20f12854b993f2e43a28dedd188e47cd297553",
+    "recommendations.ts": "a9483e97b21ee7fdb36c31b45a81654bd9185c9e9c9ad98198b957a1d173b366",
+    "formula.ts": "25c25c94d6be1e5552c6f4eae111fa50df5e945660167d8c0f7ac369b2f1b931"
+  },
+  "scenarios": [
+    {
+      "id": "fresh-zero",
+      "state": { "version": 1, "budget": "0", "costImportance": 50, "levels": {}, "ignored": [] },
+      "profile": {},
+      "rowsSha256": "b8d31a29fb1382a2220f43dbae555e7ab1f44a7e9431514118aeb4124bd41415",
+      "rankedTopTen": [],
+      "planSha256": "acbb421a05ba58a411482a984cd07ab8736b9ca653e2e8721caccf86c9995868",
+      "planCodes": [],
+      "planBudget": "0"
+    },
+    {
+      "id": "early-priority",
+      "state": { "version": 1, "budget": "1000", "costImportance": 50, "levels": { "A01": 1 }, "ignored": ["G22"] },
+      "profile": {},
+      "rowsSha256": "488dc1cc7433d1baa9c7dc4ab93c177dcfb1304f96be28c79121ae0c819e26e3",
+      "rankedTopTen": ["A02", "A03", "B01", "C1o", "A01", "C4u", "A04"],
+      "planSha256": "309d215f4143cf550d1be4147308ca05d2cc288460c31352a0342cd362bde801",
+      "planCodes": ["A02", "A03", "B01", "B01", "C1o"],
+      "planBudget": "994"
+    },
+    {
+      "id": "observed-levels-only-not-game-save",
+      "state": {
+        "version": 1, "budget": "1e55", "costImportance": 50,
+        "levels": { "A01": 5, "A04": 4, "A05": 3, "A06": 2, "A07": 9, "A08": 2, "B01": 20, "C4c": 10, "C4o": 57, "C1c": 10, "C1o": 175, "H12": 19, "H15": 2, "I04": 0, "IU3": 0 },
+        "ignored": []
+      },
+      "profile": { "level": "99", "loopsFilled": "323", "manualMk1": "1680", "shardTickspeed": ".14", "equipmentBought": "15" },
+      "rowsSha256": "fc46f3d75e061a3ab9fbc910767a2069346d35f7f760875321be83285d40e1e6",
+      "rankedTopTen": ["A02", "G22", "A03", "A09", "C4u", "C2o", "B03", "B02", "C1o", "A07"],
+      "planSha256": "d71e78d9b35881b6b3f793dd5204925ff134aa35568b76ebcf5a2de81d62e54c",
+      "planCodes": ["A02", "G22", "A03", "A09", "C4u"],
+      "planBudget": "1.00e55"
+    },
+    {
+      "id": "catalogue-near-cap",
+      "state": { "version": 1, "budget": "1e4000", "costImportance": 72, "levels": {}, "ignored": ["G22"] },
+      "levelStrategy": "min(10,maxLevel-1)",
+      "profile": { "level": "99", "loopsFilled": "323", "loopResets": "200", "manualMk1": "1680", "shardTickspeed": ".14", "equipmentBought": "15", "operationsDone": "25", "studiesDone": "25", "totalResearchLevels": "120", "completedResearches": "10", "softwareTechMk1": "100", "softwareTechMk2": "80", "cells": "3", "modPoints": "18", "research": "9", "costReduction": "5" },
+      "rowsSha256": "0065c155aeaa358d66889013bfdc8f23dd47d22266f6a921ea14cc5ca03ff2cb",
+      "rankedTopTen": ["A02", "A03", "IU2", "FU4", "IU3", "F14", "F10", "F12", "F04", "FU2"],
+      "planSha256": "363d2694a1af36651fb5b830e309a9cf4d95c8d1017f36df007cdff57c5f7811",
+      "planCodes": ["A02", "A03", "IU2", "FU4", "FU4"],
+      "planBudget": "1.00e4000"
+    }
+  ]
+}

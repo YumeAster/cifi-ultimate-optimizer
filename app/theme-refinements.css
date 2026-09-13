@@ -1,0 +1,230 @@
+/* Shared theme contract: resource identities stay consistent; node artwork,
+   progress states, controls and portalled UI follow the active palette. */
+.dashboard-shell {
+  --action-bg:#2169aa;
+  --mod-map-bg:#071321;
+  --mod-panel-bg:#10223a;
+  --mod-grid:rgba(75,154,220,.12);
+  --mod-edge:#7994ae;
+  --mod-edge-bed:#203c58;
+  --mod-focus:#91d3ff;
+  --mod-node-bg:#152434;
+  --mod-locked-bg:#101a25;
+  --mod-level-ink:#e9f2ff;
+  --mod-locked-ink:#9aaabc;
+  --mod-owned-ink:#9dffd3;
+  --mod-maxed-ink:#ffb9bd;
+  --mod-gold-ink:#c4ebff;
+  --mod-gold:#67bde9;
+  --mod-gold-top:#b8e7ff;
+  --mod-top-border:#b8e7ff;
+  --mod-top-selected:#a9e7ff;
+  --mod-score-line:#fff;
+  --mod-buy-bg:#087e64;
+  --mod-buy-hover:#099979;
+  --mod-buy-line:#36d6aa;
+}
+.dashboard-shell.theme-solar {
+  --action-bg:#1c6b9c;
+  --content-muted:#526e87; --page-muted:#526e87; --chrome-muted:#526e87;
+  --mod-map-bg:#e9f2f9; --mod-panel-bg:#f8fcff;
+  --mod-grid:rgba(65,120,168,.13); --mod-edge:#637f98; --mod-edge-bed:#c3d5e3;
+  --mod-focus:#166da4; --mod-node-bg:#203a50; --mod-locked-bg:#354653;
+  --mod-level-ink:#253f54; --mod-locked-ink:#5b6f80;
+  --mod-owned-ink:#146443; --mod-maxed-ink:#a33342;
+  --mod-gold-ink:#2f718d; --mod-gold:#4faad3; --mod-gold-top:#8dcee9;
+  --mod-top-border:#78c4e5; --mod-top-selected:#174b75; --mod-score-line:#8ca2b6;
+}
+.dashboard-shell.theme-nebula {
+  --action-bg:#136b82;
+  --mod-map-bg:#0d081d; --mod-panel-bg:#17102f;
+  --mod-grid:rgba(169,112,244,.18); --mod-edge:#b7a1dc; --mod-edge-bed:#3f2a66;
+  --mod-focus:#c6a4ff; --mod-node-bg:#2a1d47; --mod-locked-bg:#1b142d;
+  --mod-gold-ink:#eadbff; --mod-gold:#aa7fe4; --mod-gold-top:#e0c7ff;
+  --mod-top-border:#e0c7ff; --mod-top-selected:#c4a1ff;
+  --mod-buy-bg:#137767; --mod-buy-hover:#178e7d; --mod-buy-line:#41d7c5;
+}
+.dashboard-shell.theme-pearl {
+  --action-bg:#6650ad;
+  --content-muted:#655d80; --page-muted:#655d80; --chrome-muted:#655d80;
+  --mod-map-bg:#efedf8; --mod-panel-bg:#faf9ff;
+  --mod-grid:rgba(129,107,180,.13); --mod-edge:#81719d; --mod-edge-bed:#d4cbe7;
+  --mod-focus:#6850b6; --mod-node-bg:#322947; --mod-locked-bg:#464054;
+  --mod-level-ink:#413755; --mod-locked-ink:#72677e;
+  --mod-owned-ink:#21674c; --mod-maxed-ink:#a0334a;
+  --mod-gold-ink:#603d8b; --mod-gold:#704ba8; --mod-gold-top:#ad8edc;
+  --mod-top-border:#8b64bd; --mod-top-selected:#634593; --mod-score-line:#a497bc;
+  --mod-buy-bg:#286d5e; --mod-buy-hover:#348675; --mod-buy-line:#64af97;
+}
+/* The original charcoal / red Mod Tree palette is a selectable full theme. */
+.dashboard-shell.theme-red {
+  --action-bg:#aa3d52;
+  --ui-accent:#ee6875;
+  --page-ink:#fff0f2; --page-muted:#c39ba4;
+  --chrome-ink:#fff0f2; --chrome-muted:#c39ba4;
+  --chrome-bg:rgba(30,13,23,.84); --chrome-line:rgba(202,105,121,.35);
+  --chrome-shine:rgba(255,187,196,.22);
+  --chrome-shadow:0 24px 60px rgba(14,0,6,.36),inset 0 1px 0 rgba(255,189,200,.18);
+  --content-bg:#170f18; --content-ink:#fff0f2; --content-muted:#c6a0a9;
+  --surface-line:#58313e; --item-bg:#21131d; --input-bg:#120c14; --input-ink:#fff0f2;
+  --preset-bg:#21131d; --preset-ink:#fff0f2; --preset-muted:#c6a0a9;
+  --selected-bg:rgba(222,76,94,.17); --nav-selected:rgba(238,104,117,.2);
+  --mod-map-bg:#07070d; --mod-panel-bg:#1d121c;
+  --mod-grid:rgba(222,42,47,.13); --mod-edge:rgba(212,215,212,.72); --mod-edge-bed:#33080d;
+  --mod-focus:#ffa0a9; --mod-node-bg:#13161b; --mod-locked-bg:#10151c;
+  --mod-gold-ink:#bce8fa; --mod-gold:#6fb9df; --mod-gold-top:#a9def2;
+  --mod-top-border:#a9def2; --mod-top-selected:#ffe0e3;
+  background-color:#100910;
+  background-image:radial-gradient(ellipse at 85% 12%,#4b1b2b66,transparent 45%),linear-gradient(125deg,#100b14,#20101b);
+}
+.dashboard-shell.theme-red::before { background:radial-gradient(ellipse at 12% 6%,#c7485a13,transparent 40%); }
+.dashboard-shell.theme-red :is(.weight-card-heading h4,.player-card-heading h4,.player-field,.generator-matrix-row-label) { color:color-mix(in srgb,var(--resource-accent) 55%,var(--content-ink)); }
+.dashboard-shell.theme-red :is(.ship-card-heading h4,.ship-field-label) { color:color-mix(in srgb,var(--ship-accent) 55%,var(--content-ink)); }
+
+/* Contrast is a text concern: the original icons and colored borders stay intact. */
+.dashboard-shell .upgrade-multiplier-chip { --chip-ink:color-mix(in srgb,var(--chip-accent) 35%,var(--content-ink)); }
+.dashboard-shell .upgrade-chip-label,
+.dashboard-shell .upgrade-multiplier-chip strong b,
+.dashboard-shell .upgrade-multiplier-chip strong .anticon { color:var(--chip-ink); }
+.dashboard-shell .upgrade-chip-label :is(img,svg),
+.dashboard-shell .upgrade-chip-label .generator-source-icon { filter:none; }
+.dashboard-shell .generator-matrix-row-label { color:color-mix(in srgb,var(--resource-accent) 35%,var(--content-ink)); }
+.dashboard-shell .settings-option .ant-typography-secondary { color:var(--content-muted); }
+.dashboard-shell .ant-btn-primary:not(:disabled) { color:#fff; background:var(--action-bg); border-color:var(--action-bg); }
+.dashboard-shell .ant-btn-primary:not(:disabled):hover { color:#fff; background:color-mix(in srgb,var(--action-bg) 88%,#000); border-color:var(--action-bg); }
+.dashboard-shell .settings-workspace .settings-theme-select.ant-select { color:var(--content-ink)!important; background:var(--input-bg)!important; border-color:var(--surface-line)!important; box-shadow:none!important; }
+.dashboard-shell .settings-workspace .settings-theme-select :is(.ant-select-selector,.ant-select-content) { color:var(--content-ink)!important; background:var(--input-bg)!important; border-color:var(--surface-line)!important; box-shadow:none!important; text-shadow:none!important; }
+.dashboard-shell .settings-workspace .settings-theme-select :is(.ant-select-selection-item,.ant-select-arrow,.ant-select-suffix) { color:var(--content-ink)!important; text-shadow:none!important; }
+.dashboard-shell .settings-workspace .settings-theme-select.ant-select:focus-within { outline:2px solid var(--ui-accent); outline-offset:2px; border-color:var(--mod-focus)!important; box-shadow:none!important; }
+.dashboard-shell .settings-workspace .settings-theme-select:focus-within .ant-select-selector { border-color:var(--mod-focus)!important; box-shadow:none!important; }
+.dashboard-shell .sidebar-menu .ant-menu-item-selected { color:var(--chrome-ink)!important; background:var(--nav-selected)!important; }
+.dashboard-shell .sidebar-menu.ant-menu .ant-menu-sub .ant-menu-item.ant-menu-item-selected { color:var(--chrome-ink)!important; }
+.dashboard-shell .optimizer-upgrade-meta>span:first-child,
+.dashboard-shell .optimizer-suggestion-copy>span { color:color-mix(in srgb,var(--upgrade-accent) 35%,var(--content-ink)); }
+.dashboard-shell .optimizer-profile-link>span { color:color-mix(in srgb,var(--optimizer-accent) 35%,var(--content-ink)); }
+.dashboard-shell .mobile-workspace-nav .ant-select,
+.dashboard-shell .mobile-workspace-nav :is(.ant-select-selector,.ant-select-content) { color:var(--content-ink); background:var(--mod-panel-bg); border-color:var(--surface-line); }
+.dashboard-shell .mobile-workspace-nav :is(.ant-select-selection-item,.ant-select-arrow,.ant-select-suffix) { color:var(--content-ink); }
+.dashboard-shell .mod-tree-overview-effects .upgrade-chip-label { flex:1 1 auto; overflow:hidden; }
+.dashboard-shell .mod-overview-effect-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+.dashboard-shell .mod-tree-v2 :is(.mod-tree-canvas-frame,.mod-tree-map-layout) { background:var(--mod-map-bg); }
+.dashboard-shell .mod-tree-v2 .mod-tree-backdrop { fill:var(--mod-map-bg); }
+.dashboard-shell .mod-tree-v2 .mod-tree-grid-line { stroke:var(--mod-grid); }
+.dashboard-shell .mod-tree-v2 .mod-tree-edge { stroke:var(--mod-edge); filter:none; }
+.dashboard-shell .mod-tree-v2 .mod-tree-edge-shadow { stroke:var(--mod-edge-bed); }
+.dashboard-shell .mod-tree-v2 :is(.mod-tree-overview,.mod-tree-side-panel,.mod-tree-overview-help) { background:var(--mod-panel-bg); }
+.dashboard-shell .mod-tree-v2 .mod-tree-toolbar { background:var(--mod-panel-bg); }
+.dashboard-shell .mod-tree-v2 .mod-tree-search { color:var(--ui-accent); border-color:var(--surface-line); box-shadow:none; }
+.dashboard-shell .mod-tree-v2 .mod-tree-search:focus-within { border-color:var(--mod-focus); }
+.dashboard-shell .mod-tree-v2 .mod-tree-zoom :is(button:hover,.mod-tree-fit) { color:var(--mod-focus); border-color:var(--mod-focus); }
+.dashboard-shell .mod-tree-v2 :is(button,input):focus-visible,
+.dashboard-shell .mod-rec-scroll:focus-visible,
+.dashboard-shell .mod-tree-overview-scroll:focus-visible,
+.dashboard-shell .mod-rec-dialog :is(button,input,select,textarea):focus-visible { outline-color:var(--mod-focus); }
+.dashboard-shell .mod-tree-v2 .mod-tree-map-layout:has(.mod-tree-canvas:focus-visible) .mod-tree-map-help { border-top-color:var(--mod-focus); }
+.dashboard-shell .mod-rec-field input[type=range],
+.dashboard-shell .mod-rec-check input { accent-color:var(--ui-accent); }
+.dashboard-shell .mod-rec-field input[type=range] { appearance:none; height:20px; margin:0; background:transparent; cursor:pointer; }
+.dashboard-shell .mod-rec-field input[type=range]::-webkit-slider-runnable-track { height:6px; border-radius:999px; background:var(--surface-line); }
+.dashboard-shell .mod-rec-field input[type=range]::-webkit-slider-thumb { appearance:none; width:16px; height:16px; margin-top:-5px; border:2px solid var(--mod-panel-bg); border-radius:50%; background:var(--ui-accent); }
+.dashboard-shell .mod-rec-field input[type=range]::-moz-range-track { height:6px; border-radius:999px; background:var(--surface-line); }
+.dashboard-shell .mod-rec-field input[type=range]::-moz-range-thumb { width:12px; height:12px; border:2px solid var(--mod-panel-bg); border-radius:50%; background:var(--ui-accent); }
+.dashboard-shell .mod-rec-dialog input[type=file]::file-selector-button { margin-right:10px; padding:7px 12px; color:var(--content-ink); background:var(--input-bg); border:1px solid var(--surface-line); border-radius:7px; font:inherit; cursor:pointer; }
+.dashboard-shell .mod-rec-dialog input[type=file]::file-selector-button:hover { border-color:var(--mod-focus); }
+.dashboard-shell .mod-rec-power.mod-rec-field { border-color:var(--mod-score-line); }
+.dashboard-shell .mod-rec-list button.is-current { border-color:var(--mod-focus); }
+.dashboard-shell .mod-tree-search-results .is-current { border-color:var(--mod-focus); }
+.dashboard-shell .mod-rec-list button.is-top { border-color:#a87e24; box-shadow:inset 4px 0 #d6a336; }
+.dashboard-shell .mod-tree-recommendation-legend { color:var(--mod-gold-ink); }
+.dashboard-shell .mod-tree-purchase-notice { color:var(--mod-owned-ink); }
+.dashboard-shell .mod-tree-v2 .mod-tree-zoom .mod-tree-jump-recommendation { color:var(--mod-gold-ink); background:var(--input-bg); border-color:color-mix(in srgb,var(--mod-gold-ink) 65%,var(--surface-line)); }
+.dashboard-shell .mod-recommendation-panel .mod-rec-purchase { background:var(--mod-buy-bg); border-color:var(--mod-buy-line); box-shadow:none; }
+.dashboard-shell .mod-recommendation-panel .mod-rec-purchase:hover:not(:disabled) { background:var(--mod-buy-hover); border-color:var(--mod-buy-line); }
+.dashboard-shell .mod-recommendation-panel .mod-rec-purchase:disabled { opacity:1; color:var(--content-muted); background:var(--input-bg); border-color:var(--surface-line); }
+.dashboard-shell .mod-rec-tools-modal :is(.ant-modal-container,.ant-modal-content,.ant-modal-header) { background:var(--mod-panel-bg); }
+
+/* Full node palettes. Light themes use light frames with dark, tinted artwork;
+   the PNG luminance/alpha and original Sprite geometry remain unchanged. */
+.dashboard-shell {
+  --mod-available-line:#39d98a; --mod-available-bg:#123b30; --mod-available-icon:#a9f4cf;
+  --mod-locked-line:#495a70; --mod-locked-bg:#121d2c; --mod-locked-icon:#8495ac;
+  --mod-owned-line:#42c6b8; --mod-owned-bg:#10342f; --mod-owned-icon:#a5eee0; --mod-owned-ink:#91e4d5;
+  --mod-maxed-line:#4f88bd; --mod-maxed-bg:#102b48; --mod-maxed-icon:#9dceff; --mod-maxed-ink:#8ec5fb;
+  --mod-unaffordable-line:#e7bd58; --mod-unaffordable-bg:#413619; --mod-unaffordable-icon:#ffe2a2; --mod-unaffordable-ink:#ffe2a2;
+  --mod-node-selected:#d5edff;
+  --mod-code-ink:#efda89; --mod-code-bg:#161e2c; --mod-code-line:#9b8750;
+  --mod-recommended-bg:#123858; --mod-recommended-icon:#b7e6ff;
+  --mod-top-bg:#173f5d; --mod-top-icon:#d1efff;
+}
+.dashboard-shell.theme-solar {
+  --mod-available-line:#5fbb89; --mod-available-bg:#e7f6ed; --mod-available-icon:#5fbb89;
+  --mod-locked-line:#a4b3c0; --mod-locked-bg:#dce5ed; --mod-locked-icon:#a4b3c0;
+  --mod-owned-line:#328b85; --mod-owned-bg:#e0f4ee; --mod-owned-icon:#328b85; --mod-owned-ink:#24665d;
+  --mod-maxed-line:#d36f80; --mod-maxed-bg:#fde7ea; --mod-maxed-icon:#d36f80; --mod-maxed-ink:#a84255;
+  --mod-unaffordable-line:#d5ac45; --mod-unaffordable-bg:#fff4cf; --mod-unaffordable-icon:#d5ac45; --mod-unaffordable-ink:#886719;
+  --mod-node-selected:#174b75;
+  --mod-code-ink:#735516; --mod-code-bg:#fff9e8; --mod-code-line:#b29a5b;
+  --mod-recommended-bg:#e1f2f9; --mod-recommended-icon:#4faad3;
+  --mod-top-bg:#e9f7fd; --mod-top-icon:#78c4e5; --mod-top-border:#78c4e5; --mod-top-selected:#174b75;
+  --mod-buy-bg:#216998; --mod-buy-hover:#1c7dae; --mod-buy-line:#5f9fc6;
+}
+.dashboard-shell.theme-nebula {
+  --mod-available-line:#519fe7; --mod-available-bg:#192e51; --mod-available-icon:#b8dcff;
+  --mod-locked-line:#615776; --mod-locked-bg:#1c152e; --mod-locked-icon:#9c8eae;
+  --mod-owned-line:#796cc9; --mod-owned-bg:#282047; --mod-owned-icon:#c8c3ff; --mod-owned-ink:#bdb6fa;
+  --mod-maxed-line:#7553a6; --mod-maxed-bg:#2a183f; --mod-maxed-icon:#d8b9ff; --mod-maxed-ink:#d1b1fd;
+  --mod-unaffordable-line:#e4b957; --mod-unaffordable-bg:#3b2c20; --mod-unaffordable-icon:#ffe0a1; --mod-unaffordable-ink:#ffe0a1;
+  --mod-node-selected:#c4a1ff;
+  --mod-code-ink:#f0dcab; --mod-code-bg:#251938; --mod-code-line:#a885c7;
+  --mod-recommended-bg:#38285a; --mod-recommended-icon:#e2cffd;
+  --mod-top-bg:#452f68; --mod-top-icon:#f0e3ff; --mod-top-border:#e0c7ff; --mod-top-selected:#c4a1ff;
+  --mod-buy-bg:#226b83; --mod-buy-hover:#258298; --mod-buy-line:#52bbcf;
+}
+.dashboard-shell.theme-pearl {
+  --mod-available-line:#61b98b; --mod-available-bg:#eefaf3; --mod-available-icon:#61b98b;
+  --mod-locked-line:#b4abbe; --mod-locked-bg:#e7e2ec; --mod-locked-icon:#b4abbe;
+  --mod-owned-line:#589b91; --mod-owned-bg:#e0efeb; --mod-owned-icon:#589b91; --mod-owned-ink:#356f66;
+  --mod-maxed-line:#d36f80; --mod-maxed-bg:#fde7eb; --mod-maxed-icon:#d36f80; --mod-maxed-ink:#a84659;
+  --mod-unaffordable-line:#d9b451; --mod-unaffordable-bg:#fff8df; --mod-unaffordable-icon:#d9b451; --mod-unaffordable-ink:#8f6e1d;
+  --mod-node-selected:#634593;
+  --mod-code-ink:#745720; --mod-code-bg:#fff9ee; --mod-code-line:#b8a273;
+  --mod-recommended-bg:#f1ebfb; --mod-recommended-icon:#704ba8;
+  --mod-top-bg:#f5f0fd; --mod-top-icon:#8b64bd; --mod-top-border:#8b64bd; --mod-top-selected:#634593;
+  --mod-buy-bg:#7860a8; --mod-buy-hover:#8d71c1; --mod-buy-line:#ad97d1;
+}
+.dashboard-shell.theme-red {
+  --mod-available-line:#b66773; --mod-available-bg:#28191f; --mod-available-icon:#ecc3c8;
+  --mod-locked-line:#5e505b; --mod-locked-bg:#18131b; --mod-locked-icon:#988690;
+  --mod-owned-line:#42ca9b; --mod-owned-bg:#102d25; --mod-owned-icon:#a6ebce; --mod-owned-ink:#a6ebce;
+  --mod-maxed-line:#a94352; --mod-maxed-bg:#39141d; --mod-maxed-icon:#efa8b0; --mod-maxed-ink:#df98a1;
+  --mod-unaffordable-line:#c5a05c; --mod-unaffordable-bg:#3b2f1d; --mod-unaffordable-icon:#e8cb92; --mod-unaffordable-ink:#e8cb92;
+  --mod-node-selected:#ffe0e3;
+  --mod-code-ink:#f1df82; --mod-code-bg:#20171b; --mod-code-line:#a58d51;
+  --mod-recommended-bg:#1b3546; --mod-recommended-icon:#b8e5f8;
+  --mod-top-bg:#1f3844; --mod-top-icon:#a9def2; --mod-top-border:#a9def2; --mod-top-selected:#ffe0e3;
+  --mod-buy-bg:#a84055; --mod-buy-hover:#c04c64; --mod-buy-line:#e38292;
+}
+.dashboard-shell .mod-tree-code-token,
+.dashboard-shell .mod-recommendation-panel .mod-rec-code { color:var(--mod-code-ink); background:var(--mod-code-bg); border-color:var(--mod-code-line); }
+.dashboard-shell .mod-rec-list button.is-top { border-color:var(--mod-top-border); box-shadow:inset 4px 0 var(--mod-top-border); }
+.dashboard-shell .mod-rec-list button.is-top .mod-rec-rank { color:var(--mod-top-icon); background:var(--mod-top-bg); border:1px solid var(--mod-top-border); }
+
+/* Ant Design portals sit outside .dashboard-shell. Use page-owned tokens there. */
+:root:has(.theme-orbit) { --portal-bg:#10223a; --portal-ink:#eef6ff; --portal-muted:#a6b8ce; --portal-active:#224260; --portal-line:#42617e; }
+:root:has(.theme-nebula) { --portal-bg:#151329; --portal-ink:#f0f3ff; --portal-muted:#b3aecf; --portal-active:#34304b; --portal-line:#575276; }
+:root:has(.theme-red) { --portal-bg:#25151f; --portal-ink:#fff0f2; --portal-muted:#c6a0a9; --portal-active:#512632; --portal-line:#80505c; }
+:root:has(.theme-solar) { --portal-bg:#f8fcff; --portal-ink:#17334f; --portal-muted:#526e87; --portal-active:#d8eaf7; --portal-line:#a6c3d9; }
+:root:has(.theme-pearl) { --portal-bg:#faf9ff; --portal-ink:#332f57; --portal-muted:#655d80; --portal-active:#e7e0f6; --portal-line:#bcb0d5; }
+:root:has(.dashboard-shell) :is(.ant-select-dropdown,.ant-popover-container,.ant-popover-inner,.ant-message-notice-content) { color:var(--portal-ink); background:var(--portal-bg); border:1px solid var(--portal-line); }
+:root:has(.dashboard-shell) .ant-select-item { color:var(--portal-ink); }
+:root:has(.dashboard-shell) :is(.ant-select-item-option-active,.ant-select-item-option-selected) { color:var(--portal-ink)!important; background:var(--portal-active)!important; }
+:root:has(.dashboard-shell) :is(.ant-popconfirm-title,.ant-popconfirm-description) { color:var(--portal-ink)!important; }
+
+/* Ant's has-sider rule sets width:0 on its child; undo that when the sider is hidden. */
+@media (max-width:720px) {
+  .dashboard-shell.ant-layout-has-sider > .dashboard-main.ant-layout { width:100%; }
+  .dashboard-shell .mod-tree-v2 .mod-tree-map-layout { grid-template-rows:minmax(280px,42dvh) minmax(min-content,1fr); }
+  .dashboard-shell .mod-tree-v2 .mod-tree-overview { grid-row:1; }
+  .dashboard-shell .mod-tree-v2 .mod-tree-side-panel { grid-column:1 / -1; }
+}

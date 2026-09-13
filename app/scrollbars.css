@@ -1,0 +1,59 @@
+/* Root tokens also reach menus/popovers mounted outside the dashboard shell. */
+:root {
+  --scrollbar-track:#eaf1f8;
+  --scrollbar-thumb:#8cabc5;
+  --scrollbar-hover:#547fa3;
+  --rc-virtual-list-scrollbar-bg:var(--scrollbar-thumb);
+  color-scheme:light;
+}
+:root:has(.dashboard-shell.theme-orbit) {
+  --scrollbar-track:#0a1b30;
+  --scrollbar-thumb:#3d6489;
+  --scrollbar-hover:#71addd;
+  color-scheme:dark;
+}
+:root:has(.dashboard-shell.theme-nebula) {
+  --scrollbar-track:#0b1023;
+  --scrollbar-thumb:#454772;
+  --scrollbar-hover:#7596bc;
+  color-scheme:dark;
+}
+:root:has(.dashboard-shell.theme-solar) {
+  --scrollbar-track:#eaf1f8;
+  --scrollbar-thumb:#8cabc5;
+  --scrollbar-hover:#547fa3;
+  color-scheme:light;
+}
+:root:has(.dashboard-shell.theme-pearl) {
+  --scrollbar-track:#efecf8;
+  --scrollbar-thumb:#afa2d1;
+  --scrollbar-hover:#8571b2;
+  color-scheme:light;
+}
+:root:has(.dashboard-shell.theme-red) {
+  --scrollbar-track:#1b1017;
+  --scrollbar-thumb:#79404b;
+  --scrollbar-hover:#c36a76;
+  color-scheme:dark;
+}
+* { scrollbar-width:thin; scrollbar-color:var(--scrollbar-thumb) var(--scrollbar-track); }
+.ant-select-dropdown-list-scrollbar:hover { --rc-virtual-list-scrollbar-bg:var(--scrollbar-hover); }
+@supports selector(::-webkit-scrollbar) {
+  /* Let Chromium/WebKit use the rounded thumb rules instead of native styling. */
+  * { scrollbar-width:auto; scrollbar-color:auto; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:var(--scrollbar-track); border-radius:8px; }
+  ::-webkit-scrollbar-thumb { min-height:28px; min-width:28px; border:2px solid var(--scrollbar-track); border-radius:8px; background:var(--scrollbar-thumb); }
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active { background:var(--scrollbar-hover); }
+  ::-webkit-scrollbar-corner { background:var(--scrollbar-track); }
+  ::-webkit-scrollbar-button { display:none; width:0; height:0; }
+}
+@media (forced-colors:active) {
+  * { scrollbar-color:auto; }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner { background:Canvas; }
+  ::-webkit-scrollbar-thumb { background:ButtonText; border-color:Canvas; }
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active { background:Highlight; }
+}
