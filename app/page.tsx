@@ -1,48 +1,73 @@
 "use client";
 
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
-import { App as AntApp, Badge, Button, Card, ConfigProvider, Divider, Flex, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Typography } from "antd";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography } from "antd";
 import koKR from "antd/locale/ko_KR";
-import { CheckCircleFilled, ControlOutlined, DatabaseOutlined, DeleteOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, TeamOutlined, TrophyOutlined, UndoOutlined, UserOutlined, WarningFilled } from "@ant-design/icons";
+import { AppstoreOutlined, CheckCircleFilled, DatabaseOutlined, DeleteOutlined, DollarCircleOutlined, EditOutlined, SaveOutlined, SettingOutlined, SketchOutlined, TeamOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
+import ModTree from "../features/mod-tree/ModTree";
+import { GAME_DISPLAY_EXTRA_INPUTS as gameDisplayInputs, migrateGameDisplayInputs } from "../lib/cifi/mod-tree/gameDisplayInputs";
+import { recommendationCopy } from "../features/mod-tree/recommendationCopy";
+import { DEFAULT_RECOMMENDATION_COUNT, MOD_RECOMMENDATION_COUNT_KEY, RECOMMENDATION_COUNTS, restoreRecommendationCount } from "../lib/cifi/mod-tree/preferences";
+import UpgradeOptimizer from "../features/upgrade-optimizer/UpgradeOptimizer";
+import { getInputFieldHelp, inputFieldLabels, inputSectionCopy, localizedText } from "./content/inputCopy";
+import { isRecord, researchCountExceedsTotal, restoreWeightPresets, validateInput, type FieldKind, type WeightPreset } from "./content/profileValidation";
+import { DEFAULT_WEIGHT_PRESET_ID, DEFAULT_WEIGHT_VALUES, commitWeightPreset, matchingWeightPreset, storeWeightPreset } from "./content/weightPresets";
+import { calculationProfile, commitInputEdit, inputProfileSave, restoreCalculationProfile } from "./content/inputProfile";
+import "./site-audit.css";
+import "./scrollbars.css";
+import "./theme-refinements.css";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
+const APP_VERSION = "v0.3";
 
-type FieldKind = "positive" | "integer" | "short" | "decimal" | "bar";
 type FieldGroup = "weights" | "player" | "ship";
-type ActiveTab = FieldGroup | "settings";
+type OptimizerTab = "diamonds" | "tokens";
+type ActiveTab = "inputs" | OptimizerTab | "modTree" | "settings";
 type Language = "ko" | "en";
-type DashboardTheme = "orbit" | "solar" | "nebula" | "pearl";
-type FieldDefinition = { key: string; label: string; koLabel?: string; kind: FieldKind; group: FieldGroup; recommended?: string; suffix?: string };
-type WeightPreset = { id: string; name: string; values: Record<string, string>; updatedAt: string };
+type DashboardTheme = "orbit" | "solar" | "nebula" | "pearl" | "red";
+type FieldDefinition = { key: string; label: string; koLabel?: string; kind: FieldKind; group: FieldGroup; recommended?: string; suffix?: string; generator?: number; tech?: "hardware" | "software" };
 type FieldSection = { title: string; description: string; keys: string[] };
 type ResourcePalette = { accent: string; ink: string; surface: string; border: string; glow: string };
 type PlayerResourceSection = FieldSection & { key: string; enTitle: string; enDescription: string; palette: ResourcePalette; wide?: boolean };
 
 const weightFields: FieldDefinition[] = [
-  { key: "cells", label: "Cells", kind: "positive", group: "weights", recommended: "1" },
-  { key: "modPoints", label: "Mod Points", kind: "positive", group: "weights", recommended: "12" },
-  { key: "shards", label: "Shards", kind: "positive", group: "weights", recommended: "10" },
-  { key: "research", label: "Research", kind: "positive", group: "weights", recommended: "8" },
-  { key: "academyPoints", label: "Academy Points", kind: "positive", group: "weights", recommended: "24" },
-  { key: "materials", label: "Materials", kind: "positive", group: "weights", recommended: "72" },
-  { key: "costReduction", label: "Cost Reduction", kind: "positive", group: "weights", recommended: "6" },
-  { key: "rankPoints", label: "Rank Points", kind: "positive", group: "weights", recommended: "1" },
+  { key: "cells", ...inputFieldLabels.cells, kind: "positive", group: "weights", recommended: "1" },
+  { key: "modPoints", ...inputFieldLabels.modPoints, kind: "positive", group: "weights", recommended: "12" },
+  { key: "shards", ...inputFieldLabels.shards, kind: "positive", group: "weights", recommended: "10" },
+  { key: "research", ...inputFieldLabels.research, kind: "positive", group: "weights", recommended: "8" },
+  { key: "academyPoints", ...inputFieldLabels.academyPoints, kind: "positive", group: "weights", recommended: "24" },
+  { key: "materials", ...inputFieldLabels.materials, kind: "positive", group: "weights", recommended: "72" },
+  { key: "costReduction", ...inputFieldLabels.costReduction, kind: "positive", group: "weights", recommended: "6" },
+  { key: "rankPoints", ...inputFieldLabels.rankPoints, kind: "positive", group: "weights", recommended: "1" },
 ];
 
+const generatorFields: FieldDefinition[] = Array.from({ length: 8 }, (_, index) => {
+  const generator = index + 1;
+  return { key: `manualMk${generator}`, label: `Manual mk${generator}`, kind: "short" as const, group: "player" as const, generator };
+});
+const generatorTechnologyFields: FieldDefinition[] = Array.from({ length: 8 }, (_, index) => {
+  const generator = index + 1;
+  return [
+    { key: `hardwareTechMk${generator}`, label: "Hardware Tech", kind: "short" as const, group: "player" as const, generator, tech: "hardware" as const },
+    { key: `softwareTechMk${generator}`, label: "Software Tech", kind: "short" as const, group: "player" as const, generator, tech: "software" as const },
+  ];
+}).flat();
+
 const playerFields: FieldDefinition[] = [
-  { key: "level", label: "Level", kind: "integer", group: "player" },
-  { key: "loopsFilled", label: "Loops Filled", koLabel: "완료한 Loop", kind: "integer", group: "player" },
-  { key: "loopResets", label: "Loop Resets", koLabel: "Loop 초기화", kind: "integer", group: "player" },
-  { key: "operationsDone", label: "Operations Done", koLabel: "완료한 Operation", kind: "short", group: "player" },
-  { key: "studiesDone", label: "Studies Done", koLabel: "완료한 Study", kind: "short", group: "player" },
-  ...Array.from({ length: 8 }, (_, index) => ({ key: `manualMk${index + 1}`, label: `Manual mk${index + 1}`, kind: "short" as const, group: "player" as const })),
-  { key: "softwareTech", label: "Software Tech", kind: "short", group: "player" },
-  { key: "lpDoublerBarFill", label: "LP Doubler Bar Fill", koLabel: "LP Doubler 게이지", kind: "bar", group: "player", suffix: "/ 10" },
-  { key: "shardTickspeed", label: "Shard Tickspeed", koLabel: "Shard Tick 속도", kind: "decimal", group: "player", suffix: "sec" },
-  { key: "equipmentBought", label: "Equipment Bought", koLabel: "구매한 Equipment", kind: "integer", group: "player" },
-  { key: "totalResearchLevels", label: "Total Research Levels", koLabel: "전체 Research 레벨", kind: "integer", group: "player" },
-  { key: "completedResearches", label: "Completed Researches", koLabel: "완료한 Research", kind: "integer", group: "player" },
+  { key: "level", ...inputFieldLabels.level, kind: "integer", group: "player" },
+  { key: "loopsFilled", ...inputFieldLabels.loopsFilled, kind: "integer", group: "player" },
+  { key: "loopResets", ...inputFieldLabels.loopResets, kind: "integer", group: "player" },
+  { key: "operationsDone", ...inputFieldLabels.operationsDone, kind: "short", group: "player" },
+  { key: "studiesDone", ...inputFieldLabels.studiesDone, kind: "short", group: "player" },
+  ...generatorFields,
+  ...generatorTechnologyFields,
+  { key: "lpDoublerBarFill", ...inputFieldLabels.lpDoublerBarFill, kind: "bar", group: "player", suffix: "/ 10" },
+  { key: "shardTickspeed", ...inputFieldLabels.shardTickspeed, kind: "decimal", group: "player", suffix: "sec" },
+  { key: "equipmentBought", ...inputFieldLabels.equipmentBought, kind: "integer", group: "player" },
+  { key: "totalResearchLevels", ...inputFieldLabels.totalResearchLevels, kind: "integer", group: "player" },
+  { key: "completedResearches", ...inputFieldLabels.completedResearches, kind: "integer", group: "player" },
+  ...gameDisplayInputs.map(field => ({ key: field.key, label: field.label, koLabel: field.koLabel, kind: "short" as const, group: "player" as const })),
 ];
 
 const shipNames = ["Cradle", "Auxesia", "Zagreus", "Hephaestus", "Demeter", "Koios", "Zeus"];
@@ -55,23 +80,24 @@ const shipPalette: Record<string, ResourcePalette> = {
   Koios: { accent: "#b5a158", ink: "#796919", surface: "#fbf8e9", border: "#d9cf99", glow: "rgba(181, 161, 88, .17)" },
   Zeus: { accent: "#6f78ed", ink: "#4d56bd", surface: "#f1f2ff", border: "#aeb4f5", glow: "rgba(111, 120, 237, .16)" },
 };
-const playerPalette: Record<"level" | "generator" | "softwareTech" | "loop" | "shards" | "research" | "academy", ResourcePalette> = {
+const playerPalette: Record<"level" | "generator" | "technology" | "loop" | "shards" | "research" | "academy", ResourcePalette> = {
   level: { accent: "#9a70e8", ink: "#6d43bd", surface: "#f7f2ff", border: "#d9c6f5", glow: "rgba(154, 112, 232, .16)" },
   generator: shipPalette.Cradle,
-  softwareTech: shipPalette.Auxesia,
+  technology: shipPalette.Auxesia,
   loop: shipPalette.Zagreus,
   shards: shipPalette.Demeter,
   research: shipPalette.Koios,
   academy: shipPalette.Zeus,
 };
 const playerResourceSections: PlayerResourceSection[] = [
-  { key: "level", title: "레벨", enTitle: "Level", description: "Level과 LP 진행 상태입니다.", enDescription: "Current Level and LP progress.", keys: ["level", "lpDoublerBarFill"], palette: playerPalette.level },
-  { key: "generator", title: "Generator", enTitle: "Generator", description: "Manual mk 진행도입니다.", enDescription: "Manual mk progress.", keys: [...Array.from({ length: 8 }, (_, index) => `manualMk${index + 1}`)], palette: playerPalette.generator, wide: true },
-  { key: "softwareTech", title: "Software Tech", enTitle: "Software Tech", description: "Software Tech 진행도입니다.", enDescription: "Software Tech progress.", keys: ["softwareTech"], palette: playerPalette.softwareTech },
-  { key: "loop", title: "Loop", enTitle: "Loop", description: "Loop 및 MP 진행 상태입니다.", enDescription: "Current Loop and MP progress.", keys: ["loopsFilled", "loopResets"], palette: playerPalette.loop },
-  { key: "shards", title: "Shards", enTitle: "Shards", description: "Operation과 Shard 진행도입니다.", enDescription: "Operation and Shard progress.", keys: ["operationsDone", "shardTickspeed"], palette: playerPalette.shards },
-  { key: "research", title: "Research", enTitle: "Research", description: "Equipment 및 Research 진행도입니다.", enDescription: "Equipment and Research progress.", keys: ["equipmentBought", "totalResearchLevels", "completedResearches"], palette: playerPalette.research },
-  { key: "academy", title: "아카데미", enTitle: "Academy", description: "Academy Study 완료 기록입니다.", enDescription: "Completed Academy Study records.", keys: ["studiesDone"], palette: playerPalette.academy },
+  { key: "generator", ...inputSectionCopy.generator, keys: generatorFields.map((field) => field.key), palette: playerPalette.generator, wide: true },
+  { key: "level", ...inputSectionCopy.level, keys: ["level", "lpDoublerBarFill"], palette: playerPalette.level },
+  { key: "technology", ...inputSectionCopy.technology, keys: generatorTechnologyFields.map((field) => field.key), palette: playerPalette.technology, wide: true },
+  { key: "loop", ...inputSectionCopy.loop, keys: ["loopsFilled", "loopResets"], palette: playerPalette.loop },
+  { key: "shards", ...inputSectionCopy.shards, keys: ["operationsDone", "shardTickspeed"], palette: playerPalette.shards },
+  { key: "research", ...inputSectionCopy.research, keys: ["equipmentBought", "totalResearchLevels", "completedResearches"], palette: playerPalette.research },
+  { key: "academy", ...inputSectionCopy.academy, keys: ["studiesDone"], palette: playerPalette.academy },
+  { key: "gameDisplay", title: "추가 진행도", enTitle: "Additional progress", description: "기존 입력에 없는 항목만 입력하세요. 해당 사항이 없으면 0.", enDescription: "Only values not covered above. Enter 0 where not applicable.", keys: gameDisplayInputs.map(field => field.key), palette: playerPalette.loop, wide: true },
 ];
 const weightPalette: Record<string, ResourcePalette> = {
   cells: { accent: "#37c979", ink: "#1f854d", surface: "#e9fbf1", border: "#a9e9c7", glow: "rgba(55, 201, 121, .15)" },
@@ -88,58 +114,29 @@ const shipFields: FieldDefinition[] = shipNames.flatMap((ship) => [
   { key: `${ship.toLowerCase()}Crew`, label: `${ship} Crew`, kind: "integer", group: "ship" },
 ]);
 
-const fieldSections: Record<FieldGroup, FieldSection[]> = {
-  weights: [
-    { title: "자원 우선순위", description: "기본 자원 획득의 중요도를 설정합니다.", keys: ["cells", "modPoints", "shards", "research"] },
-    { title: "성장 보상", description: "성장 과정에서 얻는 보상 자원의 중요도입니다.", keys: ["academyPoints", "materials"] },
-    { title: "효율 보정", description: "비용 절감과 Rank 보상에 대한 우선순위입니다.", keys: ["costReduction", "rankPoints"] },
-  ],
-  player: playerResourceSections,
-  ship: shipNames.map((ship) => ({
-    title: ship,
-    description: "Rank와 Crew를 함께 관리합니다.",
-    keys: [`${ship.toLowerCase()}Rank`, `${ship.toLowerCase()}Crew`],
-  })),
-};
 const allFields = [...weightFields, ...playerFields, ...shipFields];
 const inputStorageKey = "cifi-orbit.mtc-inputs.v1";
 const presetStorageKey = "cifi-orbit.mtc-weight-presets.v1";
 const languageStorageKey = "cifi-orbit.ui-language.v1";
 const themeStorageKey = "cifi-ultimate.ui-theme.v1";
-const defaultPresetId = "__recommended__";
+const defaultPresetId = DEFAULT_WEIGHT_PRESET_ID;
+const recommendedWeights = DEFAULT_WEIGHT_VALUES;
 const themeOptions: Record<Language, { value: DashboardTheme; label: string }[]> = {
   ko: [
     { value: "orbit", label: "오비탈 네이비" },
     { value: "solar", label: "솔라 프로스트" },
     { value: "nebula", label: "네뷸라 코어" },
     { value: "pearl", label: "펄 문" },
+    { value: "red", label: "모드 레드" },
   ],
   en: [
     { value: "orbit", label: "Orbital Navy" },
     { value: "solar", label: "Solar Frost" },
     { value: "nebula", label: "Nebula Core" },
     { value: "pearl", label: "Pearl Moon" },
+    { value: "red", label: "Mod Red" },
   ],
 };
-const localizedText = {
-  ko: {
-    workspace: "작업 공간", inputManager: "입력값 관리", playerInput: "플레이어 진행도 입력", weights: "가중치", playerProgress: "플레이어 진행도", shipProgress: "함선 진행도", settings: "설정", settingsDescription: "화면 테마와 표시 언어를 관리합니다.", appearance: "화면 테마", displayLanguage: "표시 언어", localProfile: "로컬 프로필", localProfileNote: "현재 기기에만 저장됩니다.",
-    saved: "저장됨", changed: "개 변경됨", restore: "되돌리기", save: "입력값 저장", currentProfile: "현재 프로필", profileDescription: "자원 우선순위와 진행도 기록을 한 화면에서 관리합니다.", theme: "테마",
-    prioritySettings: "가중치 설정", playerProfile: "플레이어 진행도", shipProfile: "함선 진행도", weightsDescription: "각 자원의 우선순위를 설정합니다. 프리셋 적용 후 입력값 저장을 누르면 현재 프로필에 반영됩니다.", playerDescription: "각 통계의 현재 최고 장기 진행 기록을 입력하세요.", shipDescription: "각 함선의 현재 랭크와 승무원 수를 입력하세요.", rank: "랭크", crew: "승무원", rankAndCrew: "랭크 · 승무원",
-    inputValue: "값 입력", recommended: "권장값", weightLibrary: "가중치 라이브러리", weightPresets: "가중치 프리셋", presetHelp: "가중치 8개 항목만 저장합니다. 다른 입력값에는 영향을 주지 않습니다.", newPreset: "새 가중치 프리셋 이름", savePreset: "저장", recommendedSet: "기본 권장값", recommendedWeightSet: "권장 가중치 세트", noPresets: "저장한 프리셋이 없습니다.", applyPreset: "선택한 프리셋 적용", deletePreset: "선택한 프리셋 삭제", deleteTitle: "이 프리셋을 삭제할까요?", deleteDescription: "삭제한 프리셋은 복구할 수 없습니다.", delete: "삭제", cancel: "취소", deviceStorage: "기기별 보관", deviceStorageNote: "프리셋과 입력값은 현재 브라우저에만 저장됩니다.",
-    invalidShort: "숫자 또는 과학 표기 형식으로 입력하세요.", invalidNumber: "유효한 숫자를 입력하세요.", nonNegative: "0 이상의 값을 입력하세요.", positiveWeight: "가중치는 0보다 커야 합니다.", integer: "정수를 입력하세요.", barRange: "0부터 10 사이의 값을 입력하세요.", researchLimit: "완료 Research 수는 전체 Research 레벨보다 클 수 없습니다.",
-    storageReadFailed: "저장된 설정을 읽지 못해 기본값으로 시작합니다.", validationFailed: "오류가 있는 입력값을 먼저 확인해 주세요.", savedValues: "입력값을 이 기기에 저장했습니다.", saveFailed: "입력값을 저장하지 못했습니다.", restored: "마지막 저장 상태로 되돌렸습니다.", missingPreset: "불러올 프리셋을 찾지 못했습니다.", appliedPreset: "가중치 프리셋을 불러왔습니다. 저장 버튼을 눌러 입력값에 반영하세요.", enterPresetName: "프리셋 이름을 입력해 주세요.", duplicatePreset: "같은 이름의 프리셋이 이미 있습니다.", presetSaved: "프리셋을 저장했습니다.", presetSaveFailed: "프리셋을 저장하지 못했습니다.", presetDeleted: "프리셋을 삭제했습니다.", presetDeleteFailed: "프리셋을 삭제하지 못했습니다.",
-  },
-  en: {
-    workspace: "WORKSPACE", inputManager: "Input Manager", playerInput: "Player Progress Input", weights: "Weights", playerProgress: "Player Progress", shipProgress: "Ship Progress", settings: "Settings", settingsDescription: "Manage the dashboard theme and display language.", appearance: "Appearance", displayLanguage: "Display language", localProfile: "Local profile", localProfileNote: "Saved only in this browser.",
-    saved: "Saved", changed: "changed", restore: "Restore", save: "Save inputs", currentProfile: "CURRENT PROFILE", profileDescription: "Manage resource priorities and progress records in one place.", theme: "Theme",
-    prioritySettings: "WEIGHT SETTINGS", playerProfile: "PLAYER PROFILE", shipProfile: "SHIP PROFILE", weightsDescription: "Set each resource priority. Apply a preset and save inputs to update the current profile.", playerDescription: "Enter your best Long Run records for each stat.", shipDescription: "Enter the current Rank and Crew for each ship.", rank: "Rank", crew: "Crew", rankAndCrew: "Rank & Crew",
-    inputValue: "Enter value", recommended: "Recommended", weightLibrary: "WEIGHT LIBRARY", weightPresets: "Weight presets", presetHelp: "Only the eight Weight fields are stored. Other inputs are not affected.", newPreset: "New Weight preset name", savePreset: "Save", recommendedSet: "Recommended defaults", recommendedWeightSet: "Recommended Weight set", noPresets: "No saved presets.", applyPreset: "Apply selected preset", deletePreset: "Delete selected preset", deleteTitle: "Delete this preset?", deleteDescription: "Deleted presets cannot be recovered.", delete: "Delete", cancel: "Cancel", deviceStorage: "Device storage", deviceStorageNote: "Presets and inputs are stored in this browser only.",
-    invalidShort: "Enter a number or scientific notation.", invalidNumber: "Enter a valid number.", nonNegative: "Enter 0 or more.", positiveWeight: "Weights must be greater than 0.", integer: "Enter a whole number.", barRange: "Enter a value from 0 to 10.", researchLimit: "Completed Researches cannot exceed total Research Levels.",
-    storageReadFailed: "Saved settings could not be read. Starting with defaults.", validationFailed: "Fix invalid inputs first.", savedValues: "Inputs saved to this device.", saveFailed: "Could not save inputs.", restored: "Restored the last saved values.", missingPreset: "The preset could not be found.", appliedPreset: "Weight preset loaded. Save inputs to apply it to this profile.", enterPresetName: "Enter a preset name.", duplicatePreset: "A preset with that name already exists.", presetSaved: "Preset saved.", presetSaveFailed: "Could not save the preset.", presetDeleted: "Preset deleted.", presetDeleteFailed: "Could not delete the preset.",
-  },
-} satisfies Record<Language, Record<string, string>>;
-
 function createInitialValues() {
   return Object.fromEntries(allFields.map((field) => [field.key, field.recommended ?? ""])) as Record<string, string>;
 }
@@ -149,19 +146,8 @@ function fieldLabel(field: FieldDefinition, language: Language) {
 }
 
 function validateField(field: FieldDefinition, rawValue: string, language: Language) {
-  const text = localizedText[language];
-  const value = rawValue.trim().replaceAll(",", "");
-  if (!value) return "";
-  if (field.kind === "short") {
-    return /^(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+|k|m|b|t|qa|qu|sx|sp|o|n|d)?$/i.test(value) ? "" : text.invalidShort;
-  }
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed)) return text.invalidNumber;
-  if (parsed < 0) return text.nonNegative;
-  if (field.kind === "positive" && parsed <= 0) return text.positiveWeight;
-  if ((field.kind === "integer" || field.kind === "bar") && !Number.isInteger(parsed)) return text.integer;
-  if (field.kind === "bar" && parsed > 10) return text.barRange;
-  return "";
+  const issue = validateInput(field.kind, rawValue);
+  return issue ? localizedText[language][issue] : "";
 }
 
 function groupLabel(group: FieldGroup, language: Language) {
@@ -170,7 +156,12 @@ function groupLabel(group: FieldGroup, language: Language) {
 }
 
 function tabLabel(tab: ActiveTab, language: Language) {
-  return tab === "settings" ? localizedText[language].settings : groupLabel(tab, language);
+  const text = localizedText[language];
+  if (tab === "settings") return text.settings;
+  if (tab === "modTree") return language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations";
+  if (tab === "diamonds") return text.diamonds;
+  if (tab === "tokens") return text.tokens;
+  return text.inputManager;
 }
 
 function InputManager() {
@@ -178,50 +169,87 @@ function InputManager() {
   const initialValues = useMemo(() => createInitialValues(), []);
   const [draft, setDraft] = useState<Record<string, string>>(initialValues);
   const [saved, setSaved] = useState<Record<string, string>>(initialValues);
-  const [activeTab, setActiveTab] = useState<ActiveTab>("weights");
+  const [activeTab, setActiveTab] = useState<ActiveTab>("inputs");
   const [ready, setReady] = useState(false);
   const [weightPresets, setWeightPresets] = useState<WeightPreset[]>([]);
   const [presetName, setPresetName] = useState("");
-  const [selectedPresetId, setSelectedPresetId] = useState(defaultPresetId);
+  const [selectedPresetId, setSelectedPresetId] = useState<string | null>(defaultPresetId);
+  const profileRef = useRef({ draft: initialValues, saved: initialValues, presetId: defaultPresetId as string | null });
+  const [inputSaveStatus, setInputSaveStatus] = useState<"loading" | "saved" | "failed">("loading");
   const [language, setLanguage] = useState<Language>("ko");
   const [theme, setTheme] = useState<DashboardTheme>("orbit");
+  const [modRecommendationCount, setModRecommendationCount] = useState(DEFAULT_RECOMMENDATION_COUNT);
+  const [optimizerSaveStatus, setOptimizerSaveStatus] = useState<"loading" | "saved" | "failed">("loading");
   const text = localizedText[language];
+  const isOptimizerTab = activeTab === "diamonds" || activeTab === "tokens";
+  const isModTreeTab = activeTab === "modTree";
+  const headerTitle = activeTab === "settings" ? text.settings
+    : isOptimizerTab ? `${tabLabel(activeTab, language)} ${text.upgradeOptimizer}`
+    : tabLabel(activeTab, language);
+  const headerDescription = activeTab === "settings" ? text.settingsDescription
+    : isOptimizerTab ? text.optimizerDescription : isModTreeTab ? null : text.profileDescription;
 
   useEffect(() => {
     const restored = { ...initialValues };
     let presets: WeightPreset[] = [];
-    try {
-      const storedInputs = window.localStorage.getItem(inputStorageKey);
-      if (storedInputs) {
-        const parsed = JSON.parse(storedInputs) as { values?: Record<string, unknown> };
+    let restoredLanguage: Language = "ko";
+    let restoredTheme: DashboardTheme = "orbit";
+    let readFailed = false;
+    let displayInputConflict = false;
+    let softwareNeedsReview = false;
+    const readStored = (key: string, json = false): unknown => {
+      try {
+        const raw = window.localStorage.getItem(key);
+        return json && raw ? JSON.parse(raw) : raw;
+      } catch { readFailed = true; return undefined; }
+    };
+      const parsed = readStored(inputStorageKey, true);
+      if (isRecord(parsed) && isRecord(parsed.values)) {
+        const inputValues = parsed.values;
         for (const field of allFields) {
-          const value = parsed.values?.[field.key];
+          const value = inputValues[field.key];
           if (typeof value === "string") restored[field.key] = value;
         }
+        const hasPerGeneratorSoftwareTech = generatorTechnologyFields.some((field) => field.tech === "software" && typeof inputValues[field.key] === "string");
+        const legacySoftwareTech = inputValues.softwareTech;
+        if (!hasPerGeneratorSoftwareTech && typeof legacySoftwareTech === "string") {
+          for (const field of generatorTechnologyFields) if (field.tech === "software") restored[field.key] = legacySoftwareTech;
+        }
+        const migration = migrateGameDisplayInputs({ ...inputValues, ...Object.fromEntries(generatorTechnologyFields.filter(field => field.tech === "software").map(field => [field.key, restored[field.key]])) });
+        Object.assign(restored, migration.values);
+        displayInputConflict = migration.conflicts.length > 0;
+        softwareNeedsReview = migration.softwareNeedsReview;
       }
-      const storedPresets = window.localStorage.getItem(presetStorageKey);
-      if (storedPresets && Array.isArray(JSON.parse(storedPresets))) {
-        presets = (JSON.parse(storedPresets) as unknown[]).filter((item): item is WeightPreset => Boolean(item && typeof item === "object" && typeof (item as WeightPreset).id === "string" && typeof (item as WeightPreset).name === "string" && typeof (item as WeightPreset).values === "object"));
-      }
-      const storedLanguage = window.localStorage.getItem(languageStorageKey);
-      if (storedLanguage === "ko" || storedLanguage === "en") setLanguage(storedLanguage);
-      const storedTheme = window.localStorage.getItem(themeStorageKey);
+      presets = restoreWeightPresets(readStored(presetStorageKey, true), weightFields.map((field) => field.key));
+      const restoredSaved = restoreCalculationProfile(restored, isRecord(parsed) ? parsed.calculationValues : undefined, initialValues, allFields, recommendedWeights);
+      const storedPresetId = isRecord(parsed) && typeof parsed.weightPresetId === "string" ? parsed.weightPresetId : null;
+      // Keep the preset being edited even when its current weights differ.
+      const restoredPresetId = storedPresetId === defaultPresetId || presets.some(preset => preset.id === storedPresetId)
+        ? storedPresetId : matchingWeightPreset(restoredSaved, presets, recommendedWeights);
+      const storedLanguage = readStored(languageStorageKey);
+      if (storedLanguage === "ko" || storedLanguage === "en") restoredLanguage = storedLanguage;
+      const storedTheme = readStored(themeStorageKey);
+      const restoredModRecommendationCount = restoreRecommendationCount(readStored(MOD_RECOMMENDATION_COUNT_KEY));
       if (storedTheme === "abyss") {
-        setTheme("nebula");
-        window.localStorage.setItem(themeStorageKey, "nebula");
+        restoredTheme = "nebula";
       } else if (storedTheme === "command") {
-        setTheme("orbit");
-        window.localStorage.setItem(themeStorageKey, "orbit");
-      } else if (storedTheme === "orbit" || storedTheme === "solar" || storedTheme === "nebula" || storedTheme === "pearl") {
-        setTheme(storedTheme);
+        restoredTheme = "orbit";
+      } else if (storedTheme === "orbit" || storedTheme === "solar" || storedTheme === "nebula" || storedTheme === "pearl" || storedTheme === "red") {
+        restoredTheme = storedTheme;
       }
-    } catch {
-      message.warning(localizedText.ko.storageReadFailed);
-    }
+    if (readFailed) message.warning(localizedText[restoredLanguage].storageReadFailed);
+    if (displayInputConflict) message.warning(localizedText[restoredLanguage].displayInputConflict);
+    if (softwareNeedsReview) message.warning(localizedText[restoredLanguage].softwareNeedsReview);
     queueMicrotask(() => {
       setDraft(restored);
-      setSaved(restored);
+      setSaved(restoredSaved);
+      profileRef.current = { draft: restored, saved: restoredSaved, presetId: restoredPresetId };
+      setInputSaveStatus(readFailed ? "failed" : "saved");
       setWeightPresets(presets);
+      setSelectedPresetId(restoredPresetId);
+      setLanguage(restoredLanguage);
+      setTheme(restoredTheme);
+      setModRecommendationCount(restoredModRecommendationCount);
       setReady(true);
     });
   }, [initialValues, message]);
@@ -232,13 +260,34 @@ function InputManager() {
       const error = validateField(field, draft[field.key] ?? "", language);
       if (error) next[field.key] = error;
     }
-    if (draft.totalResearchLevels && draft.completedResearches && Number(draft.completedResearches) > Number(draft.totalResearchLevels)) next.completedResearches = text.researchLimit;
+    if (researchCountExceedsTotal(draft.completedResearches ?? "", draft.totalResearchLevels ?? "")) next.completedResearches = text.researchLimit;
     return next;
   }, [draft, language, text.researchLimit]);
-  const changedKeys = useMemo(() => allFields.filter((field) => (draft[field.key] ?? "") !== (saved[field.key] ?? "")).map((field) => field.key), [draft, saved]);
-  const recommendedWeights = useMemo(() => Object.fromEntries(weightFields.map((field) => [field.key, field.recommended ?? ""])), []);
+  const activePresetId = useMemo(() => matchingWeightPreset(saved, weightPresets, recommendedWeights, selectedPresetId), [saved, weightPresets, selectedPresetId]);
   const selectedPreset = selectedPresetId === defaultPresetId ? undefined : weightPresets.find((preset) => preset.id === selectedPresetId);
-  const updateValue = (key: string, value: string) => setDraft((current) => ({ ...current, [key]: value }));
+  const acceptProfile = (next: { draft: Record<string, string>; saved: Record<string, string> }, presetId: string | null) => {
+    profileRef.current = { ...next, presetId };
+    setDraft(next.draft); setSaved(next.saved); setSelectedPresetId(presetId); setInputSaveStatus("saved");
+  };
+  const updateValue = (key: string, value: string) => {
+    if (!ready) return;
+    const current = profileRef.current;
+    try {
+      const next = commitInputEdit(current.draft, current.saved, key, value, allFields, recommendedWeights, current.presetId, payload => window.localStorage.setItem(inputStorageKey, JSON.stringify(payload)));
+      acceptProfile(next, current.presetId);
+    } catch {
+      // Retain the edit on screen for retry, without claiming persistence.
+      const nextDraft = { ...current.draft, [key]: value };
+      profileRef.current = { ...current, draft: nextDraft };
+      setDraft(nextDraft); setInputSaveStatus("failed");
+    }
+  };
+  const persistCurrentProfile = (presetId: string | null) => {
+    const current = profileRef.current;
+    const next = { draft: current.draft, saved: calculationProfile(current.draft, current.saved, allFields, recommendedWeights) };
+    window.localStorage.setItem(inputStorageKey, JSON.stringify(inputProfileSave(next.draft, next.saved, presetId)));
+    acceptProfile(next, presetId);
+  };
   const updateLanguage = (nextLanguage: Language) => {
     setLanguage(nextLanguage);
     try { window.localStorage.setItem(languageStorageKey, nextLanguage); } catch { /* language can remain session-only */ }
@@ -248,54 +297,52 @@ function InputManager() {
     try { window.localStorage.setItem(themeStorageKey, nextTheme); } catch { /* theme can remain session-only */ }
   };
 
-  const saveValues = () => {
-    if (Object.keys(errors).length) return void message.error(text.validationFailed);
-    try {
-      window.localStorage.setItem(inputStorageKey, JSON.stringify({ version: 1, values: draft }));
-      setSaved({ ...draft });
-      message.success(text.savedValues);
-    } catch { message.error(text.saveFailed); }
-  };
-  const restoreSaved = () => { setDraft({ ...saved }); message.info(text.restored); };
   const applyPreset = (presetId = selectedPresetId) => {
+    if (!ready) return;
     const presetValues = presetId === defaultPresetId ? recommendedWeights : weightPresets.find((preset) => preset.id === presetId)?.values;
-    if (!presetValues) return void message.error(text.missingPreset);
-    setSelectedPresetId(presetId);
-    setActiveTab("weights");
-    setDraft((current) => ({ ...current, ...Object.fromEntries(weightFields.map((field) => [field.key, presetValues[field.key] ?? field.recommended ?? ""])) }));
-    message.success(text.appliedPreset);
-  };
-  const saveWeightPreset = () => {
-    const name = presetName.trim();
-    if (!name) return void message.error(text.enterPresetName);
-    if (weightPresets.some((preset) => preset.name === name)) return void message.error(text.duplicatePreset);
-    const preset: WeightPreset = { id: `weight-${Date.now()}`, name, values: Object.fromEntries(weightFields.map((field) => [field.key, draft[field.key] ?? ""])), updatedAt: new Date().toISOString() };
-    const next = [...weightPresets, preset];
+    if (!presetValues || !presetId) return void message.error(text.missingPreset);
     try {
-      window.localStorage.setItem(presetStorageKey, JSON.stringify(next));
-      setWeightPresets(next); setSelectedPresetId(preset.id); setPresetName("");
+      const current = profileRef.current;
+      const currentSaved = calculationProfile(current.draft, current.saved, allFields, recommendedWeights);
+      const next = commitWeightPreset(current.draft, currentSaved, presetValues, recommendedWeights, presetId, payload => window.localStorage.setItem(inputStorageKey, JSON.stringify(payload)));
+      acceptProfile(next, presetId);
+    } catch { message.error(text.presetApplyFailed); }
+  };
+  const saveWeightPreset = (createNew = false) => {
+    if (!ready) return;
+    if (weightFields.some(field => Boolean(errors[field.key]))) return void message.error(text.validationFailed);
+    if (!createNew && !selectedPreset) return void message.info(text.choosePresetToSave);
+    const name = createNew ? presetName.trim() : selectedPreset!.name;
+    if (!name) return void message.error(text.enterPresetName);
+    if (createNew && weightPresets.some(preset => preset.name === name)) return void message.error(text.duplicatePreset);
+    const id = createNew ? `weight-${Date.now()}-${Math.random().toString(36).slice(2, 10)}` : selectedPreset!.id;
+    try {
+      const next = storeWeightPreset(weightPresets, id, name, profileRef.current.draft, recommendedWeights, new Date().toISOString(), rows => window.localStorage.setItem(presetStorageKey, JSON.stringify(rows)));
+      setWeightPresets(next); setSelectedPresetId(id); setPresetName("");
+      profileRef.current = { ...profileRef.current, presetId: id };
       message.success(`“${name}” ${text.presetSaved}`);
+      // The library write is already complete. A separate profile failure must
+      // not misreport that the weight preset itself was lost.
+      try { persistCurrentProfile(id); }
+      catch { setInputSaveStatus("failed"); message.warning(text.saveFailed); }
     } catch { message.error(text.presetSaveFailed); }
   };
   const deleteSelectedPreset = () => {
-    if (!selectedPreset) return;
+    if (!ready || !selectedPreset) return;
     const next = weightPresets.filter((preset) => preset.id !== selectedPreset.id);
     try {
       window.localStorage.setItem(presetStorageKey, JSON.stringify(next));
-      setWeightPresets(next); setSelectedPresetId(defaultPresetId);
+      const current = profileRef.current;
+      const currentSaved = calculationProfile(current.draft, current.saved, allFields, recommendedWeights);
+      const nextAppliedId = matchingWeightPreset(currentSaved, next, recommendedWeights);
+      setWeightPresets(next); setSelectedPresetId(nextAppliedId);
+      profileRef.current = { ...profileRef.current, presetId: nextAppliedId };
+      try { persistCurrentProfile(nextAppliedId); }
+      catch { setInputSaveStatus("failed"); }
       message.success(`“${selectedPreset.name}” ${text.presetDeleted}`);
     } catch { message.error(text.presetDeleteFailed); }
   };
 
-  const fieldsByGroup: Record<FieldGroup, FieldDefinition[]> = { weights: weightFields, player: playerFields, ship: shipFields };
-  const renderField = (field: FieldDefinition) => {
-    const error = errors[field.key];
-    return <label className={`field-row ${error ? "has-error" : ""}`} key={field.key}>
-      <span className="field-label"><strong>{fieldLabel(field, language)}</strong><small>{field.recommended ? `${text.recommended} ${field.recommended}` : ""}</small></span>
-      <Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={field.kind === "short" ? "1k, 2.22b, 4.33e12" : text.inputValue} inputMode={field.kind === "short" ? "text" : field.kind === "integer" || field.kind === "bar" ? "numeric" : "decimal"} suffix={field.suffix} />
-      <span className="field-message">{error || " "}</span>
-    </label>;
-  };
   const resourceCardStyle = (palette: ResourcePalette) => ({
     "--resource-accent": palette.accent,
     "--resource-ink": palette.ink,
@@ -308,27 +355,84 @@ function InputManager() {
     const palette = weightPalette[field.key];
     return <section className={`weight-input-card ${error ? "has-error" : ""}`} style={resourceCardStyle(palette)} key={field.key}>
       <div className="weight-card-heading"><span className="weight-card-dot" /><div><h4>{fieldLabel(field, language)}</h4><p>{text.recommended} {field.recommended}</p></div></div>
-      <Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="numeric" />
+      <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="numeric" /></Tooltip>
       {error && <small>{error}</small>}
     </section>;
   };
-  const renderPlayerField = (field: FieldDefinition) => {
+  const renderPlayerField = (field: FieldDefinition, matrixCell = false) => {
     const error = errors[field.key];
-    return <label className={`player-field ${error ? "has-error" : ""}`} key={field.key}>
-      <span>{fieldLabel(field, language)}</span>
-      <Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode={field.kind === "short" ? "text" : field.kind === "integer" || field.kind === "bar" ? "numeric" : "decimal"} suffix={field.suffix} />
+    const label = matrixCell && field.generator ? `MK${field.generator} ${fieldLabel(field, language)}` : fieldLabel(field, language);
+    return <label className={`player-field ${matrixCell ? "generator-tech-matrix-field" : ""} ${error ? "has-error" : ""}`} key={field.key}>
+      <span className={matrixCell ? "visually-hidden" : undefined}>{label}</span>
+      <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={label} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode={field.kind === "short" ? "text" : field.kind === "integer" || field.kind === "bar" ? "numeric" : "decimal"} suffix={field.suffix} /></Tooltip>
       {error && <small>{error}</small>}
     </label>;
   };
-  const fieldPanel = (fields: FieldDefinition[], group: FieldGroup) => (
-    <div className={`field-panel field-panel-${group}`}>
-      <div className="field-panel-heading">
-        <div className={`panel-symbol panel-symbol-${group}`}>{group === "weights" ? "W" : group === "player" ? "P" : "S"}</div>
-        <div className="field-panel-copy"><Title level={3}>{groupLabel(group, language)}</Title><Paragraph>{group === "weights" ? text.weightsDescription : group === "player" ? text.playerDescription : text.shipDescription}</Paragraph></div>
-      </div>
-      {group === "weights" ? <div className="weight-card-grid">{fields.map(renderWeightField)}</div> : group === "ship" ? <div className="ship-card-grid">
+  const updateModRecommendationCount = (value: number) => {
+    const count = restoreRecommendationCount(value);
+    setModRecommendationCount(count);
+    try { window.localStorage.setItem(MOD_RECOMMENDATION_COUNT_KEY, String(count)); }
+    catch { message.warning(recommendationCopy[language].countSaveFailed); }
+  };
+  const renderGeneratorTechCards = (fields: FieldDefinition[]) => <div className="generator-tech-grid">
+    {Array.from({ length: 8 }, (_, index) => {
+      const generator = index + 1;
+      const techFields = [`hardwareTechMk${generator}`, `softwareTechMk${generator}`]
+        .map((key) => fields.find((field) => field.key === key))
+        .filter((field): field is FieldDefinition => Boolean(field));
+      const filledCount = techFields.filter((field) => Boolean(draft[field.key]?.trim())).length;
+      return <section className="generator-tech-card" key={generator}>
+        <div className="generator-tech-heading"><strong>MK{generator}</strong><span>{filledCount} / {techFields.length}</span></div>
+        <div className="generator-tech-fields">{techFields.map((field) => renderPlayerField(field))}</div>
+      </section>;
+    })}
+  </div>;
+  const renderGeneratorMatrix = (fields: FieldDefinition[]) => {
+    const fieldFor = (generator: number) => fields.find((field) => field.generator === generator);
+    return <div className="generator-matrix" aria-label={language === "ko" ? "MK별 Manual Generator 진행도" : "Manual Generator progress by MK"}>
+      <div className="generator-matrix-corner" aria-hidden="true" />
+      {Array.from({ length: 8 }, (_, index) => {
+        const generator = index + 1;
+        const field = fieldFor(generator);
+        const filledCount = field && draft[field.key]?.trim() ? 1 : 0;
+        return <div className="generator-matrix-heading" key={`heading-${generator}`}><strong>MK{generator}</strong><span>{filledCount}/1</span></div>;
+      })}
+      <div className="generator-matrix-row-label"><span>Manual</span><strong>MK</strong></div>
+      {Array.from({ length: 8 }, (_, index) => {
+        const field = fieldFor(index + 1);
+        return field ? renderPlayerField(field, true) : null;
+      })}
+    </div>;
+  };
+  const renderGeneratorTechMatrix = (fields: FieldDefinition[]) => {
+    const fieldsForMk = (generator: number) => [`hardwareTechMk${generator}`, `softwareTechMk${generator}`]
+      .map((key) => fields.find((field) => field.key === key))
+      .filter((field): field is FieldDefinition => Boolean(field));
+    const fieldFor = (generator: number, tech: "hardware" | "software") => fields.find((field) => field.generator === generator && field.tech === tech);
+    return <div className="generator-tech-matrix" aria-label={language === "ko" ? "MK별 Hardware Tech와 Software Tech" : "Hardware and Software Tech by MK"}>
+      <div className="generator-tech-matrix-corner" aria-hidden="true" />
+      {Array.from({ length: 8 }, (_, index) => {
+        const generator = index + 1;
+        const techFields = fieldsForMk(generator);
+        const filledCount = techFields.filter((field) => Boolean(draft[field.key]?.trim())).length;
+        return <div className="generator-tech-matrix-heading" key={`heading-${generator}`}><strong>MK{generator}</strong><span>{filledCount}/{techFields.length}</span></div>;
+      })}
+      {(["hardware", "software"] as const).flatMap((tech) => [
+        <div className="generator-tech-matrix-row-label" key={`${tech}-label`} title={tech === "hardware" ? "Hardware Tech" : "Software Tech"}><span>{tech === "hardware" ? "Hardware" : "Software"}</span><strong>Tech</strong></div>,
+        ...Array.from({ length: 8 }, (_, index) => {
+          const field = fieldFor(index + 1, tech);
+          return field ? renderPlayerField(field, true) : null;
+        }),
+      ])}
+    </div>;
+  };
+  const renderShipProgress = () => {
+    const filledCount = shipFields.filter((field) => Boolean(draft[field.key]?.trim())).length;
+    return <section className="ship-progress-section" aria-labelledby="ship-progress-heading">
+      <div className="field-section-heading"><div><h4 id="ship-progress-heading">{text.shipProgress}</h4><p>{text.shipDescription}</p></div><Badge className="ship-progress-count" count={`${filledCount} / ${shipFields.length}`} showZero /></div>
+      <div className="ship-card-grid">
         {shipNames.map((ship) => {
-          const shipGroup = fields.filter((field) => field.key === `${ship.toLowerCase()}Rank` || field.key === `${ship.toLowerCase()}Crew`);
+          const shipGroup = shipFields.filter((field) => field.key === `${ship.toLowerCase()}Rank` || field.key === `${ship.toLowerCase()}Crew`);
           const palette = shipPalette[ship];
           const isRank = (field: FieldDefinition) => field.label.endsWith("Rank");
           const cardStyle = {
@@ -345,74 +449,91 @@ function InputManager() {
                 const error = errors[field.key];
                 return <label className={`ship-field ${error ? "has-error" : ""}`} key={field.key}>
                   <span className="ship-field-label">{isRank(field) ? <TrophyOutlined aria-hidden /> : <TeamOutlined aria-hidden />}{isRank(field) ? text.rank : text.crew}</span>
-                  <Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="numeric" />
+                  <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="numeric" /></Tooltip>
                   {error && <small>{error}</small>}
                 </label>;
               })}
             </div>
           </section>;
         })}
-      </div> : group === "player" ? <div className="player-card-grid">
+      </div>
+    </section>;
+  };
+  const fieldPanel = (fields: FieldDefinition[], group: Exclude<FieldGroup, "ship">) => (
+    <div className={`field-panel field-panel-${group}`}>
+      <div className="field-panel-heading">
+        <div className={`panel-symbol panel-symbol-${group}`}>{group === "weights" ? "W" : "P"}</div>
+        <div className="field-panel-copy"><Title level={3}>{groupLabel(group, language)}</Title><Paragraph>{group === "weights" ? text.weightsDescription : text.playerDescription}</Paragraph></div>
+      </div>
+      {group === "weights" ? <div className="weight-card-grid">{fields.map(renderWeightField)}</div> : group === "player" ? <><div className="player-card-grid">
         {playerResourceSections.map((section) => {
           const sectionFields = fields.filter((field) => section.keys.includes(field.key));
           const filledCount = sectionFields.filter((field) => Boolean(draft[field.key]?.trim())).length;
-          return <section className={`player-input-card ${section.wide ? "is-wide" : ""}`} style={resourceCardStyle(section.palette)} key={section.key}>
+          return <section className={`player-input-card section-${section.key} ${section.wide ? "is-wide" : ""}`} style={resourceCardStyle(section.palette)} key={section.key}>
             <div className="player-card-heading"><span className="player-card-dot" /><div><h4>{language === "ko" ? section.title : section.enTitle}</h4><p>{language === "ko" ? section.description : section.enDescription}</p></div><Badge className="player-input-count" count={`${filledCount} / ${sectionFields.length}`} showZero /></div>
-            <div className={`player-field-grid ${section.wide ? "generator-grid" : ""}`}>{sectionFields.map(renderPlayerField)}</div>
+            {section.key === "generator" ? <><div className="generator-matrix-desktop">{renderGeneratorMatrix(sectionFields)}</div><div className="generator-matrix-mobile"><div className="player-field-grid generator-grid">{sectionFields.map((field) => renderPlayerField(field))}</div></div></> : section.key === "technology" ? <><div className="generator-tech-desktop">{renderGeneratorTechMatrix(sectionFields)}</div><div className="generator-tech-mobile">{renderGeneratorTechCards(sectionFields)}</div></> : <div className="player-field-grid">{sectionFields.map((field) => renderPlayerField(field))}</div>}
           </section>;
         })}
-      </div> : <div className="field-sections">
-        {fieldSections[group].map((section) => {
-          const sectionFields = fields.filter((field) => section.keys.includes(field.key));
-          return <section className="field-section" key={section.title}>
-            <div className="field-section-heading"><div><h4>{section.title}</h4><p>{section.description}</p></div><Badge count={sectionFields.length} /></div>
-            <div className="field-list">{sectionFields.map(renderField)}</div>
-          </section>;
-        })}
-      </div>}
+      </div>{renderShipProgress()}</> : null}
     </div>
   );
   const settingsPanel = () => (
     <Card className="settings-card" variant="borderless">
-      <div className="settings-card-heading"><div className="settings-symbol"><SettingOutlined /></div><div><Title level={3}>{text.settings}</Title><Paragraph>{text.settingsDescription}</Paragraph></div></div>
       <div className="settings-option-grid">
         <section className="settings-option"><Text className="section-kicker">{text.appearance}</Text><Select className="settings-theme-select" aria-label={text.appearance} value={theme} onChange={updateTheme} options={themeOptions[language]} /></section>
         <section className="settings-option"><Text className="section-kicker">{text.displayLanguage}</Text><Space className="language-toggle settings-language-toggle" size={3}><Button type={language === "ko" ? "primary" : "default"} aria-pressed={language === "ko"} onClick={() => updateLanguage("ko")}>한국어</Button><Button type={language === "en" ? "primary" : "default"} aria-pressed={language === "en"} onClick={() => updateLanguage("en")}>EN</Button></Space></section>
+        <section className="settings-option"><Text className="section-kicker">{recommendationCopy[language].countSetting}</Text><Select className="settings-theme-select" aria-label={recommendationCopy[language].countSetting} value={modRecommendationCount} disabled={!ready} onChange={updateModRecommendationCount} options={RECOMMENDATION_COUNTS.map(value => ({ value, label: language === "ko" ? `${value}개` : String(value) }))} /><Text type="secondary">{recommendationCopy[language].countHelp}</Text></section>
       </div>
     </Card>
   );
   return <Layout className={`dashboard-shell theme-${theme}`}>
     <Sider className="dashboard-sider" width={272} trigger={null}>
-      <div className="sidebar-brand"><div className="brand-cell"><DatabaseOutlined /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER</span></div></div>
+      <div className="sidebar-brand"><div className="brand-cell"><DatabaseOutlined /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER · {APP_VERSION}</span></div></div>
       <div className="sidebar-caption">{text.workspace}</div>
-      <Menu className="sidebar-menu" theme="dark" mode="inline" selectedKeys={[activeTab]} defaultOpenKeys={["player-input"]} onClick={({ key }) => { if (key !== "player-input") setActiveTab(key as ActiveTab); }} items={[
-        { key: "player-input", icon: <EditOutlined />, label: text.playerInput, children: [
-          { key: "weights", icon: <ControlOutlined />, label: text.weights },
-          { key: "player", icon: <UserOutlined />, label: text.playerProgress },
-          { key: "ship", icon: <RocketOutlined />, label: text.shipProgress },
+      <Menu className="sidebar-menu" theme="dark" mode="inline" selectedKeys={[activeTab]} defaultOpenKeys={["upgrade-optimizer"]} onClick={({ key }) => { if (key !== "upgrade-optimizer") setActiveTab(key as ActiveTab); }} items={[
+        { key: "inputs", icon: <EditOutlined />, label: text.inputManager },
+        { key: "upgrade-optimizer", icon: <TrophyOutlined />, label: text.upgradeOptimizer, children: [
+          { key: "diamonds", className: "optimizer-menu-diamond", icon: <SketchOutlined />, label: text.diamonds },
+          { key: "tokens", className: "optimizer-menu-token", icon: <DollarCircleOutlined />, label: text.tokens },
         ] },
+        { key: "modTree", icon: <AppstoreOutlined />, label: language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations" },
         { key: "settings", icon: <SettingOutlined />, label: text.settings },
       ]} />
       <div className="sidebar-foot"><div className="sidebar-foot-chip"><span className="sidebar-foot-dot" />{text.localProfile}</div><p>{text.localProfileNote}</p></div>
     </Sider>
     <Layout className="dashboard-main">
-      <Header className="dashboard-header"><div><Text className="header-eyebrow">MOD TREE / {tabLabel(activeTab, language).toUpperCase()}</Text><Title level={4}>{activeTab === "settings" ? text.settings : text.inputManager}</Title></div><Space size={10} wrap><Tag color={changedKeys.length ? "gold" : "green"} icon={changedKeys.length ? <WarningFilled /> : <CheckCircleFilled />}>{changedKeys.length ? `${changedKeys.length} ${text.changed}` : text.saved}</Tag><Button icon={<UndoOutlined />} disabled={!changedKeys.length} onClick={restoreSaved}>{text.restore}</Button><Button type="primary" icon={<SaveOutlined />} disabled={!ready || !changedKeys.length || Boolean(Object.keys(errors).length)} onClick={saveValues}>{text.save}</Button></Space></Header>
-      <Content className="dashboard-content">{activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary"><div className="workspace-intro"><div><Text className="section-kicker">{text.settings.toUpperCase()}</Text><Title>{text.settings}</Title><Paragraph>{text.settingsDescription}</Paragraph></div></div>{settingsPanel()}</section></main> : <main className="workspace-grid">
-        <div className="workspace-intro"><div><Text className="section-kicker">{text.currentProfile}</Text><Title>Mod Tree Profile</Title><Paragraph>{text.profileDescription}</Paragraph></div></div>
-        <div className="workspace-intro-spacer" aria-hidden="true" />
-        <section className="input-workspace"><Card className="input-card" variant="borderless">{fieldPanel(fieldsByGroup[activeTab], activeTab)}</Card></section>
-        <aside className="preset-sidebar" aria-label={text.weightPresets}><Card className="preset-card" title={<div><Text className="section-kicker">{text.weightLibrary}</Text><div className="preset-card-title">{text.weightPresets}</div></div>} extra={<Badge count={weightPresets.length} showZero color="#708458" />}>
-          <Paragraph className="preset-help">{text.presetHelp}</Paragraph>
-          <div className="preset-create"><Input aria-label={text.newPreset} value={presetName} maxLength={32} placeholder={text.newPreset} onChange={(event) => setPresetName(event.target.value)} onPressEnter={saveWeightPreset} /><Button type="primary" onClick={saveWeightPreset}>{text.savePreset}</Button></div>
-          <Divider />
-          <div className="preset-list" role="list" aria-label={text.weightPresets}>
-            <button className={`preset-item ${selectedPresetId === defaultPresetId ? "selected" : ""}`} type="button" onClick={() => setSelectedPresetId(defaultPresetId)}><span className="preset-item-mark default" /><span><strong>{text.recommendedSet}</strong><small>{text.recommendedWeightSet}</small></span></button>
-            {weightPresets.map((preset) => <button className={`preset-item ${selectedPresetId === preset.id ? "selected" : ""}`} type="button" onClick={() => setSelectedPresetId(preset.id)} key={preset.id}><span className="preset-item-mark" /><span><strong>{preset.name}</strong><small>{new Date(preset.updatedAt).toLocaleDateString(language === "ko" ? "ko-KR" : "en-US")} {text.savePreset}</small></span></button>)}
-            {!weightPresets.length && <div className="preset-empty">{text.noPresets}</div>}
-          </div>
-          <Divider />
-          <div className="preset-controls"><Button className="preset-apply" type="primary" onClick={() => applyPreset()}>{text.applyPreset}</Button>{selectedPreset && <Popconfirm title={text.deleteTitle} description={text.deleteDescription} okText={text.delete} cancelText={text.cancel} okButtonProps={{ danger: true }} onConfirm={deleteSelectedPreset}><Button danger icon={<DeleteOutlined />} aria-label={text.deletePreset} /></Popconfirm>}</div>
-        </Card><Card className="local-note" variant="borderless"><div className="local-note-icon">i</div><div><strong>{text.deviceStorage}</strong><p>{text.deviceStorageNote}</p></div></Card></aside>
+      <Header className="dashboard-header">
+        <div className="dashboard-header-copy">
+          <Text className="header-eyebrow">{isOptimizerTab ? "UPGRADE OPTIMIZER" : isModTreeTab ? "MOD TREE" : activeTab === "settings" ? "SETTINGS" : "PLAYER PROFILE"} / {tabLabel(activeTab, language).toUpperCase()}</Text>
+          <Title level={1} className="dashboard-page-title">{headerTitle}</Title>
+          {headerDescription && <Paragraph className="dashboard-header-description">{headerDescription}</Paragraph>}
+        </div>
+        <Space className="dashboard-header-actions" size={10} wrap><Tag className="app-version-tag">{APP_VERSION}</Tag>{isModTreeTab ? <Tag color="red" icon={<AppstoreOutlined />}>PRE-OUROBOROS</Tag> : isOptimizerTab ? <Tag color={optimizerSaveStatus === "failed" ? "red" : "blue"} icon={optimizerSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{optimizerSaveStatus === "failed" ? (language === "ko" ? "저장 실패" : "Not saved") : optimizerSaveStatus === "loading" ? (language === "ko" ? "불러오는 중" : "Loading") : text.autoSaved}</Tag> : <><Tag color={inputSaveStatus === "failed" ? "red" : "green"} icon={inputSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{!ready ? text.loading : inputSaveStatus === "failed" ? text.saveFailed : text.autoSaved}</Tag>{Object.keys(errors).length > 0 && <Text type="warning">{text.invalidCalculationNote}</Text>}</>}</Space>
+      </Header>
+      <nav className="mobile-workspace-nav" aria-label={language === "ko" ? "화면 이동" : "Workspace navigation"}><Select aria-label={language === "ko" ? "화면 선택" : "Select workspace"} value={activeTab} onChange={setActiveTab} options={(["inputs", "diamonds", "tokens", "modTree", "settings"] as ActiveTab[]).map(key => ({ value: key, label: tabLabel(key, language) }))} /></nav>
+      <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}`}>{isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></main> : isOptimizerTab ? <main className="optimizer-workspace">
+        <UpgradeOptimizer currency={activeTab} language={language} profile={saved} onSaveStatusChange={setOptimizerSaveStatus} />
+      </main> : <main className="input-management-workspace">
+        <section className="input-workspace">
+          <Card className="input-card" variant="borderless">
+            <div className="weight-preset-toolbar">
+              <div className="weight-preset-select-row">
+                <label htmlFor="weight-preset-select">{text.weightPresets}</label>
+                <Select id="weight-preset-select" aria-label={text.weightPresets} value={selectedPresetId} placeholder={text.customWeights} disabled={!ready} onChange={id => applyPreset(id)} options={[{ value: defaultPresetId, label: text.recommendedSet }, ...weightPresets.map(preset => ({ value: preset.id, label: preset.name }))]} />
+                <Button type="primary" icon={<SaveOutlined />} onClick={() => saveWeightPreset()} disabled={!ready || !selectedPreset || weightFields.some(field => Boolean(errors[field.key]))}>{text.saveWeights}</Button>
+                {selectedPreset && <Popconfirm title={text.deleteTitle} description={text.deleteDescription} okText={text.delete} cancelText={text.cancel} okButtonProps={{ danger: true }} onConfirm={deleteSelectedPreset}><Button danger icon={<DeleteOutlined />} aria-label={text.deletePreset} /></Popconfirm>}
+                {activePresetId === selectedPresetId && activePresetId !== null ? <Tag>{text.presetApplied}</Tag> : <Text className="weight-preset-status">{text.presetEdited}</Text>}
+              </div>
+              <div className="weight-preset-create-row">
+                <Input aria-label={text.newPreset} value={presetName} maxLength={32} placeholder={text.newPreset} onChange={event => setPresetName(event.target.value)} onPressEnter={() => saveWeightPreset(true)} disabled={!ready} />
+                <Button onClick={() => saveWeightPreset(true)} disabled={!ready || !presetName.trim() || weightFields.some(field => Boolean(errors[field.key]))}>{text.createPreset}</Button>
+                <Text type="secondary">{text.presetHelp}</Text>
+              </div>
+            </div>
+            {fieldPanel(weightFields, "weights")}
+          </Card>
+          <Card className="input-card" variant="borderless">{fieldPanel(playerFields, "player")}</Card>
+        </section>
       </main>}</Content>
     </Layout>
   </Layout>;

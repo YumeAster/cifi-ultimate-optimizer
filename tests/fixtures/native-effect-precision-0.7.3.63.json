@@ -1,0 +1,322 @@
+{
+  "source": "Independent native SSE arithmetic oracle versus v2 emitted AST. Static semantics regression, not game execution.",
+  "cases": [
+    {
+      "code": "D1L",
+      "target": "mk1Output",
+      "state": {
+        "D1L": 3
+      },
+      "profile": {
+        "currentLoopsDone": "10001"
+      },
+      "expected": 751.0750122070312
+    },
+    {
+      "code": "D7L",
+      "target": "mk7Output",
+      "state": {
+        "D7L": 3
+      },
+      "profile": {
+        "currentLoopsDone": "16777217"
+      },
+      "expected": 1258292.2000000002
+    },
+    {
+      "code": "D1c",
+      "target": "modPoints",
+      "state": {
+        "D1c": 3
+      },
+      "profile": {
+        "manualMk1": "10000"
+      },
+      "expected": 3.9999998514540493
+    },
+    {
+      "code": "D7c",
+      "target": "modPoints",
+      "state": {
+        "D7c": 3
+      },
+      "profile": {
+        "manualMk7": "10000000000"
+      },
+      "expected": 1500000001.0000002
+    },
+    {
+      "code": "D1g",
+      "target": "mk1Output",
+      "state": {
+        "D1g": 3
+      },
+      "profile": {
+        "finalLoopResetsThisConstruction": "1001"
+      },
+      "expected": 7080270570574.544
+    },
+    {
+      "code": "D7g",
+      "target": "mk7Output",
+      "state": {
+        "D7g": 3
+      },
+      "profile": {
+        "finalLoopResetsThisConstruction": "1001"
+      },
+      "expected": 7080467438104.716
+    },
+    {
+      "code": "DGC",
+      "target": "cells",
+      "state": {
+        "DGC": 2
+      },
+      "profile": {
+        "extraModLevels": "98"
+      },
+      "expected": 4
+    },
+    {
+      "code": "F04",
+      "target": "cells",
+      "state": {
+        "F04": 1
+      },
+      "profile": {
+        "level": "1001"
+      },
+      "expected": 2.1436193204866596e+25
+    },
+    {
+      "code": "F06",
+      "target": "ticksPerLoop",
+      "state": {
+        "F06": 0
+      },
+      "profile": {},
+      "expected": 0
+    },
+    {
+      "code": "F06",
+      "target": "ticksPerLoop",
+      "state": {
+        "F06": 1
+      },
+      "profile": {
+        "level": "42"
+      },
+      "expected": -30
+    },
+    {
+      "code": "F06",
+      "target": "ticksPerLoop",
+      "state": {
+        "F06": 2
+      },
+      "profile": {
+        "level": "42"
+      },
+      "expected": -30
+    },
+    {
+      "code": "F06",
+      "target": "ticksPerLoop",
+      "state": {
+        "F06": 2
+      },
+      "profile": {
+        "level": "43"
+      },
+      "expected": -60
+    },
+    {
+      "code": "F06",
+      "target": "ticksPerLoop",
+      "state": {
+        "F06": 2
+      },
+      "profile": {
+        "level": "44.9"
+      },
+      "expected": -120
+    },
+    {
+      "code": "F18",
+      "target": "loopsForReset",
+      "state": {
+        "F18": 3
+      },
+      "profile": {
+        "level": "16777217.9"
+      },
+      "expected": -25165824
+    },
+    {
+      "code": "F12",
+      "target": "research",
+      "state": {
+        "F12": 3
+      },
+      "profile": {
+        "level": "1001"
+      },
+      "expected": 2.7534216053085483e+31
+    },
+    {
+      "code": "FU4",
+      "target": "missionSpeed",
+      "state": {
+        "FU4": 30
+      },
+      "profile": {},
+      "expected": 2.5062479972839355
+    },
+    {
+      "code": "EU1",
+      "target": "allGenerators",
+      "state": {
+        "EU1": 3
+      },
+      "baseline": {
+        "EU1": 2
+      },
+      "profile": {
+        "gameCradleRank": "100"
+      },
+      "expected": 12289720259.503492
+    },
+    {
+      "code": "E04",
+      "target": "mk1Output",
+      "state": {
+        "E04": 1,
+        "EU2": 2
+      },
+      "baseline": {
+        "E04": 1,
+        "EU2": 1
+      },
+      "profile": {
+        "gameCradleCrew": "50"
+      },
+      "expected": 1.2896416319463109
+    },
+    {
+      "code": "DU2",
+      "target": "allGenerators",
+      "state": {
+        "DU2": 2,
+        "DU1": 3
+      },
+      "baseline": {
+        "DU2": 2,
+        "DU1": 2
+      },
+      "profile": {
+        "currentLoopsDone": "100"
+      },
+      "expected": 2.02290983526748
+    },
+    {
+      "code": "D1g",
+      "target": "mk1Output",
+      "state": {
+        "D1g": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "DGC",
+      "target": "cells",
+      "state": {
+        "DGC": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "E03",
+      "target": "cells",
+      "state": {
+        "E03": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "F04",
+      "target": "cells",
+      "state": {
+        "F04": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "F08",
+      "target": "mk1Output",
+      "state": {
+        "F08": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "F12",
+      "target": "modPoints",
+      "state": {
+        "F12": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "F14",
+      "target": "research",
+      "state": {
+        "F14": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "F16",
+      "target": "mk4Output",
+      "state": {
+        "F16": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "F18",
+      "target": "academyPoints",
+      "state": {
+        "F18": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "EU1",
+      "target": "allGenerators",
+      "state": {
+        "EU1": 0
+      },
+      "profile": {},
+      "expected": 1
+    },
+    {
+      "code": "DU2",
+      "target": "allGenerators",
+      "state": {
+        "DU2": 0
+      },
+      "profile": {},
+      "expected": 1
+    }
+  ]
+}

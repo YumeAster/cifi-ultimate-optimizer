@@ -1,0 +1,165 @@
+.mobile-workspace-nav { display: none; }
+.optimizer-local-notice, .optimizer-storage-warning { margin: 0 0 12px; padding: 10px 14px; color: var(--content-muted); font-size: 13px; line-height: 1.6; }
+.optimizer-storage-warning { color: #8a1822; background: #fff1f0; border: 1px solid #d24a48; border-radius: 10px; }
+@media (max-width: 720px) {
+  .mobile-workspace-nav { display: block; margin: 12px 0 0; padding: 0 8px; }
+  .mobile-workspace-nav .ant-select { width: 100%; min-height: 44px; }
+  .dashboard-shell .dashboard-content { padding-top: 12px; }
+}
+@media (max-width: 440px) {
+  .optimizer-upgrade-grid { grid-template-columns: minmax(0, 1fr); }
+  .generator-tech-fields { grid-template-columns: minmax(0, 1fr); }
+  .generator-tech-heading { flex-wrap: wrap; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-shell *, .dashboard-shell *::before, .dashboard-shell *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* One page title belongs to the top chrome, not a separate content row. */
+.dashboard-shell .dashboard-header .dashboard-header-copy { min-width:0; flex:1; }
+.dashboard-shell .dashboard-header .dashboard-page-title.ant-typography { margin:4px 0 0; color:var(--chrome-ink); font-size:22px; line-height:1.25; letter-spacing:-.02em; overflow-wrap:anywhere; }
+.dashboard-shell .dashboard-header .dashboard-header-description.ant-typography { margin:4px 0 0; color:var(--chrome-muted); font-size:12px; line-height:1.45; overflow-wrap:anywhere; }
+.dashboard-shell .dashboard-header .dashboard-header-actions { max-width:100%; }
+@media (max-width:720px) {
+  .dashboard-shell .dashboard-header .dashboard-page-title.ant-typography { font-size:20px; }
+}
+
+/* Compact surrounding space; keep input/font sizes and existing card columns. */
+.dashboard-shell .dashboard-content:not(.is-mod-tree) { padding:12px 0 16px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.workspace-grid,.optimizer-workspace,.settings-workspace) { width:100%; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .workspace-grid { column-gap:12px; }
+
+/* Ant Card already wraps field-panel: avoid charging padding twice. */
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .input-card > .ant-card-body { padding:0; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .field-panel { padding:16px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .field-panel-heading { margin-bottom:12px; padding:8px 12px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.weight-card-grid,.ship-card-grid,.player-card-grid) { gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.weight-input-card,.ship-input-card,.player-input-card) { min-height:0; padding:12px 14px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.weight-card-heading,.ship-card-heading,.player-card-heading) { min-height:0; margin-bottom:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .ship-field-stack { gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .generator-tech-grid { gap:8px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .generator-tech-card { padding:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .generator-tech-heading { margin-bottom:7px; }
+
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-card .ant-card-head { min-height:60px; padding-inline:14px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-card .ant-card-head-title { padding-block:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-card .ant-card-body { padding:12px 14px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-card .ant-divider { margin-block:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-help { margin-bottom:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .local-note { margin-top:10px; }
+
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .upgrade-optimizer { gap:12px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.optimizer-main-column,.optimizer-upgrade-groups) { gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-control-card { padding:12px; gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-suggestion { min-height:0; padding:12px 14px; gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-upgrade-group { padding:14px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-group-heading { margin-bottom:10px; gap:12px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-upgrade-grid { gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-upgrade-card { padding:11px 12px 11px 20px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-plan-card { padding:14px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-plan-heading { padding-bottom:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-plan-totals { margin-block:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-plan-empty { padding:18px 10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.optimizer-local-notice,.optimizer-storage-warning) { margin-bottom:8px; padding:8px 12px; }
+
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .settings-card .ant-card-body { padding:16px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .settings-option-grid { margin-top:0; gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .settings-option { padding:12px; gap:8px; }
+
+@media (min-width:981px) {
+  /* The title is in the header: inputs and presets start on the same row. */
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .workspace-grid { grid-template-areas:"input preset"; }
+}
+@media (max-width:980px) {
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .workspace-grid { grid-template-areas:"input" "preset"; row-gap:10px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-sidebar { gap:10px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-sidebar .local-note { margin-top:0; }
+}
+@media (max-width:720px) {
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) { padding:10px 2px 12px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .field-panel { padding:12px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.weight-input-card,.ship-input-card,.player-input-card) { padding:12px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .settings-card .ant-card-body { padding:12px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .optimizer-upgrade-group { padding:12px; }
+}
+
+/* Wide player profiles use matched Generator and Tech matrices with shared MK columns. */
+.generator-matrix-desktop, .generator-tech-desktop { display:none; }
+.generator-matrix-mobile, .generator-tech-mobile { display:block; }
+.visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; clip-path:inset(50%); white-space:nowrap; border:0; }
+@media (min-width:721px) {
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .player-field { gap:3px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .player-field :is(.ant-input,.ant-input-affix-wrapper) { min-height:28px; height:28px; padding-block:2px; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .player-field .ant-input-affix-wrapper .ant-input { min-height:0; height:auto; padding-block:0; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.section-generator,.section-technology) { container-type:inline-size; align-self:start; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .section-generator { container-name:generator-panel; }
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .section-technology { container-name:technology-panel; }
+}
+@container generator-panel (min-width:920px) {
+  .section-generator .generator-matrix-desktop { display:block; }
+  .section-generator .generator-matrix-mobile { display:none; }
+}
+@container technology-panel (min-width:920px) {
+  .section-technology .generator-tech-desktop { display:block; }
+  .section-technology .generator-tech-mobile { display:none; }
+}
+.generator-matrix, .generator-tech-matrix { display:grid; grid-template-columns:54px repeat(8,minmax(0,1fr)); gap:7px 6px; align-items:end; padding:7px; background:color-mix(in srgb,var(--input-bg) 72%,transparent); border:1px solid var(--surface-line); border-radius:11px; }
+.generator-matrix-corner, .generator-tech-matrix-corner { min-height:27px; }
+.generator-matrix-heading, .generator-tech-matrix-heading { min-width:0; box-sizing:border-box; padding-inline:10px; display:flex; align-items:center; justify-content:space-between; gap:2px; color:var(--content-ink); font-size:11px; font-variant-numeric:tabular-nums; }
+.generator-matrix-heading strong, .generator-tech-matrix-heading strong { white-space:nowrap; }
+.generator-matrix-heading span, .generator-tech-matrix-heading span { flex:0 0 auto; color:var(--content-muted); font-size:9px; }
+.generator-matrix-row-label, .generator-tech-matrix-row-label { align-self:center; display:flex; flex-direction:column; color:var(--resource-ink); font-size:10px; font-weight:760; line-height:1.05; }
+.generator-matrix-row-label strong, .generator-tech-matrix-row-label strong { color:var(--resource-ink); font-size:10px; }
+.generator-tech-matrix-field { gap:0!important; }
+.generator-tech-matrix-field .ant-input { width:100%; }
+
+/* A full-width Player panel can present Generator, Tech, then the five summary groups as scan rows. */
+@media (min-width:721px) {
+  .dashboard-shell .dashboard-content:not(.is-mod-tree) .field-panel-player { container-type:inline-size; container-name:player-panel; }
+}
+@container player-panel (min-width:1050px) {
+  .field-panel-player .player-card-grid {
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    grid-template-areas:
+      "generator generator generator generator generator"
+      "technology technology technology technology technology"
+      "level loop shards research academy";
+    align-items:start;
+  }
+  .field-panel-player .section-generator { grid-area:generator; }
+  .field-panel-player .section-technology { grid-area:technology; }
+  .field-panel-player .section-research .player-field-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .field-panel-player :is(.section-generator,.section-technology) { align-self:auto; }
+  .field-panel-player .ship-card-grid { grid-template-columns:repeat(7,minmax(0,1fr)); }
+  .field-panel-player .ship-input-card { padding:10px; }
+  .field-panel-player .ship-card-heading { margin-bottom:7px; }
+  .field-panel-player .ship-field-stack { gap:7px; }
+  .field-panel-player .ship-field { gap:3px; }
+  .field-panel-player .ship-field .ant-input { min-height:28px; height:28px; padding-block:2px; }
+}
+.ship-progress-section { margin-top:12px; padding-top:12px; border-top:1px solid var(--surface-line); }
+.ship-progress-section .field-section-heading { margin-bottom:9px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .field-panel-player .player-input-card.section-gameDisplay { grid-column:1 / -1; }
+.section-gameDisplay .player-field-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr)); gap:12px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-item-copy { flex:1; min-width:0; overflow-wrap:anywhere; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-applied { flex-shrink:0; padding:3px 6px; color:var(--preset-ink); background:var(--selected-bg); border:1px solid var(--chrome-line); border-radius:6px; font-size:.75rem; font-weight:700; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-current { margin:10px 0 0; color:var(--preset-muted); font-size:.8125rem; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .preset-item:disabled { cursor:wait; opacity:.6; }
+@media (min-width:721px) and (max-width:980px) {
+  .field-panel-player .player-card-grid {
+    grid-template-areas:"generator generator" "technology technology" "level loop" "shards research" "academy academy";
+  }
+}
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .input-management-workspace { width:100%; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .input-management-workspace .input-workspace { display:grid; gap:12px; min-width:0; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar { padding:14px 14px 0; display:grid; gap:10px; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.weight-preset-select-row,.weight-preset-create-row) { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-select-row > label { color:var(--content-ink); font-size:.875rem; font-weight:700; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-select-row .ant-select { width:240px; max-width:100%; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-create-row > .ant-input { width:240px; max-width:100%; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) :is(.weight-preset-status,.weight-preset-create-row > .ant-typography) { color:var(--content-muted); font-size:.875rem; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar :is(.ant-input,.ant-select,.ant-select-selector,.ant-select-content,.ant-btn-default) { color:var(--content-ink)!important; background:var(--input-bg)!important; border-color:var(--surface-line)!important; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar :is(.ant-select-selection-item,.ant-select-arrow) { color:var(--content-ink)!important; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar .ant-input::placeholder { color:var(--content-muted); }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar .ant-btn:disabled { color:var(--content-muted)!important; background:var(--input-bg)!important; border-color:var(--surface-line)!important; box-shadow:none!important; opacity:.7; }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar .ant-tag { color:var(--content-ink); background:var(--selected-bg); border-color:var(--surface-line); }

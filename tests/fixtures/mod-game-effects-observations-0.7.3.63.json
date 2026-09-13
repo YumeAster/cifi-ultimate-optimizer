@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-09-13",
+  "gameVersion": "Ouroboros v0.7.3.63 Early Access",
+  "sourceReport": "docs/2026-09-13-mod-tree-live-game-audit.md",
+  "evidenceScope": "Read-only observation of node descriptions and displayed current bonuses. No purchases or internal game-value verification. Unknown suffixes are preserved verbatim.",
+  "nodes": [
+    { "code": "A01", "level": 5, "maxLevel": 5, "displayed": ["CELLS GAINED ×7.59", "TICKS PER TICK LOOP −200 Ticks"] },
+    { "code": "A04", "level": 4, "maxLevel": 4, "displayed": ["CELLS ×9.38", "TICKS PER TICK LOOP −200"] },
+    { "code": "A05", "level": 3, "maxLevel": 3, "displayed": ["CELLS ×15.63", "TICKS PER TICK LOOP −180"] },
+    { "code": "A06", "level": 2, "maxLevel": 2, "displayed": ["CELLS ×16.00", "TICKS PER TICK LOOP −140"] },
+    { "code": "A07", "level": 9, "maxLevel": 10, "displayed": ["MP ×7.45"], "nextPrice": "3.00e53" },
+    { "code": "A08", "level": 2, "maxLevel": 777, "displayed": ["MP ×3.13", "SHARDS ×3.13", "MK1 ×3.13", "MK2 ×3.13", "MK4 ×3.13", "LOOP RESET −14 Req", "TICKS PER TICK LOOP −154"], "nextPrice": "7.00e55" },
+    { "code": "B01", "level": 20, "maxLevel": 20, "displayed": ["−2.00 Sec"], "description": "−0.1 s per level" },
+    { "code": "C4c", "level": 10, "maxLevel": 10, "displayed": ["COST /1e86"], "description": "Divide MK4 generator cost by 400m per level" },
+    { "code": "C4o", "level": 57, "maxLevel": 200, "displayed": ["×228.76"], "description": "10% increase per level", "nextPrice": "1.36e49" },
+    { "code": "C1c", "level": 10, "maxLevel": 10, "displayed": ["COST /57.67n"], "description": "Divide MK1 generator cost by 1500 per level", "unresolvedSuffix": "n" },
+    { "code": "C1o", "level": 175, "maxLevel": 200, "displayed": ["×17.53m"], "nextPrice": "1.27e49", "unresolvedSuffix": "m" },
+    { "code": "H12", "level": 19, "maxLevel": 200, "displayed": ["COST /1.00e95"], "description": "Divide Bio-Scientists cost by 100k per level", "nextPrice": "1.59e49" },
+    { "code": "H15", "level": 2, "maxLevel": 40, "displayed": ["+0.08x"], "description": "Equipment multiplicative bonus gains +0.04x per level; base coefficient ×1.10", "nextPrice": "9.26e52" },
+    { "code": "I04", "level": 0, "maxLevel": 100, "locked": true, "displayed": ["MISSION EXP ×1.00"], "description": "Mission EXP gained increases 20%", "nextPrice": "1.00e123" },
+    { "code": "IU3", "level": 0, "maxLevel": 20, "locked": true, "displayed": ["MISSION RETENTION 0%", "MISSION EXP ×1.00", "ALL MASTERY BONUSES ×1.00"], "description": "Per level: additive Mission Retention +1%, Mission EXP +100%, all Mastery bonuses ×100", "nextPrice": "2.50e303" }
+  ]
+}

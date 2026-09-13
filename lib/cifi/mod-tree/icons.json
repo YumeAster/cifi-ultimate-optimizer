@@ -1,0 +1,5640 @@
+{
+  "apkSha256": "b0a0bf607cbfb89e29377333ff7485c92a709061bf921d1f35e899e105dce944",
+  "assetFile": "sharedassets0.assets",
+  "nodes": {
+    "A01": {
+      "objectName": "LM0",
+      "position": {
+        "x": -691.81884765625,
+        "y": -475.9625549316406
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3892.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopMods-128",
+          "pathId": 3892,
+          "sha256": "f2ee64aea1501d5dce0bc115ca83e88144f7cc664538bc78514bd3b42d923425"
+        }
+      ]
+    },
+    "A02": {
+      "objectName": "LM0v2",
+      "position": {
+        "x": -486.9195556640625,
+        "y": -593.463623046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2934.png",
+          "x": 11.363636363636363,
+          "y": 7.454545281150124,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "DailyReward-128",
+          "pathId": 2934,
+          "sha256": "d7278cb6090ec5e755cb7c3c81f6565aacdc66e686596ef1cc9d13da5ac6b3d4"
+        }
+      ]
+    },
+    "A03": {
+      "objectName": "LM0v3",
+      "position": {
+        "x": -312.218994140625,
+        "y": -594.0436401367188
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4662.png",
+          "x": 11.363636363636363,
+          "y": 10,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "Arcade-128",
+          "pathId": 4662,
+          "sha256": "5a3b0b71115a81739ba3afcc6bb4223e290d0783d234829dcf6e964a7e42a0b5"
+        }
+      ]
+    },
+    "A04": {
+      "objectName": "LM9",
+      "position": {
+        "x": -691.8201904296875,
+        "y": -1016.7205810546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3892.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopMods-128",
+          "pathId": 3892,
+          "sha256": "f2ee64aea1501d5dce0bc115ca83e88144f7cc664538bc78514bd3b42d923425"
+        }
+      ]
+    },
+    "A05": {
+      "objectName": "LM10",
+      "position": {
+        "x": -691.8194580078125,
+        "y": -1186.50048828125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3892.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopMods-128",
+          "pathId": 3892,
+          "sha256": "f2ee64aea1501d5dce0bc115ca83e88144f7cc664538bc78514bd3b42d923425"
+        }
+      ]
+    },
+    "A06": {
+      "objectName": "LM11",
+      "position": {
+        "x": -691.8194580078125,
+        "y": -1356.4998779296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3892.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopMods-128",
+          "pathId": 3892,
+          "sha256": "f2ee64aea1501d5dce0bc115ca83e88144f7cc664538bc78514bd3b42d923425"
+        }
+      ]
+    },
+    "A08": {
+      "objectName": "LM72",
+      "position": {
+        "x": -351.8189697265625,
+        "y": -1356.50048828125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4094.png",
+          "x": 11.363622492009943,
+          "y": 11.363650235262785,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Ruleof7-128",
+          "pathId": 4094,
+          "sha256": "7ce65314027f99a110a586e2ec421063d54886e8f92c53b7272e336303717da7"
+        }
+      ]
+    },
+    "A09": {
+      "objectName": "LM12",
+      "position": {
+        "x": -691.8201904296875,
+        "y": -1526.500244140625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3892.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopMods-128",
+          "pathId": 3892,
+          "sha256": "f2ee64aea1501d5dce0bc115ca83e88144f7cc664538bc78514bd3b42d923425"
+        }
+      ]
+    },
+    "A11": {
+      "objectName": "LM13",
+      "position": {
+        "x": -861.8192749023438,
+        "y": -1526.499755859375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4421.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModSpecial1-128",
+          "pathId": 4421,
+          "sha256": "ea5b65dd23acd9088b09c8dcf0e83d9eee52a1f9ae7c8a5fe8610a48ad76ccdd"
+        }
+      ]
+    },
+    "A12": {
+      "objectName": "LM207",
+      "position": {
+        "x": -691.8194580078125,
+        "y": -1696.5
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3369.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "Arcade-Upgrade-Sabotage-64",
+          "pathId": 3369,
+          "sha256": "1c443ad0eaac7e872b592a30a043013ededff9d03518652a9d539d070a88b0ca"
+        }
+      ]
+    },
+    "A13": {
+      "objectName": "LM294",
+      "position": {
+        "x": -521.819091796875,
+        "y": -1696.5
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4726.png",
+          "x": 13.650848432062048,
+          "y": 13.650862953879617,
+          "width": 72.69827409224077,
+          "height": 72.69827409224077,
+          "opacity": 1,
+          "sprite": "snail",
+          "pathId": 4726,
+          "sha256": "7e2ca3f1db355f43090a06fa93217ed8d5bcfa188d03b86c0845870be91a73f2"
+        }
+      ]
+    },
+    "B01": {
+      "objectName": "LM14",
+      "position": {
+        "x": 26.1806640625,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "B02": {
+      "objectName": "LM27",
+      "position": {
+        "x": 26.181283950805664,
+        "y": -705.9640502929688
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3024.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LevelPoints-128",
+          "pathId": 3024,
+          "sha256": "178ab24860950be938afc88013cb05d51d0bb2c2fd9418f67f7bb39a6323618a"
+        }
+      ]
+    },
+    "B03": {
+      "objectName": "LM15",
+      "position": {
+        "x": 196.18101501464844,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4084.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-DuoOutput-128",
+          "pathId": 4084,
+          "sha256": "4fa9fb1b813d008e21d9bd087b083876f371b455a06f0f492180a1f89f13f123"
+        }
+      ]
+    },
+    "B04": {
+      "objectName": "LM16",
+      "position": {
+        "x": 366.180908203125,
+        "y": -475.9625244140625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "B05": {
+      "objectName": "LM17",
+      "position": {
+        "x": 536.1812744140625,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4084.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-DuoOutput-128",
+          "pathId": 4084,
+          "sha256": "4fa9fb1b813d008e21d9bd087b083876f371b455a06f0f492180a1f89f13f123"
+        }
+      ]
+    },
+    "B06": {
+      "objectName": "LM18",
+      "position": {
+        "x": 706.1805419921875,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "B07": {
+      "objectName": "LM19",
+      "position": {
+        "x": 876.141845703125,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4084.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-DuoOutput-128",
+          "pathId": 4084,
+          "sha256": "4fa9fb1b813d008e21d9bd087b083876f371b455a06f0f492180a1f89f13f123"
+        }
+      ]
+    },
+    "B08": {
+      "objectName": "LM20",
+      "position": {
+        "x": 1046.141357421875,
+        "y": -476.5438232421875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "B09": {
+      "objectName": "LM21",
+      "position": {
+        "x": 1216.141357421875,
+        "y": -476.5438232421875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4084.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-DuoOutput-128",
+          "pathId": 4084,
+          "sha256": "4fa9fb1b813d008e21d9bd087b083876f371b455a06f0f492180a1f89f13f123"
+        }
+      ]
+    },
+    "B10": {
+      "objectName": "LM173",
+      "position": {
+        "x": 706.102783203125,
+        "y": -705.967041015625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3024.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LevelPoints-128",
+          "pathId": 3024,
+          "sha256": "178ab24860950be938afc88013cb05d51d0bb2c2fd9418f67f7bb39a6323618a"
+        }
+      ]
+    },
+    "B11": {
+      "objectName": "LM174",
+      "position": {
+        "x": 877.212158203125,
+        "y": -705.484130859375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2853.png",
+          "x": -7.9425803095099665,
+          "y": -5.578910220753063,
+          "width": 115.88509299538352,
+          "height": 115.88509299538352,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_1",
+          "pathId": 2853,
+          "sha256": "15fd92fac09334c574d44d8dcaffcdba3e84d485df15de902fcd022257287e95"
+        }
+      ]
+    },
+    "C1o": {
+      "objectName": "LM1",
+      "position": {
+        "x": -1577.578857421875,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C2o": {
+      "objectName": "LM2",
+      "position": {
+        "x": -1747.85888671875,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C3o": {
+      "objectName": "LM3",
+      "position": {
+        "x": -1917.858642578125,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C4u": {
+      "objectName": "LM4",
+      "position": {
+        "x": -691.8194580078125,
+        "y": -305.9637451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4821.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-NewGenerator-128",
+          "pathId": 4821,
+          "sha256": "23dd49f7e3c99640bba7ddf7ddca30e23137c1d140a369b7047e0f00bfe473fe"
+        }
+      ]
+    },
+    "C5u": {
+      "objectName": "LM5",
+      "position": {
+        "x": -691.8194580078125,
+        "y": -135.963623046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4821.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-NewGenerator-128",
+          "pathId": 4821,
+          "sha256": "23dd49f7e3c99640bba7ddf7ddca30e23137c1d140a369b7047e0f00bfe473fe"
+        }
+      ]
+    },
+    "C6u": {
+      "objectName": "LM6",
+      "position": {
+        "x": -691.8194580078125,
+        "y": 33.9962158203125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4821.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-NewGenerator-128",
+          "pathId": 4821,
+          "sha256": "23dd49f7e3c99640bba7ddf7ddca30e23137c1d140a369b7047e0f00bfe473fe"
+        }
+      ]
+    },
+    "C7u": {
+      "objectName": "LM7",
+      "position": {
+        "x": -691.8201904296875,
+        "y": 203.99681091308594
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4821.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-NewGenerator-128",
+          "pathId": 4821,
+          "sha256": "23dd49f7e3c99640bba7ddf7ddca30e23137c1d140a369b7047e0f00bfe473fe"
+        }
+      ]
+    },
+    "C8u": {
+      "objectName": "LM8",
+      "position": {
+        "x": -691.8201904296875,
+        "y": 373.99560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4821.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-NewGenerator-128",
+          "pathId": 4821,
+          "sha256": "23dd49f7e3c99640bba7ddf7ddca30e23137c1d140a369b7047e0f00bfe473fe"
+        }
+      ]
+    },
+    "C09": {
+      "objectName": "LM126",
+      "position": {
+        "x": -691.8197021484375,
+        "y": 1613.9547119140625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3365.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "ResourceDiamond-128",
+          "pathId": 3365,
+          "sha256": "1c3a8f76cdd3cfed3619915e69f58a1024c78d6cd91687b4dd652ebd65c909bb"
+        }
+      ]
+    },
+    "C1b": {
+      "objectName": "LM127",
+      "position": {
+        "x": -861.81884765625,
+        "y": 1613.9560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C1cb": {
+      "objectName": "LM128",
+      "position": {
+        "x": -861.8199462890625,
+        "y": 1783.957275390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C1ob": {
+      "objectName": "LM129",
+      "position": {
+        "x": -861.8187866210938,
+        "y": 1443.9569091796875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C2b": {
+      "objectName": "LM130",
+      "position": {
+        "x": -1030.654296875,
+        "y": 1613.9560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C2cb": {
+      "objectName": "LM131",
+      "position": {
+        "x": -1030.6534423828125,
+        "y": 1783.957275390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C2ob": {
+      "objectName": "LM132",
+      "position": {
+        "x": -1030.6533203125,
+        "y": 1443.9556884765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C3b": {
+      "objectName": "LM133",
+      "position": {
+        "x": -1201.41064453125,
+        "y": 1613.9559326171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C3cb": {
+      "objectName": "LM134",
+      "position": {
+        "x": -1201.4111328125,
+        "y": 1783.9559326171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C3ob": {
+      "objectName": "LM135",
+      "position": {
+        "x": -1201.41064453125,
+        "y": 1443.9569091796875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C4b": {
+      "objectName": "LM136",
+      "position": {
+        "x": -1371.4375,
+        "y": 1613.9547119140625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C4cb": {
+      "objectName": "LM137",
+      "position": {
+        "x": -1371.436767578125,
+        "y": 1783.957275390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C4ob": {
+      "objectName": "LM138",
+      "position": {
+        "x": -1371.43701171875,
+        "y": 1443.9569091796875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C5b": {
+      "objectName": "LM139",
+      "position": {
+        "x": -1540.734619140625,
+        "y": 1613.9560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C5cb": {
+      "objectName": "LM140",
+      "position": {
+        "x": -1540.7353515625,
+        "y": 1783.9559326171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C5ob": {
+      "objectName": "LM141",
+      "position": {
+        "x": -1540.732666015625,
+        "y": 1443.9569091796875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C6b": {
+      "objectName": "LM142",
+      "position": {
+        "x": -1710.031982421875,
+        "y": 1613.9560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C6cb": {
+      "objectName": "LM143",
+      "position": {
+        "x": -1710.032470703125,
+        "y": 1783.9556884765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C6ob": {
+      "objectName": "LM144",
+      "position": {
+        "x": -1710.031005859375,
+        "y": 1443.9569091796875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C7b": {
+      "objectName": "LM145",
+      "position": {
+        "x": -1879.3302001953125,
+        "y": 1613.957275390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C7cb": {
+      "objectName": "LM146",
+      "position": {
+        "x": -1879.3302001953125,
+        "y": 1783.9559326171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C7ob": {
+      "objectName": "LM147",
+      "position": {
+        "x": -1879.3287353515625,
+        "y": 1443.9569091796875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C8b": {
+      "objectName": "LM148",
+      "position": {
+        "x": -2048.6259765625,
+        "y": 1613.9547119140625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3560.png",
+          "x": 13.98184678771279,
+          "y": 11.363592147827148,
+          "width": 71.35208823464133,
+          "height": 71.35208823464133,
+          "opacity": 1,
+          "sprite": "LM-GeneratorAmount-128",
+          "pathId": 3560,
+          "sha256": "27ecbeac65858e77737dbd2f64d1bdf5310c4ab1fbc0ad4b8cf5d85931013367"
+        }
+      ]
+    },
+    "C8cb": {
+      "objectName": "LM149",
+      "position": {
+        "x": -2048.6259765625,
+        "y": 1783.9556884765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C8ob": {
+      "objectName": "LM150",
+      "position": {
+        "x": -2048.6259765625,
+        "y": 1443.9569091796875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "D1v": {
+      "objectName": "LM53",
+      "position": {
+        "x": 426.6409912109375,
+        "y": -66.5435791015625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D2v": {
+      "objectName": "LM54",
+      "position": {
+        "x": 596.6412353515625,
+        "y": -66.54346466064453
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D3v": {
+      "objectName": "LM55",
+      "position": {
+        "x": 766.641357421875,
+        "y": -66.54346466064453
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D4v": {
+      "objectName": "LM73",
+      "position": {
+        "x": 936.6407470703125,
+        "y": -66.54442596435547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D5v": {
+      "objectName": "LM75",
+      "position": {
+        "x": 1106.640869140625,
+        "y": -66.54346466064453
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D6v": {
+      "objectName": "LM77",
+      "position": {
+        "x": 1276.641845703125,
+        "y": -63.7436637878418
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D7v": {
+      "objectName": "LM155",
+      "position": {
+        "x": 1446.3521728515625,
+        "y": -63.7439079284668
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D8v": {
+      "objectName": "LM159",
+      "position": {
+        "x": 1615.6490478515625,
+        "y": -63.7436637878418
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4636.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "mozy (1)",
+          "pathId": 4636,
+          "sha256": "c4126ab7dfdab9876a6814f83e5887a0ca18cee43c7bd5bf5b29d312d60c091b"
+        }
+      ]
+    },
+    "D4L": {
+      "objectName": "LM74",
+      "position": {
+        "x": 936.641357421875,
+        "y": 103.45629119873047
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "D5L": {
+      "objectName": "LM76",
+      "position": {
+        "x": 1106.640625,
+        "y": 103.45629119873047
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "D6L": {
+      "objectName": "LM78",
+      "position": {
+        "x": 1276.640869140625,
+        "y": 106.25634002685547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "D7L": {
+      "objectName": "LM156",
+      "position": {
+        "x": 1446.3516845703125,
+        "y": 106.25634002685547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "D8L": {
+      "objectName": "LM160",
+      "position": {
+        "x": 1615.6490478515625,
+        "y": 106.25634002685547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "D1c": {
+      "objectName": "LM79",
+      "position": {
+        "x": 426.6409912109375,
+        "y": 273.7763671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D2c": {
+      "objectName": "LM80",
+      "position": {
+        "x": 596.1802978515625,
+        "y": 273.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D3c": {
+      "objectName": "LM81",
+      "position": {
+        "x": 763.640869140625,
+        "y": 273.7763671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D4c": {
+      "objectName": "LM82",
+      "position": {
+        "x": 936.6407470703125,
+        "y": 273.7763671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D5c": {
+      "objectName": "LM83",
+      "position": {
+        "x": 1106.640625,
+        "y": 273.45556640625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D6c": {
+      "objectName": "LM84",
+      "position": {
+        "x": 1276.640625,
+        "y": 276.25634765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D7c": {
+      "objectName": "LM157",
+      "position": {
+        "x": 1446.3521728515625,
+        "y": 276.25634765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D8c": {
+      "objectName": "LM161",
+      "position": {
+        "x": 1615.648681640625,
+        "y": 276.25634765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3361.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MPConnection-128",
+          "pathId": 3361,
+          "sha256": "ed2e51584ac944fc8a434758a46427e4d6b0d93ab69a9692daedbec966677cdb"
+        }
+      ]
+    },
+    "D1g": {
+      "objectName": "LM85",
+      "position": {
+        "x": 426.640869140625,
+        "y": 443.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "D2g": {
+      "objectName": "LM86",
+      "position": {
+        "x": 596.1805419921875,
+        "y": 443.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "D3g": {
+      "objectName": "LM87",
+      "position": {
+        "x": 763.640869140625,
+        "y": 443.7763671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "D4g": {
+      "objectName": "LM88",
+      "position": {
+        "x": 936.6407470703125,
+        "y": 443.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "D5g": {
+      "objectName": "LM89",
+      "position": {
+        "x": 1106.640869140625,
+        "y": 443.7763671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "D6g": {
+      "objectName": "LM90",
+      "position": {
+        "x": 1276.640869140625,
+        "y": 446.255859375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "D7g": {
+      "objectName": "LM158",
+      "position": {
+        "x": 1446.3521728515625,
+        "y": 446.2567138671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "D8g": {
+      "objectName": "LM162",
+      "position": {
+        "x": 1615.6490478515625,
+        "y": 446.2567138671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3532.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResetGrowth",
+          "pathId": 3532,
+          "sha256": "cd0aebe8dabdc20bbe76f3f54d6497e285c3f2ae4d52fa1e10ccb6fc5605df7f"
+        }
+      ]
+    },
+    "DGC": {
+      "objectName": "LM175",
+      "position": {
+        "x": 596.641357421875,
+        "y": 683.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2849.png",
+          "x": 1.516118970784274,
+          "y": -1.6194083473899148,
+          "width": 98.48390752618963,
+          "height": 98.48390752618963,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_6",
+          "pathId": 2849,
+          "sha256": "b3d28bed813c06ea508f234ffffd32410de0d8936b678011fdfa6e0808bfa610"
+        }
+      ]
+    },
+    "DGS": {
+      "objectName": "LM176",
+      "position": {
+        "x": 596.641357421875,
+        "y": 853.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2849.png",
+          "x": 1.516118970784274,
+          "y": -1.6194083473899148,
+          "width": 98.48390752618963,
+          "height": 98.48390752618963,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_6",
+          "pathId": 2849,
+          "sha256": "b3d28bed813c06ea508f234ffffd32410de0d8936b678011fdfa6e0808bfa610"
+        }
+      ]
+    },
+    "DU1": {
+      "objectName": "LM226-InfiniteLoopMod",
+      "position": {
+        "x": 1618.3804931640625,
+        "y": 809.85595703125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3490.png",
+          "x": -15.404387846507683,
+          "y": -13.446696276668668,
+          "width": 130.34741272092006,
+          "height": 130.35352842942095,
+          "opacity": 1,
+          "sprite": "45",
+          "pathId": 3490,
+          "sha256": "3f75057c2abd5278c49ca8748ba0d5e43682bf4818fcc01183933a2c6f98437f"
+        }
+      ]
+    },
+    "DU2": {
+      "objectName": "LM227",
+      "position": {
+        "x": 1417.28076171875,
+        "y": 810.638671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3338.png",
+          "x": -20.658884915438566,
+          "y": -23.29527421431108,
+          "width": 141.3178183815696,
+          "height": 141.3178183815696,
+          "opacity": 1,
+          "sprite": "07",
+          "pathId": 3338,
+          "sha256": "72558284d80098d8a6eaeaff00db0abe9b75d2e70292fed2c7786613f3300145"
+        }
+      ]
+    },
+    "DU3": {
+      "objectName": "LM228",
+      "position": {
+        "x": 1616.1802978515625,
+        "y": 1010.23583984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3563.png",
+          "x": -7.21202850341797,
+          "y": -7.207131819291549,
+          "width": 114.42400152033025,
+          "height": 114.41436073996805,
+          "opacity": 1,
+          "sprite": "78",
+          "pathId": 3563,
+          "sha256": "1097ba40bc4981f9e03a4b3100b2ab36d625c73f2e1ae7775b620460878a4d8f"
+        }
+      ]
+    },
+    "E01": {
+      "objectName": "LM22",
+      "position": {
+        "x": -1747.85888671875,
+        "y": -65.96434783935547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E06": {
+      "objectName": "LM23",
+      "position": {
+        "x": -1747.859375,
+        "y": 103.7762451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E10": {
+      "objectName": "LM24",
+      "position": {
+        "x": -1747.85888671875,
+        "y": 273.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E14": {
+      "objectName": "LM25",
+      "position": {
+        "x": -1747.85888671875,
+        "y": 443.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E18": {
+      "objectName": "LM26",
+      "position": {
+        "x": -1747.798828125,
+        "y": 613.77587890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E22": {
+      "objectName": "LM98",
+      "position": {
+        "x": -1747.798828125,
+        "y": 783.15625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E26": {
+      "objectName": "LM167",
+      "position": {
+        "x": -1747.799560546875,
+        "y": 952.6904296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E30": {
+      "objectName": "LM229",
+      "position": {
+        "x": -1747.799560546875,
+        "y": 1120.7366943359375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        }
+      ]
+    },
+    "E03": {
+      "objectName": "LM57",
+      "position": {
+        "x": -2087.819091796875,
+        "y": -65.96434783935547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2901.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShipRankBonus-128",
+          "pathId": 2901,
+          "sha256": "becf6e876a5ff7a19a483d0413464e113a12a5d247cfa41f9b8e820377aecdae"
+        }
+      ]
+    },
+    "E07": {
+      "objectName": "LM58",
+      "position": {
+        "x": -2087.819091796875,
+        "y": 103.77635955810547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2901.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShipRankBonus-128",
+          "pathId": 2901,
+          "sha256": "becf6e876a5ff7a19a483d0413464e113a12a5d247cfa41f9b8e820377aecdae"
+        }
+      ]
+    },
+    "E11": {
+      "objectName": "LM59",
+      "position": {
+        "x": -2087.81884765625,
+        "y": 273.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2901.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShipRankBonus-128",
+          "pathId": 2901,
+          "sha256": "becf6e876a5ff7a19a483d0413464e113a12a5d247cfa41f9b8e820377aecdae"
+        }
+      ]
+    },
+    "E15": {
+      "objectName": "LM60",
+      "position": {
+        "x": -2087.819091796875,
+        "y": 443.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2901.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShipRankBonus-128",
+          "pathId": 2901,
+          "sha256": "becf6e876a5ff7a19a483d0413464e113a12a5d247cfa41f9b8e820377aecdae"
+        }
+      ]
+    },
+    "E19": {
+      "objectName": "LM61",
+      "position": {
+        "x": -2087.819091796875,
+        "y": 613.77587890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2901.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShipRankBonus-128",
+          "pathId": 2901,
+          "sha256": "becf6e876a5ff7a19a483d0413464e113a12a5d247cfa41f9b8e820377aecdae"
+        }
+      ]
+    },
+    "E23": {
+      "objectName": "LM99",
+      "position": {
+        "x": -2087.819091796875,
+        "y": 783.15625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2901.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShipRankBonus-128",
+          "pathId": 2901,
+          "sha256": "becf6e876a5ff7a19a483d0413464e113a12a5d247cfa41f9b8e820377aecdae"
+        }
+      ]
+    },
+    "E27": {
+      "objectName": "LM168",
+      "position": {
+        "x": -2087.81884765625,
+        "y": 952.689453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2901.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShipRankBonus-128",
+          "pathId": 2901,
+          "sha256": "becf6e876a5ff7a19a483d0413464e113a12a5d247cfa41f9b8e820377aecdae"
+        }
+      ]
+    },
+    "E04": {
+      "objectName": "LM62",
+      "position": {
+        "x": -2257.818603515625,
+        "y": -65.96434783935547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3191.png",
+          "x": 4.545454545454546,
+          "y": 4.545544711026278,
+          "width": 90.9090909090909,
+          "height": 90.9090909090909,
+          "opacity": 1,
+          "sprite": "Crew-TheCradle-128",
+          "pathId": 3191,
+          "sha256": "661c26e9af35167808ea03720daa53e31547d4a5524e759b641e03ad9462a7c8"
+        }
+      ]
+    },
+    "E08": {
+      "objectName": "LM63",
+      "position": {
+        "x": -2257.818603515625,
+        "y": 103.45629119873047
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4972.png",
+          "x": 4.545454545454546,
+          "y": 4.545544711026278,
+          "width": 90.9090909090909,
+          "height": 90.9090909090909,
+          "opacity": 1,
+          "sprite": "Crew-TheAuxesia-128",
+          "pathId": 4972,
+          "sha256": "ef396eff3dce1b4755ecd5f91c81d1af1f92ece385dbcec5aba014537adb8474"
+        }
+      ]
+    },
+    "E12": {
+      "objectName": "LM64",
+      "position": {
+        "x": -2257.818603515625,
+        "y": 273.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4536.png",
+          "x": 4.545454545454546,
+          "y": 4.545544711026278,
+          "width": 90.9090909090909,
+          "height": 90.9090909090909,
+          "opacity": 1,
+          "sprite": "Crew-TheZagreus-128",
+          "pathId": 4536,
+          "sha256": "857058ea7ba3a959e38d30353d39080ada09dbabd1ffc0bc8d0aea0f39f41a5f"
+        }
+      ]
+    },
+    "E16": {
+      "objectName": "LM65",
+      "position": {
+        "x": -2257.818603515625,
+        "y": 443.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4382.png",
+          "x": 4.545454545454546,
+          "y": 4.545544711026278,
+          "width": 90.9090909090909,
+          "height": 90.9090909090909,
+          "opacity": 1,
+          "sprite": "Crew-TheHephaestus-128",
+          "pathId": 4382,
+          "sha256": "7e4f9e4176b0534e88d81f6587d2ae2d8a1e4e718b4fb0b1f1b75e3c4d91ec3f"
+        }
+      ]
+    },
+    "E20": {
+      "objectName": "LM66",
+      "position": {
+        "x": -2257.8193359375,
+        "y": 613.77587890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4620.png",
+          "x": 4.545454545454546,
+          "y": 4.545544711026278,
+          "width": 90.9090909090909,
+          "height": 90.9090909090909,
+          "opacity": 1,
+          "sprite": "Crew-TheDemeter-128",
+          "pathId": 4620,
+          "sha256": "1e923839d86b07973b78af7fb2c4356fdae223f0abb7d29667a3404f4ceb3245"
+        }
+      ]
+    },
+    "E24": {
+      "objectName": "LM100",
+      "position": {
+        "x": -2257.8193359375,
+        "y": 783.15625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3464.png",
+          "x": 4.545454545454546,
+          "y": 4.545544711026278,
+          "width": 90.9090909090909,
+          "height": 90.9090909090909,
+          "opacity": 1,
+          "sprite": "Crew-TheKoios-128",
+          "pathId": 3464,
+          "sha256": "6c87228820a05c0081b12c484de2403c8a1a4bad957ab9838e7b440bdb472a51"
+        }
+      ]
+    },
+    "E28": {
+      "objectName": "LM169",
+      "position": {
+        "x": -2257.818603515625,
+        "y": 952.689453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3844.png",
+          "x": 4.545454545454546,
+          "y": 4.545544711026278,
+          "width": 90.9090909090909,
+          "height": 90.9090909090909,
+          "opacity": 1,
+          "sprite": "Crew-TheAres-128",
+          "pathId": 3844,
+          "sha256": "61a2530705f9e51a33885931a772c95ac188ea0a8699ce9c7f1dcc6b79b6f8e9"
+        }
+      ]
+    },
+    "E05": {
+      "objectName": "LM67",
+      "position": {
+        "x": -2427.819091796875,
+        "y": -66.5435791015625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "E09": {
+      "objectName": "LM68",
+      "position": {
+        "x": -2431.21875,
+        "y": 103.4561767578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "E13": {
+      "objectName": "LM69",
+      "position": {
+        "x": -2427.819091796875,
+        "y": 273.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "E17": {
+      "objectName": "LM70",
+      "position": {
+        "x": -2427.819091796875,
+        "y": 443.7762145996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "E21": {
+      "objectName": "LM71",
+      "position": {
+        "x": -2427.8193359375,
+        "y": 613.77587890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "E25": {
+      "objectName": "LM101",
+      "position": {
+        "x": -2427.8193359375,
+        "y": 783.15625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "E29": {
+      "objectName": "LM170",
+      "position": {
+        "x": -2427.8193359375,
+        "y": 952.689453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "E31": {
+      "objectName": "LM230",
+      "position": {
+        "x": -2426.87939453125,
+        "y": 1121.3359375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4416.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MultipleGeneratorCost-128",
+          "pathId": 4416,
+          "sha256": "816be44fe1f71aef1343d5c2bbadfac649756c07c0a217348c3f74274c63dc55"
+        }
+      ]
+    },
+    "EA1": {
+      "objectName": "LM106",
+      "position": {
+        "x": -1577.859130859375,
+        "y": -65.96434783935547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EA2": {
+      "objectName": "LM107",
+      "position": {
+        "x": -1577.859130859375,
+        "y": 103.7762451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EA3": {
+      "objectName": "LM108",
+      "position": {
+        "x": -1577.578857421875,
+        "y": 273.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EA4": {
+      "objectName": "LM109",
+      "position": {
+        "x": -1577.859130859375,
+        "y": 446.255859375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EA5": {
+      "objectName": "LM110",
+      "position": {
+        "x": -1577.859130859375,
+        "y": 616.5560302734375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EA6": {
+      "objectName": "LM111",
+      "position": {
+        "x": -1577.578857421875,
+        "y": 783.15576171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EA7": {
+      "objectName": "LM171",
+      "position": {
+        "x": -1577.578369140625,
+        "y": 952.689453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3625.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "RankPoints-128",
+          "pathId": 3625,
+          "sha256": "2c2fd1cc9d5fb69fc3dc887aa7fc2b2c5eb743c0f1770997f100cbdb0982cca0"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EB1": {
+      "objectName": "LM112",
+      "position": {
+        "x": -1408.199462890625,
+        "y": -65.96434783935547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4307.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "Pluse128x128",
+          "pathId": 4307,
+          "sha256": "ec9e2289351fdded4f87de0e03a127a4a6ceea09470da1a0cd989dcd0c1314a1"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EB2": {
+      "objectName": "LM113",
+      "position": {
+        "x": -1408.199462890625,
+        "y": 103.7762451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3839.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "Pluse64x64",
+          "pathId": 3839,
+          "sha256": "1731eae88fbf3351a953d552d038de5898db908e53f16944764d1a21b1e9750a"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EB3": {
+      "objectName": "LM114",
+      "position": {
+        "x": -1407.919189453125,
+        "y": 273.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3839.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "Pluse64x64",
+          "pathId": 3839,
+          "sha256": "1731eae88fbf3351a953d552d038de5898db908e53f16944764d1a21b1e9750a"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EB4": {
+      "objectName": "LM115",
+      "position": {
+        "x": -1408.199462890625,
+        "y": 446.255859375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3839.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "Pluse64x64",
+          "pathId": 3839,
+          "sha256": "1731eae88fbf3351a953d552d038de5898db908e53f16944764d1a21b1e9750a"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EB5": {
+      "objectName": "LM116",
+      "position": {
+        "x": -1408.199462890625,
+        "y": 616.5560302734375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3839.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "Pluse64x64",
+          "pathId": 3839,
+          "sha256": "1731eae88fbf3351a953d552d038de5898db908e53f16944764d1a21b1e9750a"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EB6": {
+      "objectName": "LM117",
+      "position": {
+        "x": -1407.919189453125,
+        "y": 783.15576171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3839.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "Pluse64x64",
+          "pathId": 3839,
+          "sha256": "1731eae88fbf3351a953d552d038de5898db908e53f16944764d1a21b1e9750a"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EB7": {
+      "objectName": "LM172",
+      "position": {
+        "x": -1407.919189453125,
+        "y": 952.6903076171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3839.png",
+          "x": 32.363609075546265,
+          "y": 30.909090909090907,
+          "width": 36.36363636363637,
+          "height": 36.36363636363637,
+          "opacity": 1,
+          "sprite": "Pluse64x64",
+          "pathId": 3839,
+          "sha256": "1731eae88fbf3351a953d552d038de5898db908e53f16944764d1a21b1e9750a"
+        },
+        {
+          "src": "./assets/mod-tree/sprite-3318.png",
+          "x": 8.216000470248137,
+          "y": 8.046363483775746,
+          "width": 83.8749087940563,
+          "height": 82.08909121426669,
+          "opacity": 1,
+          "sprite": "Automation",
+          "pathId": 3318,
+          "sha256": "a7ac4eeddd4cb2c025693590cc22423fb5b5d99e62ad58857f3e7ea18efe6906"
+        }
+      ]
+    },
+    "EU1": {
+      "objectName": "LM239",
+      "position": {
+        "x": -2769.1787109375,
+        "y": -66.54442596435547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4485.png",
+          "x": -12.017832669344815,
+          "y": -14.018954363736238,
+          "width": 124.03572776100853,
+          "height": 124.03609015724875,
+          "opacity": 1,
+          "sprite": "87",
+          "pathId": 4485,
+          "sha256": "6e122af3c1424bde2d5c15536cfd8e3bd53f2e93d7dd951404c284f06e6dac96"
+        }
+      ]
+    },
+    "EU2": {
+      "objectName": "LM240-InfiniteLoopMod",
+      "position": {
+        "x": -2971.47900390625,
+        "y": -66.54442596435547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3695.png",
+          "x": -3.5456124581777937,
+          "y": -3.3149262973249023,
+          "width": 106.62985039481079,
+          "height": 106.62985039481079,
+          "opacity": 1,
+          "sprite": "09",
+          "pathId": 3695,
+          "sha256": "5f7a30e8fac009732c13b9f1e73113334eb98733a615f01eb3e52bfb36ca0a87"
+        }
+      ]
+    },
+    "F01": {
+      "objectName": "LM28",
+      "position": {
+        "x": 196.18101501464844,
+        "y": -66.54346466064453
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3999.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellLoopExponent-128",
+          "pathId": 3999,
+          "sha256": "28ce057bd71e2aa0f51b2c7e4126739de961470cef9d209b2a5ef347896b153c"
+        }
+      ]
+    },
+    "F02": {
+      "objectName": "LM29",
+      "position": {
+        "x": 196.18101501464844,
+        "y": 273.45556640625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2947.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModGoalGrowth-128",
+          "pathId": 2947,
+          "sha256": "79758a9d8b4915a4c50944a6324cc0943ebdc0da0dbe89948b70a90553c5fa5f"
+        }
+      ]
+    },
+    "F03": {
+      "objectName": "LM52",
+      "position": {
+        "x": 195.92124938964844,
+        "y": 683.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F04": {
+      "objectName": "LM91",
+      "position": {
+        "x": 366.180908203125,
+        "y": 683.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "F05": {
+      "objectName": "LM92",
+      "position": {
+        "x": 196.18101501464844,
+        "y": 853.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F06": {
+      "objectName": "LM95",
+      "position": {
+        "x": 25.9208984375,
+        "y": 853.4560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "F07": {
+      "objectName": "LM93",
+      "position": {
+        "x": 195.92124938964844,
+        "y": 1023.4559326171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F08": {
+      "objectName": "LM96",
+      "position": {
+        "x": 366.180908203125,
+        "y": 1023.4559326171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "F09": {
+      "objectName": "LM94",
+      "position": {
+        "x": 195.92124938964844,
+        "y": 1193.4564208984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F10": {
+      "objectName": "LM97",
+      "position": {
+        "x": 25.9208984375,
+        "y": 1193.4564208984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "F11": {
+      "objectName": "LM151",
+      "position": {
+        "x": 195.91921997070312,
+        "y": 1363.0980224609375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F12": {
+      "objectName": "LM163",
+      "position": {
+        "x": 365.9212646484375,
+        "y": 1363.0560302734375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "F13": {
+      "objectName": "LM152",
+      "position": {
+        "x": 195.92124938964844,
+        "y": 1532.3953857421875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F14": {
+      "objectName": "LM164",
+      "position": {
+        "x": 25.9208984375,
+        "y": 1532.35498046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "F15": {
+      "objectName": "LM153",
+      "position": {
+        "x": 195.92124938964844,
+        "y": 1701.691650390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F16": {
+      "objectName": "LM165",
+      "position": {
+        "x": 365.9195556640625,
+        "y": 1701.6561279296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "F17": {
+      "objectName": "LM154",
+      "position": {
+        "x": 195.92124938964844,
+        "y": 1870.988525390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4632.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special2-128",
+          "pathId": 4632,
+          "sha256": "174a71106a84d33887415e0a479b0d9421266b08d309bc3bb6ee4af3dcabc24f"
+        }
+      ]
+    },
+    "F18": {
+      "objectName": "LM166",
+      "position": {
+        "x": 25.9208984375,
+        "y": 1870.9556884765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4791.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModsGrowth",
+          "pathId": 4791,
+          "sha256": "f7c1f4367a90da397de009c6e8c57c2df2b22074c76ddd7498e901c08e5e136a"
+        }
+      ]
+    },
+    "FU1": {
+      "objectName": "LM217-InfiniteLoopMod",
+      "position": {
+        "x": 196.43359375,
+        "y": 2234.553955078125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3141.png",
+          "x": -2.9270360763774557,
+          "y": -2.698787089068049,
+          "width": 105.39274376026142,
+          "height": 105.39769792412615,
+          "opacity": 1,
+          "sprite": "94",
+          "pathId": 3141,
+          "sha256": "8ecc39951b7ab2db2f59096411125706dfc413dc81d17be08c084b5239cc99fe"
+        }
+      ]
+    },
+    "FU2": {
+      "objectName": "LM218",
+      "position": {
+        "x": -5.259156703948975,
+        "y": 2236.3564453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4470.png",
+          "x": -6.800001534548674,
+          "y": -6.8000923503528945,
+          "width": 106.80000305175781,
+          "height": 106.80000305175781,
+          "opacity": 1,
+          "sprite": "42",
+          "pathId": 4470,
+          "sha256": "d212487b3ab274e8f404f808865c98fa612f668e95bc68adad3bf09c51d83372"
+        }
+      ]
+    },
+    "FU3": {
+      "objectName": "LM220",
+      "position": {
+        "x": 196.20472717285156,
+        "y": 2436.262939453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4911.png",
+          "x": -5.24545355276628,
+          "y": -3.9681378276972366,
+          "width": 107.94545260342684,
+          "height": 107.93636668812145,
+          "opacity": 1,
+          "sprite": "97",
+          "pathId": 4911,
+          "sha256": "46cb104389695dad41ad5495b0bf587433948bde43553936ef8cdf5b8c199505"
+        }
+      ]
+    },
+    "FU4": {
+      "objectName": "LM219",
+      "position": {
+        "x": 398.4615478515625,
+        "y": 2236.980712890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4432.png",
+          "x": -9.55475113589769,
+          "y": -14.019042361866344,
+          "width": 119.10945545543323,
+          "height": 119.10608465021306,
+          "opacity": 1,
+          "sprite": "76",
+          "pathId": 4432,
+          "sha256": "7aee1720a59d541284d55b1f2dd7bda8713153bea97d820bdd0c9d7b41465cf8"
+        }
+      ]
+    },
+    "G01": {
+      "objectName": "LM30",
+      "position": {
+        "x": -2327.81884765625,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3522.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TechSoftwareScaler-128",
+          "pathId": 3522,
+          "sha256": "a55569d6db2433e16bdf29724fd657a6da3d268f2e85c8278be1293b553ec155"
+        }
+      ]
+    },
+    "G02": {
+      "objectName": "LM56",
+      "position": {
+        "x": -2497.818603515625,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4736.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShardGain-128",
+          "pathId": 4736,
+          "sha256": "6c081932af9a11e5f4dfe060a7578c0bb8961bd08b661a0b126ddf420dd0852e"
+        }
+      ]
+    },
+    "G03": {
+      "objectName": "LM40",
+      "position": {
+        "x": -2327.819091796875,
+        "y": -1342.9993896484375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3092.png",
+          "x": 11.363636363636363,
+          "y": 10.21790937943892,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-MiningHeadquarters-128",
+          "pathId": 3092,
+          "sha256": "2f5aae4f0e726a20e72371fe8ef5e8a508b8d5090dd4119f63882db2ec4c2a35"
+        }
+      ]
+    },
+    "G04": {
+      "objectName": "LM41",
+      "position": {
+        "x": -2497.818603515625,
+        "y": -1342.9993896484375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2974.png",
+          "x": 14.09090909090909,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-RoboticMiner-128",
+          "pathId": 2974,
+          "sha256": "3d86372449347643a5022f720db5e36852eca1d100a998fb15a73c46b5d826a2"
+        }
+      ]
+    },
+    "G06": {
+      "objectName": "LM51",
+      "position": {
+        "x": -2667.818603515625,
+        "y": -1342.9993896484375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4037.png",
+          "x": 14.09090909090909,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-RobotAmountMultiplicative-128",
+          "pathId": 4037,
+          "sha256": "64a4e086e5f0b35dff8cfc516d3d5ecbba1a5dcb5127fa4c6b70dca7b5df6d4a"
+        }
+      ]
+    },
+    "G08": {
+      "objectName": "LM45",
+      "position": {
+        "x": -2327.818603515625,
+        "y": -1752.9991455078125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3894.png",
+          "x": 11.36358781294389,
+          "y": 9.252180619673297,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "PhaseOne-128",
+          "pathId": 3894,
+          "sha256": "9cbba80c29ea8aa476f338140091cf5d0e11f14a007e7e97e33224351a923d96"
+        }
+      ]
+    },
+    "G09": {
+      "objectName": "LM46",
+      "position": {
+        "x": -2327.819091796875,
+        "y": -1922.998779296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4575.png",
+          "x": 11.36358781294389,
+          "y": 9.252180619673297,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "PhaseTwo-128",
+          "pathId": 4575,
+          "sha256": "1e155fe11c764438685034ec643daf2203ecd62fd5f7691c71a56d0ffd2d63a9"
+        }
+      ]
+    },
+    "G10": {
+      "objectName": "LM47",
+      "position": {
+        "x": -2327.818603515625,
+        "y": -2092.9990234375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4558.png",
+          "x": 11.36358781294389,
+          "y": 11.363657171075994,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "PhaseThree-128",
+          "pathId": 4558,
+          "sha256": "3d2a793b058eefe049c2e9339cde30744ab4c5a42c685e9b7bd4211cc890e190"
+        }
+      ]
+    },
+    "G11": {
+      "objectName": "LM48",
+      "position": {
+        "x": -2497.8193359375,
+        "y": -1752.9991455078125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3816.png",
+          "x": 11.36358781294389,
+          "y": 9.252180619673297,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "PhaseFour-128",
+          "pathId": 3816,
+          "sha256": "307aaea9ff50b2d2c517ea0bc9227219a6489fc9bfce1b6b00d6bcd32838c8c6"
+        }
+      ]
+    },
+    "G12": {
+      "objectName": "LM49",
+      "position": {
+        "x": -2497.8193359375,
+        "y": -1922.998779296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4588.png",
+          "x": 11.36358781294389,
+          "y": 9.25227078524503,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "PhaseFive-128",
+          "pathId": 4588,
+          "sha256": "639ebd9eb25a1916d0c9ab6772562fdfa05f76b14a5a487a457d21a488d8bf53"
+        }
+      ]
+    },
+    "G13": {
+      "objectName": "LM50",
+      "position": {
+        "x": -2497.8193359375,
+        "y": -2092.99951171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4451.png",
+          "x": 11.36358781294389,
+          "y": 9.252180619673297,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "PhaseSix-128",
+          "pathId": 4451,
+          "sha256": "04a56834f5c49aa2f96634b6b95632703f7aabbdc282068adb1c2f435ed6d18b"
+        }
+      ]
+    },
+    "G14": {
+      "objectName": "LM42",
+      "position": {
+        "x": -2097.818603515625,
+        "y": -1342.9993896484375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4736.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShardGain-128",
+          "pathId": 4736,
+          "sha256": "6c081932af9a11e5f4dfe060a7578c0bb8961bd08b661a0b126ddf420dd0852e"
+        }
+      ]
+    },
+    "G18": {
+      "objectName": "LM43",
+      "position": {
+        "x": -1927.8194580078125,
+        "y": -1343.0001220703125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4736.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShardGain-128",
+          "pathId": 4736,
+          "sha256": "6c081932af9a11e5f4dfe060a7578c0bb8961bd08b661a0b126ddf420dd0852e"
+        }
+      ]
+    },
+    "G21": {
+      "objectName": "LM44",
+      "position": {
+        "x": -1757.819580078125,
+        "y": -1342.9993896484375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4736.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShardGain-128",
+          "pathId": 4736,
+          "sha256": "6c081932af9a11e5f4dfe060a7578c0bb8961bd08b661a0b126ddf420dd0852e"
+        }
+      ]
+    },
+    "G24": {
+      "objectName": "LM231",
+      "position": {
+        "x": -2097.818603515625,
+        "y": -2093.02001953125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3715.png",
+          "x": 11.649455699053677,
+          "y": 12.922256426470332,
+          "width": 74.15563409978692,
+          "height": 74.15563409978692,
+          "opacity": 1,
+          "sprite": "minotaur (2)",
+          "pathId": 3715,
+          "sha256": "92782b27535f3b7e256b586264bb6ab2e00c469f10f9deffecc84b03b0f5bb55"
+        }
+      ]
+    },
+    "G25": {
+      "objectName": "LM232",
+      "position": {
+        "x": -1927.779052734375,
+        "y": -2093.02001953125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4637.png",
+          "x": 11.363636363636363,
+          "y": 10.181818225167016,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "robot (5)",
+          "pathId": 4637,
+          "sha256": "3296b9989a5b3861c576e8fe6cb16d2eb006a73b7278b62199ad31e2967ef06c"
+        }
+      ]
+    },
+    "G26": {
+      "objectName": "LM233",
+      "position": {
+        "x": -1757.779296875,
+        "y": -2093.02001953125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4701.png",
+          "x": 11.363636363636363,
+          "y": 10.545454567128962,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "alien (3)",
+          "pathId": 4701,
+          "sha256": "f7deb89713a2790227d7a8ed2a19e0d08481246743657ae4ea62fa49008b79c7"
+        }
+      ]
+    },
+    "G27": {
+      "objectName": "LM56v2",
+      "position": {
+        "x": -2667.018798828125,
+        "y": -475.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3598.png",
+          "x": 1.4929892800335605,
+          "y": -0.5982734940268777,
+          "width": 97.0140907981179,
+          "height": 97.01472889293325,
+          "opacity": 1,
+          "sprite": "Icon_Jump1",
+          "pathId": 3598,
+          "sha256": "b762b64d185935907f7d28af644ae15afc40297f979cfa4641620ed37c5579df"
+        }
+      ]
+    },
+    "GU1": {
+      "objectName": "LM234",
+      "position": {
+        "x": -2906.97900390625,
+        "y": -1923.019775390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3922.png",
+          "x": 1.6888306353642044,
+          "y": 0.2462732791900635,
+          "width": 96.62236300381747,
+          "height": 96.6181807084517,
+          "opacity": 1,
+          "sprite": "54",
+          "pathId": 3922,
+          "sha256": "a23214600cb39591d583113be2cf7a00d6315baffcd8d2578038c2db2794c39b"
+        }
+      ]
+    },
+    "H01": {
+      "objectName": "LM31",
+      "position": {
+        "x": 536.1812744140625,
+        "y": -885.96337890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4392.png",
+          "x": 11.363664106889203,
+          "y": 6.7941839044744325,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellGain-128",
+          "pathId": 4392,
+          "sha256": "4f9986297f0f8eaf6eb0f5cad6f8f85a70d284781d6c32e6bcefbd7d253d50f5"
+        }
+      ]
+    },
+    "H02": {
+      "objectName": "LM32",
+      "position": {
+        "x": 365.920166015625,
+        "y": -885.96337890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H03": {
+      "objectName": "LM33",
+      "position": {
+        "x": 706.6412353515625,
+        "y": -885.96337890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H04": {
+      "objectName": "LM34",
+      "position": {
+        "x": 365.920166015625,
+        "y": -1055.9635009765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H05": {
+      "objectName": "LM35",
+      "position": {
+        "x": 706.6412353515625,
+        "y": -1055.9635009765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H06": {
+      "objectName": "LM36",
+      "position": {
+        "x": 365.921142578125,
+        "y": -1225.9635009765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4978.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-QuadOutput-128",
+          "pathId": 4978,
+          "sha256": "bb9b3b1f264f05a04ef80a64428dffe55f50b729bc1fbaf2926ad29131afa167"
+        }
+      ]
+    },
+    "H07": {
+      "objectName": "LM37",
+      "position": {
+        "x": 706.6412353515625,
+        "y": -1225.9635009765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4392.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellGain-128",
+          "pathId": 4392,
+          "sha256": "4f9986297f0f8eaf6eb0f5cad6f8f85a70d284781d6c32e6bcefbd7d253d50f5"
+        }
+      ]
+    },
+    "H08": {
+      "objectName": "LM38",
+      "position": {
+        "x": 536.640869140625,
+        "y": -1225.9635009765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3365.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "ResourceDiamond-128",
+          "pathId": 3365,
+          "sha256": "1c3a8f76cdd3cfed3619915e69f58a1024c78d6cd91687b4dd652ebd65c909bb"
+        }
+      ]
+    },
+    "H09": {
+      "objectName": "LM39",
+      "position": {
+        "x": 536.6407470703125,
+        "y": -1055.9635009765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4071.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick-256",
+          "pathId": 4071,
+          "sha256": "c8345dc7c0b8f647c5cc5f83af56f41b20837137eb409fcea0ac72eeb3f536af"
+        }
+      ]
+    },
+    "H10": {
+      "objectName": "LM102",
+      "position": {
+        "x": 536.6409912109375,
+        "y": -1605.9434814453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3050.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "qualitative-research (1)",
+          "pathId": 3050,
+          "sha256": "6ca910c4994852f4af39eb1edabd6201f2452a1b36dc2f42a1c8d9ac34d3f095"
+        }
+      ]
+    },
+    "H11": {
+      "objectName": "LM103",
+      "position": {
+        "x": 365.920166015625,
+        "y": -1605.9434814453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3529.png",
+          "x": 11.363643299449574,
+          "y": 8.090909177606756,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "BioScientist-128",
+          "pathId": 3529,
+          "sha256": "ff256f38d1a51883a9fef119f54468f616463a1211107458ac497b47a5daffde"
+        }
+      ]
+    },
+    "H12": {
+      "objectName": "LM104",
+      "position": {
+        "x": 706.140869140625,
+        "y": -1605.9434814453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3529.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "BioScientist-128",
+          "pathId": 3529,
+          "sha256": "ff256f38d1a51883a9fef119f54468f616463a1211107458ac497b47a5daffde"
+        }
+      ]
+    },
+    "H13": {
+      "objectName": "LM105",
+      "position": {
+        "x": 536.640869140625,
+        "y": -1775.9439697265625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3682.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "research 1",
+          "pathId": 3682,
+          "sha256": "05089c97432aaa7d4abe754b4db58d8c1c5079d2e3cdb5141d8e62e579e397a9"
+        }
+      ]
+    },
+    "H14": {
+      "objectName": "LM118",
+      "position": {
+        "x": 366.6409912109375,
+        "y": -1775.9439697265625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4888.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "neural (1)",
+          "pathId": 4888,
+          "sha256": "2e9d0b32a4a9127be9528739836452b554e685e0327c0aa0305c98669801fd0a"
+        }
+      ]
+    },
+    "H15": {
+      "objectName": "LM119",
+      "position": {
+        "x": 706.641357421875,
+        "y": -1775.9439697265625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4248.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "analysis (1)",
+          "pathId": 4248,
+          "sha256": "34a929302eca79e36e5d1396537db166855a9909a74c82049c578684b6406861"
+        }
+      ]
+    },
+    "H16": {
+      "objectName": "LM120",
+      "position": {
+        "x": 536.140869140625,
+        "y": -1945.943359375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4158.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "qualitative-research",
+          "pathId": 4158,
+          "sha256": "0f55437340f2de77fe3e4b2a9d3b173d66aca92395f7345bc93003f0f8e3d0c5"
+        }
+      ]
+    },
+    "H17": {
+      "objectName": "LM121",
+      "position": {
+        "x": 366.140869140625,
+        "y": -1945.943359375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4413.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "idea (1)",
+          "pathId": 4413,
+          "sha256": "a19aab1364fc9e0878766aa5f1773212487e07bca46f501f7c54c89ca42b4ea1"
+        }
+      ]
+    },
+    "H18": {
+      "objectName": "LM122",
+      "position": {
+        "x": 706.1805419921875,
+        "y": -1945.943359375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4494.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "genetics (1)",
+          "pathId": 4494,
+          "sha256": "d05a3e85c23df1e35eb8515775e2a4c23773a4a7460a9c16945c5f6ecd26b94d"
+        }
+      ]
+    },
+    "H19": {
+      "objectName": "LM123",
+      "position": {
+        "x": 536.140869140625,
+        "y": -2115.94384765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3050.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "qualitative-research (1)",
+          "pathId": 3050,
+          "sha256": "6ca910c4994852f4af39eb1edabd6201f2452a1b36dc2f42a1c8d9ac34d3f095"
+        }
+      ]
+    },
+    "H20": {
+      "objectName": "LM124",
+      "position": {
+        "x": 365.920166015625,
+        "y": -2115.94384765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4010.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "qualitative-research (2)",
+          "pathId": 4010,
+          "sha256": "0b2eb3534cb52cb45036fe1a55793b9c73fde81c601a3c4086f5fa6dc6365ae4"
+        }
+      ]
+    },
+    "H21": {
+      "objectName": "LM125",
+      "position": {
+        "x": 706.140869140625,
+        "y": -2115.94384765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4306.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-Special1128",
+          "pathId": 4306,
+          "sha256": "766d67b47e500284312770e3c84d6f8992409b145384b2865165f73126ba55ca"
+        }
+      ]
+    },
+    "H22": {
+      "objectName": "LM208",
+      "position": {
+        "x": 1277.0322265625,
+        "y": -1948.637451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4392.png",
+          "x": 11.363664106889203,
+          "y": 6.7941839044744325,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellGain-128",
+          "pathId": 4392,
+          "sha256": "4f9986297f0f8eaf6eb0f5cad6f8f85a70d284781d6c32e6bcefbd7d253d50f5"
+        }
+      ]
+    },
+    "H23": {
+      "objectName": "LM209",
+      "position": {
+        "x": 1277.439697265625,
+        "y": -1778.635009765625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H24": {
+      "objectName": "LM210",
+      "position": {
+        "x": 1277.624267578125,
+        "y": -2118.6484375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H25": {
+      "objectName": "LM211",
+      "position": {
+        "x": 1447.44287109375,
+        "y": -1779.0426025390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H26": {
+      "objectName": "LM212",
+      "position": {
+        "x": 1446.64404296875,
+        "y": -2117.0478515625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3606.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-OutputPerPlayerLevel-128",
+          "pathId": 3606,
+          "sha256": "c9ee7abc1ee3fa27e7cb039c2528f7501d7dd4a02004540371048803e9aee5e0"
+        }
+      ]
+    },
+    "H27": {
+      "objectName": "LM214",
+      "position": {
+        "x": 1620.180908203125,
+        "y": -1778.450439453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4392.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellGain-128",
+          "pathId": 4392,
+          "sha256": "4f9986297f0f8eaf6eb0f5cad6f8f85a70d284781d6c32e6bcefbd7d253d50f5"
+        }
+      ]
+    },
+    "H28": {
+      "objectName": "LM213",
+      "position": {
+        "x": 1617.6461181640625,
+        "y": -2117.4638671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4978.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-QuadOutput-128",
+          "pathId": 4978,
+          "sha256": "bb9b3b1f264f05a04ef80a64428dffe55f50b729bc1fbaf2926ad29131afa167"
+        }
+      ]
+    },
+    "H29": {
+      "objectName": "LM215",
+      "position": {
+        "x": 1617.0462646484375,
+        "y": -1948.452880859375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3365.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "ResourceDiamond-128",
+          "pathId": 3365,
+          "sha256": "1c3a8f76cdd3cfed3619915e69f58a1024c78d6cd91687b4dd652ebd65c909bb"
+        }
+      ]
+    },
+    "H30": {
+      "objectName": "LM216",
+      "position": {
+        "x": 1447.0517578125,
+        "y": -1947.0447998046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4071.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick-256",
+          "pathId": 4071,
+          "sha256": "c8345dc7c0b8f647c5cc5f83af56f41b20837137eb409fcea0ac72eeb3f536af"
+        }
+      ]
+    },
+    "I01": {
+      "objectName": "LM177",
+      "position": {
+        "x": 1688.960205078125,
+        "y": -479.1439208984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "I02": {
+      "objectName": "LM183",
+      "position": {
+        "x": 1863.659912109375,
+        "y": -476.5438232421875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3157.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "AcademyPoints-128",
+          "pathId": 3157,
+          "sha256": "e8bf0b5970456406d9d73c18fe5a670db9cc6b7c32f1f4ea8db8b763231b72fe"
+        }
+      ]
+    },
+    "I03": {
+      "objectName": "LM189",
+      "position": {
+        "x": 2038.264892578125,
+        "y": -476.5888977050781
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "I04": {
+      "objectName": "LM191",
+      "position": {
+        "x": 2213.37109375,
+        "y": -476.6389465332031
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4024.png",
+          "x": 5.005712942620448,
+          "y": 4.3348832563920453e-7,
+          "width": 89.9885420365767,
+          "height": 89.98818137428978,
+          "opacity": 1,
+          "sprite": "icon_Score",
+          "pathId": 4024,
+          "sha256": "30e5815434ede8801e3a97281118d8ca869814d594a0f747355fcc025ac45457"
+        }
+      ]
+    },
+    "I05": {
+      "objectName": "LM198",
+      "position": {
+        "x": 2387.876220703125,
+        "y": -476.6849060058594
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "I06": {
+      "objectName": "LM200",
+      "position": {
+        "x": 2562.380126953125,
+        "y": -476.7285461425781
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3814.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "container (1)",
+          "pathId": 3814,
+          "sha256": "7e750fafc87bac310c16ef9f16c67d41ad5d6f636abb9a5d649ac80893e3756f"
+        }
+      ]
+    },
+    "I07": {
+      "objectName": "LM205",
+      "position": {
+        "x": 2737.2890625,
+        "y": -476.6771240234375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4019.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-TickTime-128",
+          "pathId": 4019,
+          "sha256": "31fbad1955cd0b8480cc2a8a3d48234f025618ca49fe5a709a3d94f062879574"
+        }
+      ]
+    },
+    "I08": {
+      "objectName": "LM178",
+      "position": {
+        "x": 1691.0565185546875,
+        "y": -705.521728515625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-5008.png",
+          "x": -7.9425803095099665,
+          "y": -11.851637580178002,
+          "width": 115.88509299538352,
+          "height": 115.88509299538352,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_9",
+          "pathId": 5008,
+          "sha256": "68396ed34af0a192d4911c6ceb4f38401d6b86dde47f3c50bb732117868c187f"
+        }
+      ]
+    },
+    "I09": {
+      "objectName": "LM179",
+      "position": {
+        "x": 1691.0748291015625,
+        "y": -884.6281127929688
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-5008.png",
+          "x": -7.9425803095099665,
+          "y": -11.851637580178002,
+          "width": 115.88509299538352,
+          "height": 115.88509299538352,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_9",
+          "pathId": 5008,
+          "sha256": "68396ed34af0a192d4911c6ceb4f38401d6b86dde47f3c50bb732117868c187f"
+        }
+      ]
+    },
+    "I10": {
+      "objectName": "LM180",
+      "position": {
+        "x": 1691.300537109375,
+        "y": -1062.6358642578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-5008.png",
+          "x": -7.9425803095099665,
+          "y": -11.851637580178002,
+          "width": 115.88509299538352,
+          "height": 115.88509299538352,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_9",
+          "pathId": 5008,
+          "sha256": "68396ed34af0a192d4911c6ceb4f38401d6b86dde47f3c50bb732117868c187f"
+        }
+      ]
+    },
+    "I11": {
+      "objectName": "LM181",
+      "position": {
+        "x": 1691.3167724609375,
+        "y": -1241.7420654296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-5008.png",
+          "x": -7.9425803095099665,
+          "y": -11.851637580178002,
+          "width": 115.88509299538352,
+          "height": 115.88509299538352,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_9",
+          "pathId": 5008,
+          "sha256": "68396ed34af0a192d4911c6ceb4f38401d6b86dde47f3c50bb732117868c187f"
+        }
+      ]
+    },
+    "I12": {
+      "objectName": "LM182",
+      "position": {
+        "x": 1691.343994140625,
+        "y": -1419.6488037109375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-5008.png",
+          "x": -7.9425803095099665,
+          "y": -11.851637580178002,
+          "width": 115.88509299538352,
+          "height": 115.88509299538352,
+          "opacity": 1,
+          "sprite": "RegularPresetsIcons_9",
+          "pathId": 5008,
+          "sha256": "68396ed34af0a192d4911c6ceb4f38401d6b86dde47f3c50bb732117868c187f"
+        }
+      ]
+    },
+    "I13": {
+      "objectName": "LM184",
+      "position": {
+        "x": 1864.1585693359375,
+        "y": -706.0555419921875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4217.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "personal-data (1)",
+          "pathId": 4217,
+          "sha256": "c5c8862cf61e8d010f8fd07d97e3e935cfa94787bd6dbe082b75fc119c6dc4d7"
+        }
+      ]
+    },
+    "I14": {
+      "objectName": "LM185",
+      "position": {
+        "x": 1863.6761474609375,
+        "y": -885.0573120117188
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4217.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "personal-data (1)",
+          "pathId": 4217,
+          "sha256": "c5c8862cf61e8d010f8fd07d97e3e935cfa94787bd6dbe082b75fc119c6dc4d7"
+        }
+      ]
+    },
+    "I15": {
+      "objectName": "LM186",
+      "position": {
+        "x": 1864.2027587890625,
+        "y": -1063.067626953125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4217.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "personal-data (1)",
+          "pathId": 4217,
+          "sha256": "c5c8862cf61e8d010f8fd07d97e3e935cfa94787bd6dbe082b75fc119c6dc4d7"
+        }
+      ]
+    },
+    "I16": {
+      "objectName": "LM187",
+      "position": {
+        "x": 1864.7200927734375,
+        "y": -1242.0784912109375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4217.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "personal-data (1)",
+          "pathId": 4217,
+          "sha256": "c5c8862cf61e8d010f8fd07d97e3e935cfa94787bd6dbe082b75fc119c6dc4d7"
+        }
+      ]
+    },
+    "I17": {
+      "objectName": "LM188",
+      "position": {
+        "x": 1864.2467041015625,
+        "y": -1420.0799560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4217.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "personal-data (1)",
+          "pathId": 4217,
+          "sha256": "c5c8862cf61e8d010f8fd07d97e3e935cfa94787bd6dbe082b75fc119c6dc4d7"
+        }
+      ]
+    },
+    "I18": {
+      "objectName": "LM190",
+      "position": {
+        "x": 2040.0609130859375,
+        "y": -705.96337890625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3024.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LevelPoints-128",
+          "pathId": 3024,
+          "sha256": "178ab24860950be938afc88013cb05d51d0bb2c2fd9418f67f7bb39a6323618a"
+        }
+      ]
+    },
+    "I19": {
+      "objectName": "LM192",
+      "position": {
+        "x": 2214.271728515625,
+        "y": -705.9542846679688
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3182.png",
+          "x": 15.909057097272704,
+          "y": 14.09090909090909,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "Icon_Rank",
+          "pathId": 3182,
+          "sha256": "e518eaf7744f3e90acefa4848ab7385306eba4702e9489eb420c47844ec7c2f1"
+        }
+      ]
+    },
+    "I20": {
+      "objectName": "LM193",
+      "position": {
+        "x": 2213.7900390625,
+        "y": -884.9560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3182.png",
+          "x": 15.909057097272704,
+          "y": 14.09090909090909,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "Icon_Rank",
+          "pathId": 3182,
+          "sha256": "e518eaf7744f3e90acefa4848ab7385306eba4702e9489eb420c47844ec7c2f1"
+        }
+      ]
+    },
+    "I21": {
+      "objectName": "LM194",
+      "position": {
+        "x": 2214.314697265625,
+        "y": -1062.9666748046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3182.png",
+          "x": 15.909057097272704,
+          "y": 14.09090909090909,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "Icon_Rank",
+          "pathId": 3182,
+          "sha256": "e518eaf7744f3e90acefa4848ab7385306eba4702e9489eb420c47844ec7c2f1"
+        }
+      ]
+    },
+    "I22": {
+      "objectName": "LM195",
+      "position": {
+        "x": 2214.833251953125,
+        "y": -1241.9774169921875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3182.png",
+          "x": 15.909057097272704,
+          "y": 14.09090909090909,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "Icon_Rank",
+          "pathId": 3182,
+          "sha256": "e518eaf7744f3e90acefa4848ab7385306eba4702e9489eb420c47844ec7c2f1"
+        }
+      ]
+    },
+    "I23": {
+      "objectName": "LM196",
+      "position": {
+        "x": 2214.35986328125,
+        "y": -1419.979248046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3182.png",
+          "x": 15.909057097272704,
+          "y": 14.09090909090909,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "Icon_Rank",
+          "pathId": 3182,
+          "sha256": "e518eaf7744f3e90acefa4848ab7385306eba4702e9489eb420c47844ec7c2f1"
+        }
+      ]
+    },
+    "I24": {
+      "objectName": "LM197",
+      "position": {
+        "x": 2214.383056640625,
+        "y": -1598.2852783203125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3182.png",
+          "x": 15.909057097272704,
+          "y": 14.09090909090909,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "Icon_Rank",
+          "pathId": 3182,
+          "sha256": "e518eaf7744f3e90acefa4848ab7385306eba4702e9489eb420c47844ec7c2f1"
+        }
+      ]
+    },
+    "I25": {
+      "objectName": "LM224",
+      "position": {
+        "x": 2214.200439453125,
+        "y": -1776.9637451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3195.png",
+          "x": 12.86469936631461,
+          "y": 9.137273701754484,
+          "width": 74.2703663219105,
+          "height": 74.2709073153409,
+          "opacity": 1,
+          "sprite": "Acadimmeh-128",
+          "pathId": 3195,
+          "sha256": "dd579e273cc92cd16f9fe360427f08f284741bc85bc753d2bc8d62af73fd4704"
+        }
+      ]
+    },
+    "I26": {
+      "objectName": "LM199",
+      "position": {
+        "x": 2388.67333984375,
+        "y": -706.398193359375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3871.png",
+          "x": 7.718527359796677,
+          "y": 7.71845986054607,
+          "width": 84.56272472034802,
+          "height": 84.56291198730469,
+          "opacity": 1,
+          "sprite": "shape-design (2)",
+          "pathId": 3871,
+          "sha256": "4afe168bbf77374f10ae08d1f9690e86e53d095ef45757393b88ab9d4d35bbe3"
+        }
+      ]
+    },
+    "I27": {
+      "objectName": "LM223",
+      "position": {
+        "x": 2388.67333984375,
+        "y": -884.6239013671875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3651.png",
+          "x": 15.955032864876555,
+          "y": 15.955108554118686,
+          "width": 68.08963428844105,
+          "height": 68.08982155539772,
+          "opacity": 1,
+          "sprite": "AdTokens-128",
+          "pathId": 3651,
+          "sha256": "aeeefe49b88dda0dd5a8a4ad01c1ed43400402b728d0c4a65b6d57fc2e1d6f8c"
+        }
+      ]
+    },
+    "I28": {
+      "objectName": "LM201",
+      "position": {
+        "x": 2563.2861328125,
+        "y": -705.844482421875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3354.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "supplier",
+          "pathId": 3354,
+          "sha256": "84740efee896d1e8671a19f4b5aa02f9a8f8b0447bbf32edb8e75256a468136d"
+        }
+      ]
+    },
+    "I29": {
+      "objectName": "LM202",
+      "position": {
+        "x": 2562.802001953125,
+        "y": -884.8463745117188
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3354.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "supplier",
+          "pathId": 3354,
+          "sha256": "84740efee896d1e8671a19f4b5aa02f9a8f8b0447bbf32edb8e75256a468136d"
+        }
+      ]
+    },
+    "I30": {
+      "objectName": "LM203",
+      "position": {
+        "x": 2563.329345703125,
+        "y": -1062.856689453125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3354.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "supplier",
+          "pathId": 3354,
+          "sha256": "84740efee896d1e8671a19f4b5aa02f9a8f8b0447bbf32edb8e75256a468136d"
+        }
+      ]
+    },
+    "I31": {
+      "objectName": "LM204",
+      "position": {
+        "x": 2563.84765625,
+        "y": -1241.8675537109375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3354.png",
+          "x": 15.909057097272704,
+          "y": 11.99999982660467,
+          "width": 68.18181818181817,
+          "height": 68.18181818181817,
+          "opacity": 1,
+          "sprite": "supplier",
+          "pathId": 3354,
+          "sha256": "84740efee896d1e8671a19f4b5aa02f9a8f8b0447bbf32edb8e75256a468136d"
+        }
+      ]
+    },
+    "I32": {
+      "objectName": "LM206",
+      "position": {
+        "x": 2736.286865234375,
+        "y": -706.2769775390625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3024.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LevelPoints-128",
+          "pathId": 3024,
+          "sha256": "178ab24860950be938afc88013cb05d51d0bb2c2fd9418f67f7bb39a6323618a"
+        }
+      ]
+    },
+    "IU1": {
+      "objectName": "LM221-InfiniteLoopMod",
+      "position": {
+        "x": 2563.605712890625,
+        "y": -114.11671447753906
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3059.png",
+          "x": -2.9270360763774557,
+          "y": -2.646507131884066,
+          "width": 105.39274376026142,
+          "height": 105.39769792412615,
+          "opacity": 1,
+          "sprite": "62",
+          "pathId": 3059,
+          "sha256": "fad75593173b99b8e1884a5eb41ab902ef3fe9adb4c8cf0738257d2c5f52a50f"
+        }
+      ]
+    },
+    "IU2": {
+      "objectName": "LM225",
+      "position": {
+        "x": 2566.400634765625,
+        "y": 87.58543395996094
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4068.png",
+          "x": -15.053522803321936,
+          "y": -9.687952128323642,
+          "width": 130.10690862482244,
+          "height": 130.10317715731534,
+          "opacity": 1,
+          "sprite": "64",
+          "pathId": 4068,
+          "sha256": "41e32a079a8868356d26d136a6cbfcf1d7d4b69045b5050d0509aaee9f0c967e"
+        }
+      ]
+    },
+    "IU3": {
+      "objectName": "LM222",
+      "position": {
+        "x": 2766.108154296875,
+        "y": -111.06981658935547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-2923.png",
+          "x": -15.053522803321936,
+          "y": -18.869770223444156,
+          "width": 130.10690862482244,
+          "height": 130.10317715731534,
+          "opacity": 1,
+          "sprite": "26",
+          "pathId": 2923,
+          "sha256": "e2617abcabde2f0422051edfe2ae1c746cb75fdbe80ddadec3e3466674c5db56"
+        }
+      ]
+    },
+    "IU4": {
+      "objectName": "LM284",
+      "position": {
+        "x": 2566.400634765625,
+        "y": 1019.93603515625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4878.png",
+          "x": -5.727187611839988,
+          "y": -8.908847895535557,
+          "width": 109.09090909090908,
+          "height": 109.09090909090908,
+          "opacity": 1,
+          "sprite": "52",
+          "pathId": 4878,
+          "sha256": "a4557d5e72245940ce482206523b94a3054c2ad4a69b12bb3270713d9114cda8"
+        }
+      ]
+    },
+    "A07": {
+      "objectName": "LM11-3",
+      "position": {
+        "x": -521.818115234375,
+        "y": -1356.4998779296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3595.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModSGained-128",
+          "pathId": 3595,
+          "sha256": "8eebc830b89a545a0b2ecdf55597045814aeba4bcfcd5a94f4c79f46e7a8698c"
+        }
+      ]
+    },
+    "A10": {
+      "objectName": "LM12-3",
+      "position": {
+        "x": -521.818115234375,
+        "y": -1526.499755859375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3595.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-LoopModSGained-128",
+          "pathId": 3595,
+          "sha256": "8eebc830b89a545a0b2ecdf55597045814aeba4bcfcd5a94f4c79f46e7a8698c"
+        }
+      ]
+    },
+    "C1c": {
+      "objectName": "LM1-2",
+      "position": {
+        "x": -1577.578857421875,
+        "y": -645.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C2c": {
+      "objectName": "LM2-2",
+      "position": {
+        "x": -1747.85888671875,
+        "y": -645.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C3c": {
+      "objectName": "LM3-2",
+      "position": {
+        "x": -1917.858642578125,
+        "y": -645.9639892578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 9.090909090909092,
+          "y": 9.090883948181066,
+          "width": 81.81818181818183,
+          "height": 81.81818181818183,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C4o": {
+      "objectName": "LM4-2",
+      "position": {
+        "x": -861.8192749023438,
+        "y": -305.9637451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C4c": {
+      "objectName": "LM4-3",
+      "position": {
+        "x": -521.818115234375,
+        "y": -305.9637451171875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C5o": {
+      "objectName": "LM5-2",
+      "position": {
+        "x": -861.8192749023438,
+        "y": -135.963623046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C5c": {
+      "objectName": "LM5-3",
+      "position": {
+        "x": -521.818115234375,
+        "y": -135.963623046875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C6o": {
+      "objectName": "LM6-2",
+      "position": {
+        "x": -861.8192749023438,
+        "y": 33.5356559753418
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C6c": {
+      "objectName": "LM6-3",
+      "position": {
+        "x": -521.818115234375,
+        "y": 33.9962158203125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C7o": {
+      "objectName": "LM7-2",
+      "position": {
+        "x": -861.81884765625,
+        "y": 203.99681091308594
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C7c": {
+      "objectName": "LM7-3",
+      "position": {
+        "x": -521.818115234375,
+        "y": 203.99681091308594
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "C8o": {
+      "objectName": "LM8-2",
+      "position": {
+        "x": -861.81884765625,
+        "y": 373.99560546875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4505.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorOutput-128",
+          "pathId": 4505,
+          "sha256": "55a4f063ed243b9ffb2fae771ab81edffbeb564aae40f386fb0f040358b2c75b"
+        }
+      ]
+    },
+    "C8c": {
+      "objectName": "LM8-3",
+      "position": {
+        "x": -522.359130859375,
+        "y": 373.9964294433594
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4437.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-GeneratorCost-128",
+          "pathId": 4437,
+          "sha256": "36c75be5ff30ebaf87b869d1e20e65a95217f94f7aa15f7b71b314e68083ca51"
+        }
+      ]
+    },
+    "D1L": {
+      "objectName": "LM53-2",
+      "position": {
+        "x": 426.640869140625,
+        "y": 103.77635955810547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "D2L": {
+      "objectName": "LM54-2",
+      "position": {
+        "x": 596.641357421875,
+        "y": 103.4561767578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "D3L": {
+      "objectName": "LM55-2",
+      "position": {
+        "x": 766.641357421875,
+        "y": 103.45629119873047
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4579.png",
+          "x": 11.363643299449574,
+          "y": 8.36363358931108,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerTick",
+          "pathId": 4579,
+          "sha256": "121f0e472031238cdd502cefc89a51ed12dfb8be1e150c80353d349c7282d265"
+        }
+      ]
+    },
+    "E02": {
+      "objectName": "LM22-2",
+      "position": {
+        "x": -1917.8590087890625,
+        "y": -65.96434783935547
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3365.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "ResourceDiamond-128",
+          "pathId": 3365,
+          "sha256": "1c3a8f76cdd3cfed3619915e69f58a1024c78d6cd91687b4dd652ebd65c909bb"
+        }
+      ]
+    },
+    "G05": {
+      "objectName": "LM41-2",
+      "position": {
+        "x": -2497.8193359375,
+        "y": -1173.000244140625
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3501.png",
+          "x": 11.36358781294389,
+          "y": 9.252180619673297,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-RobotAmount-128",
+          "pathId": 3501,
+          "sha256": "6b7e53f1bde985bf1c302a1af7c9cff0ae64374c4e8faa7fffc149e2cc749b07"
+        }
+      ]
+    },
+    "G07": {
+      "objectName": "LM41-3",
+      "position": {
+        "x": -2497.818603515625,
+        "y": -1513
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3501.png",
+          "x": 11.36358781294389,
+          "y": 9.252180619673297,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-RobotAmount-128",
+          "pathId": 3501,
+          "sha256": "6b7e53f1bde985bf1c302a1af7c9cff0ae64374c4e8faa7fffc149e2cc749b07"
+        }
+      ]
+    },
+    "G15": {
+      "objectName": "LM42-2",
+      "position": {
+        "x": -2097.818603515625,
+        "y": -1513
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4315.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerOperation-256",
+          "pathId": 4315,
+          "sha256": "3f9f2a71049553c4604157858f182f393b8bba163bda90c1f6d2c77c146ec3f1"
+        }
+      ]
+    },
+    "G16": {
+      "objectName": "LM42-3",
+      "position": {
+        "x": -2097.818603515625,
+        "y": -1682.9998779296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4315.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerOperation-256",
+          "pathId": 4315,
+          "sha256": "3f9f2a71049553c4604157858f182f393b8bba163bda90c1f6d2c77c146ec3f1"
+        }
+      ]
+    },
+    "G17": {
+      "objectName": "LM42-4",
+      "position": {
+        "x": -2097.818603515625,
+        "y": -1853.0001220703125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-4315.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-CellsPerOperation-256",
+          "pathId": 4315,
+          "sha256": "3f9f2a71049553c4604157858f182f393b8bba163bda90c1f6d2c77c146ec3f1"
+        }
+      ]
+    },
+    "G19": {
+      "objectName": "LM43-2",
+      "position": {
+        "x": -1927.818603515625,
+        "y": -1513
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3342.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShardsPerOperation-128",
+          "pathId": 3342,
+          "sha256": "894c5d3a61c069c0d519b3dfa659793748ab096f26d8e0917351ab5498735464"
+        }
+      ]
+    },
+    "G20": {
+      "objectName": "LM43-3",
+      "position": {
+        "x": -1927.818603515625,
+        "y": -1682.9998779296875
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3342.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ShardsPerOperation-128",
+          "pathId": 3342,
+          "sha256": "894c5d3a61c069c0d519b3dfa659793748ab096f26d8e0917351ab5498735464"
+        }
+      ]
+    },
+    "G22": {
+      "objectName": "LM44-2",
+      "position": {
+        "x": -1757.819091796875,
+        "y": -1513
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3222.png",
+          "x": 11.363636363636363,
+          "y": 11.36361122090834,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "LM-ResearchPointsPerOperation-128",
+          "pathId": 3222,
+          "sha256": "7fbdb6a60e994e2e3a652a3de2658bcd6e6e9360e1872f40eacc94bd822c9fe3"
+        }
+      ]
+    },
+    "G23": {
+      "objectName": "LM44-3",
+      "position": {
+        "x": -1757.819580078125,
+        "y": -1172.999267578125
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3365.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "ResourceDiamond-128",
+          "pathId": 3365,
+          "sha256": "1c3a8f76cdd3cfed3619915e69f58a1024c78d6cd91687b4dd652ebd65c909bb"
+        }
+      ]
+    },
+    "IC1": {
+      "objectName": "LMOuro26-CampaignWasta",
+      "position": {
+        "x": 2736.403564453125,
+        "y": 1020.7532958984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3078.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "planet (2)",
+          "pathId": 3078,
+          "sha256": "c3cfa48878f84bb6e62fdc27b003ff6f38c1cba8c585dbe913d094b46ef5215f"
+        }
+      ]
+    },
+    "IC2": {
+      "objectName": "LMOuro27-CampaignCryton",
+      "position": {
+        "x": 2906.20263671875,
+        "y": 1020.7532958984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3078.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "planet (2)",
+          "pathId": 3078,
+          "sha256": "c3cfa48878f84bb6e62fdc27b003ff6f38c1cba8c585dbe913d094b46ef5215f"
+        }
+      ]
+    },
+    "IC3": {
+      "objectName": "LMOuro28-CampaignEgetuar",
+      "position": {
+        "x": 3075.80078125,
+        "y": 1020.7532958984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3078.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "planet (2)",
+          "pathId": 3078,
+          "sha256": "c3cfa48878f84bb6e62fdc27b003ff6f38c1cba8c585dbe913d094b46ef5215f"
+        }
+      ]
+    },
+    "IC4": {
+      "objectName": "LMOuro29-CampaignSekhur",
+      "position": {
+        "x": 2397.099609375,
+        "y": 1020.7532958984375
+      },
+      "layers": [
+        {
+          "src": "./assets/mod-tree/sprite-3078.png",
+          "x": 11.363643299449574,
+          "y": 11.363601684570312,
+          "width": 77.27272727272727,
+          "height": 77.27272727272727,
+          "opacity": 1,
+          "sprite": "planet (2)",
+          "pathId": 3078,
+          "sha256": "c3cfa48878f84bb6e62fdc27b003ff6f38c1cba8c585dbe913d094b46ef5215f"
+        }
+      ]
+    }
+  }
+}

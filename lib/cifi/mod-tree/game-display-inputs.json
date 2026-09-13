@@ -1,0 +1,163 @@
+[
+  {
+    "key": "currentLoopsDone",
+    "label": "Current effective loops",
+    "koLabel": "현재 유효 Loops Filled",
+    "helpKo": "현재 Cell Loop + Tick Loop + 무료 Loops Filled. 과거 최고 기록과 구분.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current effective loops. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "currentTotalResearchLevels",
+    "label": "Current research levels",
+    "koLabel": "현재 Research 레벨 합계",
+    "helpKo": "현재 Research 레벨의 합계. 과거 구매량이나 최고 기록과 구분.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current research levels. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "extraJerrehLevels",
+    "label": "Additional Jerreh levels",
+    "koLabel": "추가 Jerreh 레벨 (LM235)",
+    "helpKo": "현재 지도 밖 LM235의 레벨. 미구매 상태는 0을 입력.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Additional Jerreh levels. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "extraModLevels",
+    "label": "Mod levels outside this map",
+    "koLabel": "지도 밖 Mod 레벨 합계",
+    "helpKo": "현재 지도에 없는 Ouroboros 등의 Mod 레벨 합계. 없다면 0을 입력.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Mod levels outside this map. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "finalLoopResetsThisConstruction",
+    "label": "Effective resets this Construction",
+    "koLabel": "이번 Construction의 유효 Reset 수",
+    "helpKo": "이번 Construction의 Loop Reset 수 + Temporal 1/4 무료 Reset 보너스.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Effective resets this Construction. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "fullyCompletedResearches",
+    "label": "Current completed researches",
+    "koLabel": "현재 완료 Research 수",
+    "helpKo": "현재 게임의 최종 Fully Completed Researches 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current completed researches. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameAuxesiaCrew",
+    "label": "Current Auxesia Crew",
+    "koLabel": "현재 Auxesia 승무원",
+    "helpKo": "무료 승무원 보너스까지 포함한 현재 게임의 Auxesia 최종 Crew 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Auxesia Crew. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameAuxesiaRank",
+    "label": "Current Auxesia Rank",
+    "koLabel": "현재 Auxesia 랭크",
+    "helpKo": "무료 랭크 보너스까지 포함한 현재 게임의 Auxesia 최종 Rank 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Auxesia Rank. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameCradleCrew",
+    "label": "Current Cradle Crew",
+    "koLabel": "현재 Cradle 승무원",
+    "helpKo": "무료 승무원 보너스까지 포함한 현재 게임의 Cradle 최종 Crew 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Cradle Crew. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameCradleRank",
+    "label": "Current Cradle Rank",
+    "koLabel": "현재 Cradle 랭크",
+    "helpKo": "무료 랭크 보너스까지 포함한 현재 게임의 Cradle 최종 Rank 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Cradle Rank. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameDemeterCrew",
+    "label": "Current Demeter Crew",
+    "koLabel": "현재 Demeter 승무원",
+    "helpKo": "무료 승무원 보너스까지 포함한 현재 게임의 Demeter 최종 Crew 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Demeter Crew. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameDemeterRank",
+    "label": "Current Demeter Rank",
+    "koLabel": "현재 Demeter 랭크",
+    "helpKo": "무료 랭크 보너스까지 포함한 현재 게임의 Demeter 최종 Rank 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Demeter Rank. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameHephaestusCrew",
+    "label": "Current Hephaestus Crew",
+    "koLabel": "현재 Hephaestus 승무원",
+    "helpKo": "무료 승무원 보너스까지 포함한 현재 게임의 Hephaestus 최종 Crew 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Hephaestus Crew. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameHephaestusRank",
+    "label": "Current Hephaestus Rank",
+    "koLabel": "현재 Hephaestus 랭크",
+    "helpKo": "무료 랭크 보너스까지 포함한 현재 게임의 Hephaestus 최종 Rank 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Hephaestus Rank. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameKoiosCrew",
+    "label": "Current Koios Crew",
+    "koLabel": "현재 Koios 승무원",
+    "helpKo": "무료 승무원 보너스까지 포함한 현재 게임의 Koios 최종 Crew 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Koios Crew. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameKoiosRank",
+    "label": "Current Koios Rank",
+    "koLabel": "현재 Koios 랭크",
+    "helpKo": "무료 랭크 보너스까지 포함한 현재 게임의 Koios 최종 Rank 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Koios Rank. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameZagreusCrew",
+    "label": "Current Zagreus Crew",
+    "koLabel": "현재 Zagreus 승무원",
+    "helpKo": "무료 승무원 보너스까지 포함한 현재 게임의 Zagreus 최종 Crew 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Zagreus Crew. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameZagreusRank",
+    "label": "Current Zagreus Rank",
+    "koLabel": "현재 Zagreus 랭크",
+    "helpKo": "무료 랭크 보너스까지 포함한 현재 게임의 Zagreus 최종 Rank 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Zagreus Rank. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameZeusCrew",
+    "label": "Current Zeus Crew",
+    "koLabel": "현재 Zeus 승무원",
+    "helpKo": "무료 승무원 보너스까지 포함한 현재 게임의 Zeus 최종 Crew 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Zeus Crew. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "gameZeusRank",
+    "label": "Current Zeus Rank",
+    "koLabel": "현재 Zeus 랭크",
+    "helpKo": "무료 랭크 보너스까지 포함한 현재 게임의 Zeus 최종 Rank 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Current Zeus Rank. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "operationsThisRun",
+    "label": "Operations this run",
+    "koLabel": "이번 Run의 유효 Operation 수",
+    "helpKo": "현재 Run의 Operation 수에 게임의 추가 Operation 보너스를 포함한 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Operations this run. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "studiesThisLoop",
+    "label": "Studies this Loop",
+    "koLabel": "이번 Loop의 Study 수",
+    "helpKo": "이번 Loop에 완료한 Study 수. 누적·최고 기록과 구분.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Studies this Loop. Enter 0 explicitly if none. Do not use a best-run record."
+  },
+  {
+    "key": "totalSoftwareLevelsMK1To12",
+    "label": "Software levels (MK1–12)",
+    "koLabel": "Software Tech 합계 (MK1–12)",
+    "helpKo": "현재 MK1~MK12 Software Tech 레벨의 합계. 최고 기록이 아닌 현재 값.",
+    "helpEn": "Use the current effective in-game value, including free bonuses. Software levels (MK1–12). Enter 0 explicitly if none. Do not use a best-run record."
+  }
+]

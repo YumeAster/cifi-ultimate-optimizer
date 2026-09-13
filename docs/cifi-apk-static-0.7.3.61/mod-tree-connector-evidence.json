@@ -1,0 +1,2034 @@
+{
+  "method": "Conservative geometric matching: original rectangular connector endpoints, one displayed node continuing on each side, perpendicular deviation <=3 Unity units, node boundary gap20..105. Not gameplay prerequisites. Unmatched primitives include junctions, hidden nodes, and other scopes; do not invent edges.",
+  "sceneConnectorCount": 295,
+  "directMatches": [
+    {
+      "objectName": "SkeletonLM1",
+      "pair": [
+        "C1o",
+        "A01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM2",
+      "pair": [
+        "C2o",
+        "C1o"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM1-2",
+      "pair": [
+        "C1c",
+        "C1o"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM2-2",
+      "pair": [
+        "C2c",
+        "C2o"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM3",
+      "pair": [
+        "C3o",
+        "C2o"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM3-2",
+      "pair": [
+        "C3c",
+        "C3o"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM4",
+      "pair": [
+        "A01",
+        "C4u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM4-2",
+      "pair": [
+        "C4o",
+        "C4u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM4-3",
+      "pair": [
+        "C4u",
+        "C4c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM5",
+      "pair": [
+        "C4u",
+        "C5u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM5-2",
+      "pair": [
+        "C5o",
+        "C5u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM5-3",
+      "pair": [
+        "C5u",
+        "C5c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM6",
+      "pair": [
+        "C5u",
+        "C6u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM6-2",
+      "pair": [
+        "C6o",
+        "C6u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM6-3",
+      "pair": [
+        "C6u",
+        "C6c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM7",
+      "pair": [
+        "C6u",
+        "C7u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM7-2",
+      "pair": [
+        "C7o",
+        "C7u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM7-3",
+      "pair": [
+        "C7u",
+        "C7c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM8",
+      "pair": [
+        "C7u",
+        "C8u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM8-2",
+      "pair": [
+        "C8o",
+        "C8u"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM8-3",
+      "pair": [
+        "C8u",
+        "C8c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM9",
+      "pair": [
+        "A04",
+        "A01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM10",
+      "pair": [
+        "A05",
+        "A04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM11",
+      "pair": [
+        "A06",
+        "A05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM11-3",
+      "pair": [
+        "A06",
+        "A07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM12",
+      "pair": [
+        "A09",
+        "A06"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM12-3",
+      "pair": [
+        "A09",
+        "A10"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM13",
+      "pair": [
+        "A09",
+        "A11"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM14",
+      "pair": [
+        "A01",
+        "B01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM15",
+      "pair": [
+        "B01",
+        "B03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM16",
+      "pair": [
+        "B03",
+        "B04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM17",
+      "pair": [
+        "B04",
+        "B05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM18",
+      "pair": [
+        "B05",
+        "B06"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM19",
+      "pair": [
+        "B06",
+        "B07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM20",
+      "pair": [
+        "B07",
+        "B08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM21",
+      "pair": [
+        "B08",
+        "B09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM22",
+      "pair": [
+        "C2o",
+        "E01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM22-2",
+      "pair": [
+        "E02",
+        "E01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM23",
+      "pair": [
+        "E01",
+        "E06"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM24",
+      "pair": [
+        "E06",
+        "E10"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM25",
+      "pair": [
+        "E10",
+        "E14"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM26",
+      "pair": [
+        "E14",
+        "E18"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM27",
+      "pair": [
+        "B02",
+        "B01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM28",
+      "pair": [
+        "B03",
+        "F01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM29",
+      "pair": [
+        "F01",
+        "F02"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM30",
+      "pair": [
+        "G01",
+        "C3o"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM31",
+      "pair": [
+        "H01",
+        "B05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM32",
+      "pair": [
+        "H02",
+        "H01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM33",
+      "pair": [
+        "H01",
+        "H03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM34",
+      "pair": [
+        "H04",
+        "H02"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM35",
+      "pair": [
+        "H05",
+        "H03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM36",
+      "pair": [
+        "H06",
+        "H04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM37",
+      "pair": [
+        "H07",
+        "H05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM38",
+      "pair": [
+        "H06",
+        "H08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM38",
+      "pair": [
+        "H08",
+        "H07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM39",
+      "pair": [
+        "H08",
+        "H09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM40",
+      "pair": [
+        "G03",
+        "G01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM41",
+      "pair": [
+        "G04",
+        "G03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM41-2",
+      "pair": [
+        "G04",
+        "G05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM41-3",
+      "pair": [
+        "G07",
+        "G04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM42",
+      "pair": [
+        "G03",
+        "G14"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM42-2",
+      "pair": [
+        "G15",
+        "G14"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM42-3",
+      "pair": [
+        "G16",
+        "G15"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM42-4",
+      "pair": [
+        "G17",
+        "G16"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM43",
+      "pair": [
+        "G14",
+        "G18"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM43-2",
+      "pair": [
+        "G19",
+        "G18"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM43-3",
+      "pair": [
+        "G20",
+        "G19"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM44",
+      "pair": [
+        "G18",
+        "G21"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM44-2",
+      "pair": [
+        "G22",
+        "G21"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM44-3",
+      "pair": [
+        "G21",
+        "G23"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM45",
+      "pair": [
+        "G08",
+        "G03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM46",
+      "pair": [
+        "G09",
+        "G08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM47",
+      "pair": [
+        "G10",
+        "G09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM48",
+      "pair": [
+        "G11",
+        "G08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM49",
+      "pair": [
+        "G12",
+        "G09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM50",
+      "pair": [
+        "G13",
+        "G10"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM51",
+      "pair": [
+        "G06",
+        "G04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM52",
+      "pair": [
+        "F02",
+        "F03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM53",
+      "pair": [
+        "F01",
+        "D1v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM53-2",
+      "pair": [
+        "D1v",
+        "D1L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM54",
+      "pair": [
+        "D1v",
+        "D2v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM54-2",
+      "pair": [
+        "D2v",
+        "D2L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM55",
+      "pair": [
+        "D2v",
+        "D3v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM55-2",
+      "pair": [
+        "D3v",
+        "D3L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM56",
+      "pair": [
+        "G02",
+        "G01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM56v2",
+      "pair": [
+        "G27",
+        "G02"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM57",
+      "pair": [
+        "E03",
+        "E02"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM58",
+      "pair": [
+        "E07",
+        "E06"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM59",
+      "pair": [
+        "E11",
+        "E10"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM60",
+      "pair": [
+        "E15",
+        "E14"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM61",
+      "pair": [
+        "E19",
+        "E18"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM62",
+      "pair": [
+        "E04",
+        "E03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM63",
+      "pair": [
+        "E08",
+        "E07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM64",
+      "pair": [
+        "E12",
+        "E11"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM65",
+      "pair": [
+        "E16",
+        "E15"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM66",
+      "pair": [
+        "E20",
+        "E19"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM67",
+      "pair": [
+        "E05",
+        "E04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM68",
+      "pair": [
+        "E09",
+        "E08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM69",
+      "pair": [
+        "E13",
+        "E12"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM70",
+      "pair": [
+        "E17",
+        "E16"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM71",
+      "pair": [
+        "E21",
+        "E20"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM72",
+      "pair": [
+        "A07",
+        "A08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM73",
+      "pair": [
+        "D3v",
+        "D4v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM74",
+      "pair": [
+        "D4v",
+        "D4L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM75",
+      "pair": [
+        "D4v",
+        "D5v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM76",
+      "pair": [
+        "D5v",
+        "D5L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM77",
+      "pair": [
+        "D5v",
+        "D6v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM78",
+      "pair": [
+        "D6v",
+        "D6L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM79",
+      "pair": [
+        "D1L",
+        "D1c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM80",
+      "pair": [
+        "D2L",
+        "D2c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM82",
+      "pair": [
+        "D4L",
+        "D4c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM83",
+      "pair": [
+        "D5L",
+        "D5c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM84",
+      "pair": [
+        "D6L",
+        "D6c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM85",
+      "pair": [
+        "D1c",
+        "D1g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM86",
+      "pair": [
+        "D2c",
+        "D2g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM87",
+      "pair": [
+        "D3c",
+        "D3g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM88",
+      "pair": [
+        "D4c",
+        "D4g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM89",
+      "pair": [
+        "D5c",
+        "D5g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM90",
+      "pair": [
+        "D6c",
+        "D6g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM91",
+      "pair": [
+        "F03",
+        "F04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM92",
+      "pair": [
+        "F03",
+        "F05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM93",
+      "pair": [
+        "F05",
+        "F07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM94",
+      "pair": [
+        "F07",
+        "F09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM95",
+      "pair": [
+        "F06",
+        "F05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM96",
+      "pair": [
+        "F07",
+        "F08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM97",
+      "pair": [
+        "F10",
+        "F09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM98",
+      "pair": [
+        "E18",
+        "E22"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM99",
+      "pair": [
+        "E23",
+        "E22"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM100",
+      "pair": [
+        "E24",
+        "E23"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM101",
+      "pair": [
+        "E25",
+        "E24"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM102",
+      "pair": [
+        "H10",
+        "H08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM103",
+      "pair": [
+        "H11",
+        "H10"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM104",
+      "pair": [
+        "H10",
+        "H12"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM105",
+      "pair": [
+        "H13",
+        "H10"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM106",
+      "pair": [
+        "E01",
+        "EA1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM107",
+      "pair": [
+        "E06",
+        "EA2"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM108",
+      "pair": [
+        "E10",
+        "EA3"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM109",
+      "pair": [
+        "E14",
+        "EA4"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM110",
+      "pair": [
+        "E18",
+        "EA5"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM111",
+      "pair": [
+        "E22",
+        "EA6"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM112",
+      "pair": [
+        "EA1",
+        "EB1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM113",
+      "pair": [
+        "EA2",
+        "EB2"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM114",
+      "pair": [
+        "EA3",
+        "EB3"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM115",
+      "pair": [
+        "EA4",
+        "EB4"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM116",
+      "pair": [
+        "EA5",
+        "EB5"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM117",
+      "pair": [
+        "EA6",
+        "EB6"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM118",
+      "pair": [
+        "H14",
+        "H13"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM119",
+      "pair": [
+        "H13",
+        "H15"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM120",
+      "pair": [
+        "H16",
+        "H13"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM121",
+      "pair": [
+        "H17",
+        "H16"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM122",
+      "pair": [
+        "H16",
+        "H18"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM123",
+      "pair": [
+        "H19",
+        "H16"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM124",
+      "pair": [
+        "H20",
+        "H19"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM125",
+      "pair": [
+        "H19",
+        "H21"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM126",
+      "pair": [
+        "C8u",
+        "C09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM127",
+      "pair": [
+        "C1b",
+        "C09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM128",
+      "pair": [
+        "C1b",
+        "C1cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM129",
+      "pair": [
+        "C1ob",
+        "C1b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM130",
+      "pair": [
+        "C2b",
+        "C1b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM131",
+      "pair": [
+        "C2b",
+        "C2cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM132",
+      "pair": [
+        "C2ob",
+        "C2b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM133",
+      "pair": [
+        "C3b",
+        "C2b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM134",
+      "pair": [
+        "C3b",
+        "C3cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM135",
+      "pair": [
+        "C3ob",
+        "C3b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM136",
+      "pair": [
+        "C4b",
+        "C3b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM137",
+      "pair": [
+        "C4b",
+        "C4cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM138",
+      "pair": [
+        "C4ob",
+        "C4b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM139",
+      "pair": [
+        "C5b",
+        "C4b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM140",
+      "pair": [
+        "C5b",
+        "C5cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM141",
+      "pair": [
+        "C5ob",
+        "C5b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM142",
+      "pair": [
+        "C6b",
+        "C5b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM143",
+      "pair": [
+        "C6b",
+        "C6cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM144",
+      "pair": [
+        "C6ob",
+        "C6b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM145",
+      "pair": [
+        "C7b",
+        "C6b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM146",
+      "pair": [
+        "C7b",
+        "C7cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM147",
+      "pair": [
+        "C7ob",
+        "C7b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM148",
+      "pair": [
+        "C8b",
+        "C7b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM149",
+      "pair": [
+        "C8b",
+        "C8cb"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM150",
+      "pair": [
+        "C8ob",
+        "C8b"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM151",
+      "pair": [
+        "F09",
+        "F11"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM152",
+      "pair": [
+        "F11",
+        "F13"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM153",
+      "pair": [
+        "F13",
+        "F15"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM154",
+      "pair": [
+        "F15",
+        "F17"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM155",
+      "pair": [
+        "D6v",
+        "D7v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM156",
+      "pair": [
+        "D7v",
+        "D7L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM157",
+      "pair": [
+        "D7L",
+        "D7c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM158",
+      "pair": [
+        "D7c",
+        "D7g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM159",
+      "pair": [
+        "D7v",
+        "D8v"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM160",
+      "pair": [
+        "D8v",
+        "D8L"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM161",
+      "pair": [
+        "D8L",
+        "D8c"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM162",
+      "pair": [
+        "D8c",
+        "D8g"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM163",
+      "pair": [
+        "F11",
+        "F12"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM164",
+      "pair": [
+        "F14",
+        "F13"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM165",
+      "pair": [
+        "F15",
+        "F16"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM166",
+      "pair": [
+        "F18",
+        "F17"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM167",
+      "pair": [
+        "E22",
+        "E26"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM168",
+      "pair": [
+        "E27",
+        "E26"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM169",
+      "pair": [
+        "E28",
+        "E27"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM170",
+      "pair": [
+        "E29",
+        "E28"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM171",
+      "pair": [
+        "E26",
+        "EA7"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM172",
+      "pair": [
+        "EA7",
+        "EB7"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM173",
+      "pair": [
+        "B10",
+        "B06"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM174",
+      "pair": [
+        "B11",
+        "B07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM175",
+      "pair": [
+        "D2g",
+        "DGC"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM176",
+      "pair": [
+        "DGC",
+        "DGS"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM177",
+      "pair": [
+        "B09",
+        "I01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM178",
+      "pair": [
+        "I08",
+        "I01"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM179",
+      "pair": [
+        "I09",
+        "I08"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM180",
+      "pair": [
+        "I10",
+        "I09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM181",
+      "pair": [
+        "I11",
+        "I10"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM182",
+      "pair": [
+        "I12",
+        "I11"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM183",
+      "pair": [
+        "I01",
+        "I02"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM184",
+      "pair": [
+        "I13",
+        "I02"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM185",
+      "pair": [
+        "I14",
+        "I13"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM186",
+      "pair": [
+        "I15",
+        "I14"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM187",
+      "pair": [
+        "I16",
+        "I15"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM188",
+      "pair": [
+        "I17",
+        "I16"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM189",
+      "pair": [
+        "I02",
+        "I03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM190",
+      "pair": [
+        "I18",
+        "I03"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM191",
+      "pair": [
+        "I03",
+        "I04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM192",
+      "pair": [
+        "I19",
+        "I04"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM193",
+      "pair": [
+        "I20",
+        "I19"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM194",
+      "pair": [
+        "I21",
+        "I20"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM195",
+      "pair": [
+        "I22",
+        "I21"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM196",
+      "pair": [
+        "I23",
+        "I22"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM197",
+      "pair": [
+        "I24",
+        "I23"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM198",
+      "pair": [
+        "I04",
+        "I05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM199",
+      "pair": [
+        "I26",
+        "I05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM200",
+      "pair": [
+        "I05",
+        "I06"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM201",
+      "pair": [
+        "I28",
+        "I06"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM202",
+      "pair": [
+        "I29",
+        "I28"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM203",
+      "pair": [
+        "I30",
+        "I29"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM204",
+      "pair": [
+        "I31",
+        "I30"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM205",
+      "pair": [
+        "I06",
+        "I07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM206",
+      "pair": [
+        "I32",
+        "I07"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM207",
+      "pair": [
+        "A12",
+        "A09"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM209",
+      "pair": [
+        "H22",
+        "H23"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM210",
+      "pair": [
+        "H24",
+        "H22"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM211",
+      "pair": [
+        "H23",
+        "H25"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM212",
+      "pair": [
+        "H24",
+        "H26"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM213",
+      "pair": [
+        "H26",
+        "H28"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM214",
+      "pair": [
+        "H25",
+        "H27"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM215-1",
+      "pair": [
+        "H29",
+        "H27"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM215-2",
+      "pair": [
+        "H28",
+        "H29"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM217",
+      "pair": [
+        "F17",
+        "FU1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM218",
+      "pair": [
+        "FU2",
+        "FU1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM219",
+      "pair": [
+        "FU1",
+        "FU4"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM220",
+      "pair": [
+        "FU1",
+        "FU3"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM221",
+      "pair": [
+        "I06",
+        "IU1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM222",
+      "pair": [
+        "IU1",
+        "IU3"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM223",
+      "pair": [
+        "I27",
+        "I26"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM224",
+      "pair": [
+        "I25",
+        "I24"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM225",
+      "pair": [
+        "IU1",
+        "IU2"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM226",
+      "pair": [
+        "D8g",
+        "DU1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM227",
+      "pair": [
+        "DU2",
+        "DU1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM228",
+      "pair": [
+        "DU1",
+        "DU3"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM229",
+      "pair": [
+        "E26",
+        "E30"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM230",
+      "pair": [
+        "E31",
+        "E30"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM231",
+      "pair": [
+        "G24",
+        "G17"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM232",
+      "pair": [
+        "G25",
+        "G20"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM233",
+      "pair": [
+        "G26",
+        "G22"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM234",
+      "pair": [
+        "GU1",
+        "G12"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM239",
+      "pair": [
+        "EU1",
+        "E05"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM240",
+      "pair": [
+        "EU2",
+        "EU1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM284",
+      "pair": [
+        "IU2",
+        "IU4"
+      ]
+    },
+    {
+      "objectName": "SkeletonLM294",
+      "pair": [
+        "A12",
+        "A13"
+      ]
+    },
+    {
+      "objectName": "SkeletonLMOuro26",
+      "pair": [
+        "IU4",
+        "IC1"
+      ]
+    },
+    {
+      "objectName": "SkeletonLMOuro27",
+      "pair": [
+        "IC1",
+        "IC2"
+      ]
+    },
+    {
+      "objectName": "SkeletonLMOuro28",
+      "pair": [
+        "IC2",
+        "IC3"
+      ]
+    },
+    {
+      "objectName": "SkeletonLMOuro29",
+      "pair": [
+        "IC4",
+        "IU4"
+      ]
+    }
+  ],
+  "reviewedStems": [
+    {
+      "name": "SkeletonLM0v2",
+      "path": "Canvas/#LoopModScrollView/Viewport/Content/Container/SkeletonLM0v2",
+      "active": true,
+      "position": {
+        "x": -486.9186706542969,
+        "y": -508.4634094238281
+      },
+      "size": {
+        "x": 5,
+        "y": 60
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "angleDegrees": 0,
+      "image": {
+        "untexturedImage": true,
+        "imageColor": [
+          0.4245283007621765,
+          0.4245283007621765,
+          0.4245283007621765,
+          1
+        ],
+        "imageComponentPathId": 302470
+      }
+    },
+    {
+      "name": "SkeletonLM0v3",
+      "path": "Canvas/#LoopModScrollView/Viewport/Content/Container/SkeletonLM0v3",
+      "active": true,
+      "position": {
+        "x": -312.218994140625,
+        "y": -508.4642333984375
+      },
+      "size": {
+        "x": 5,
+        "y": 60
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "angleDegrees": 0,
+      "image": {
+        "untexturedImage": true,
+        "imageColor": [
+          0.4245283007621765,
+          0.4245283007621765,
+          0.4245283007621765,
+          1
+        ],
+        "imageComponentPathId": 302304
+      }
+    },
+    {
+      "name": "SkeletonLM39",
+      "path": "Canvas/#LoopModScrollView/Viewport/Content/Container/SkeletonLM39",
+      "active": true,
+      "position": {
+        "x": 536.640869140625,
+        "y": -1140.9635009765625
+      },
+      "size": {
+        "x": 5,
+        "y": 60
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "angleDegrees": 0,
+      "image": {
+        "untexturedImage": true,
+        "imageColor": [
+          0.4245283007621765,
+          0.4245283007621765,
+          0.4245283007621765,
+          1
+        ],
+        "imageComponentPathId": 302526
+      }
+    },
+    {
+      "name": "SkeletonLM234",
+      "path": "Canvas/#LoopModScrollView/Viewport/Content/Container/SkeletonLM234",
+      "active": true,
+      "position": {
+        "x": -2702.35888671875,
+        "y": -1922.998779296875
+      },
+      "size": {
+        "x": 299.1593933105469,
+        "y": 5
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "angleDegrees": 0,
+      "image": {
+        "untexturedImage": true,
+        "imageColor": [
+          0.42352941632270813,
+          0.42352941632270813,
+          0.42352941632270813,
+          1
+        ],
+        "imageComponentPathId": 302471
+      }
+    }
+  ]
+}
