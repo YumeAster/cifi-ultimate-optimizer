@@ -1,4 +1,4 @@
-# CIFI Ultimate Optimizer
+# CIFI Ultimate Optimizer v0.4
 
 A local-first web prototype for CIFI player progression input and Weight presets.
 
@@ -51,6 +51,13 @@ npm run test:optimizer
 ```bash
 node --experimental-strip-types tests/mod-tree-recommendations.test.mjs
 ```
+
+## Ship Install
+
+- Seven ships and 77 Install nodes with three saved Loadout slots per ship.
+- Five recommendation modes, a purchase-order plan, and a final-effects view.
+- Ship Rank/Crew and other shared profile inputs remain local to the browser.
+- The recommendation and effect calculations are estimates; compare important purchases with the current game before applying them.
 
 ## Included Shape
 

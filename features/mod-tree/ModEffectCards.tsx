@@ -7,7 +7,7 @@ import { modContentEffect } from "../../lib/cifi/mod-tree/contentEffects";
 import { getInputFieldLabel } from "../../app/content/inputCopy";
 
 export function ModEffectIcon({ palette }: { palette: ModEffectPresentation }) {
-  return palette.generator || palette.nodeIcon ? <span className="generator-source-icon" aria-hidden="true" style={{ "--generator-icon-accent": palette.accent, "--generator-icon-source": `url("${palette.icon}")` } as CSSProperties} /> : palette.glyph === "rank" ? <TrophyOutlined aria-hidden="true" /> : palette.glyph === "cost" ? <PercentageOutlined aria-hidden="true" /> : <img src={palette.icon} alt="" />;
+  return palette.generator || palette.nodeIcon ? <img className="generator-source-icon" aria-hidden="true" src={palette.icon} alt="" style={{ "--generator-icon-accent": palette.accent } as CSSProperties} /> : palette.glyph === "rank" ? <TrophyOutlined aria-hidden="true" /> : palette.glyph === "cost" ? <PercentageOutlined aria-hidden="true" /> : <img src={palette.icon} alt="" />;
 }
 
 export default function ModEffectCards({ code, effects, language, level, nextLevel }: { code: string; effects: ModEffectComparison[]; language: "ko" | "en"; level: number; nextLevel: number }) {

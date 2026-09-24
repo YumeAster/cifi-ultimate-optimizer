@@ -37,3 +37,15 @@ test("compact tabs remove duplicate padding and use a responsive Tech matrix wit
   // Static builds can emit globals after page CSS: scoped specificity must win.
   assert.doesNotMatch(css, /\.dashboard-shell (?!\.dashboard-content:not\(\.is-mod-tree\))/);
 });
+
+test("mobile workspace navigation is a bottom icon dock with accessible page names", async () => {
+  const [page, css] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/site-audit.css", import.meta.url), "utf8"),
+  ]);
+  assert.ok(page.indexOf('<nav className="mobile-workspace-nav"') > page.indexOf('</Content>'));
+  assert.match(page, /mobileTabs\.map\(tab => <button[^>]*aria-label=\{tabLabel\(tab\.key, language\)\}[^>]*aria-current=/);
+  assert.doesNotMatch(page, /mobile-workspace-nav[^\n]*<Select/);
+  assert.match(css, /\.dashboard-shell \.mobile-workspace-nav \{[^}]*display:grid; grid-template-columns:repeat\(6,minmax\(0,1fr\)\)/);
+  assert.match(css, /\.mobile-workspace-tab:focus-visible/);
+});

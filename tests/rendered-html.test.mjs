@@ -25,7 +25,7 @@ test("server-renders the Mod Tree input manager", async () => {
 
   const html = await response.text();
   assert.match(html, /CIFI ULTIMATE/);
-  assert.match(html, /v0\.3/);
+  assert.match(html, /v0\.4/);
   assert.match(html, /page-[A-Za-z0-9_-]+\.js/);
   assert.match(html, /https:\/\/orbit\.example\/og-cifi-ultimate\.png/);
   assert.match(html, /summary_large_image/);
@@ -78,9 +78,9 @@ test("removes starter preview assets and keeps the social card", async () => {
   assert.match(page, /generator-tech-desktop/);
   assert.match(page, /generator-tech-mobile/);
   assert.match(page, /softwareTechMk/);
-  assert.match(page, /ship-card-grid/);
-  assert.match(page, /ship-input-card/);
-  assert.match(page, /ship-progress-section/);
+  assert.match(page, /<ShipInstall/);
+  assert.match(page, /key: "shipInstall"/);
+  assert.doesNotMatch(page, /renderShipProgress/);
   assert.match(page, /type ActiveTab = "inputs"/);
   assert.doesNotMatch(page, /key: "ship"/);
   assert.doesNotMatch(page, /\["weights", "player", "ship"/);
@@ -137,7 +137,7 @@ test("removes starter preview assets and keeps the social card", async () => {
   assert.match(inputCopy, /아카데미/);
   assert.match(page, /shipPalette/);
   assert.match(page, /TrophyOutlined/);
-  assert.match(page, /TeamOutlined/);
+  assert.match(page, /key: "shipInstall", icon: <RocketOutlined \/>/);
   assert.doesNotMatch(page, /짧은 단위 표기 지원/);
   assert.match(inputCopy, /가중치 프리셋/);
   assert.match(page, /deleteSelectedPreset/);
@@ -145,7 +145,6 @@ test("removes starter preview assets and keeps the social card", async () => {
   assert.match(page, /dashboard-sider/);
   assert.match(page, /text.inputManager/);
   assert.match(page, /EditOutlined/);
-  assert.doesNotMatch(page, /RocketOutlined/);
   assert.doesNotMatch(page, /tabItems/);
   assert.doesNotMatch(page, /<Tabs/);
   assert.match(page, /presetStorageKey/);

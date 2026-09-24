@@ -92,7 +92,10 @@ test("map states use the same evaluation as recommendations and the wider panel 
   }
   assert.match(css, /\.mod-tree-v2 \.mod-tree-node-frame \{[^}]*fill:var\(--node-fill\); stroke:var\(--node-line\);/);
   assert.match(css, /grid-template-columns:260px minmax\(0,1fr\) 420px/);
-  assert.match(css, /@media \(max-width:720px\)[\s\S]*?\.mod-tree-map-layout \{ display:grid; grid-template-columns:170px minmax\(0,1fr\)/);
+  assert.match(css, /@media \(max-width:1200px\)[\s\S]*?\.mod-tree-map-layout\.is-overview-collapsed \{ display:grid; grid-template-columns:minmax\(0,1fr\)/);
+  assert.match(css, /\.mod-tree-canvas-frame \{ grid-column:1; grid-row:1;/);
+  assert.match(css, /\.mod-tree-side-panel \{ grid-column:1; grid-row:2;/);
+  assert.match(css, /\.mod-tree-overview \{ grid-column:1; grid-row:3;/);
 });
 
 test("all scrollbar surfaces follow the active theme, including portal menus and forced colors", async () => {

@@ -31,9 +31,8 @@ type UpgradeCardStyle = CSSProperties & {
 
 function GeneratorSourceIcon({ generator }: Readonly<{ generator: GeneratorId }>) {
   const palette = getGeneratorPresentation(generator);
-  return <span className="generator-source-icon" aria-hidden="true" style={{
+  return <img className="generator-source-icon" aria-hidden="true" src={UPGRADE_RESOURCE_PRESENTATION.generator.icon} alt="" style={{
     "--generator-icon-accent": palette.accent,
-    "--generator-icon-source": `url("${UPGRADE_RESOURCE_PRESENTATION.generator.icon}")`,
   } as CSSProperties} />;
 }
 
