@@ -3,12 +3,14 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography } from "antd";
 import koKR from "antd/locale/ko_KR";
-import { AppstoreOutlined, CheckCircleFilled, DatabaseOutlined, DeleteOutlined, DollarCircleOutlined, EditOutlined, SaveOutlined, SettingOutlined, SketchOutlined, TeamOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
+import { AppstoreOutlined, CheckCircleFilled, DatabaseOutlined, DeleteOutlined, DollarCircleOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, SketchOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
 import ModTree from "../features/mod-tree/ModTree";
 import { GAME_DISPLAY_EXTRA_INPUTS as gameDisplayInputs, migrateGameDisplayInputs } from "../lib/cifi/mod-tree/gameDisplayInputs";
 import { recommendationCopy } from "../features/mod-tree/recommendationCopy";
 import { DEFAULT_RECOMMENDATION_COUNT, MOD_RECOMMENDATION_COUNT_KEY, RECOMMENDATION_COUNTS, restoreRecommendationCount } from "../lib/cifi/mod-tree/preferences";
 import UpgradeOptimizer from "../features/upgrade-optimizer/UpgradeOptimizer";
+import ShipInstall from "../features/ship-install/ShipInstall";
+import { SHIP_INSTALL_EXTRA_FIELDS } from "../lib/cifi/ship-install/profile";
 import { getInputFieldHelp, inputFieldLabels, inputSectionCopy, localizedText } from "./content/inputCopy";
 import { isRecord, researchCountExceedsTotal, restoreWeightPresets, validateInput, type FieldKind, type WeightPreset } from "./content/profileValidation";
 import { DEFAULT_WEIGHT_PRESET_ID, DEFAULT_WEIGHT_VALUES, commitWeightPreset, matchingWeightPreset, storeWeightPreset } from "./content/weightPresets";
@@ -19,11 +21,11 @@ import "./theme-refinements.css";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
-const APP_VERSION = "v0.3";
+const APP_VERSION = "v0.4";
 
 type FieldGroup = "weights" | "player" | "ship";
 type OptimizerTab = "diamonds" | "tokens";
-type ActiveTab = "inputs" | OptimizerTab | "modTree" | "settings";
+type ActiveTab = "inputs" | OptimizerTab | "modTree" | "shipInstall" | "settings";
 type Language = "ko" | "en";
 type DashboardTheme = "orbit" | "solar" | "nebula" | "pearl" | "red";
 type FieldDefinition = { key: string; label: string; koLabel?: string; kind: FieldKind; group: FieldGroup; recommended?: string; suffix?: string; generator?: number; tech?: "hardware" | "software" };
@@ -114,7 +116,8 @@ const shipFields: FieldDefinition[] = shipNames.flatMap((ship) => [
   { key: `${ship.toLowerCase()}Crew`, label: `${ship} Crew`, kind: "integer", group: "ship" },
 ]);
 
-const allFields = [...weightFields, ...playerFields, ...shipFields];
+const shipExtraFields: FieldDefinition[] = SHIP_INSTALL_EXTRA_FIELDS.map(field => ({ key: field.key, label: field.enLabel, koLabel: field.label, kind: "short", group: "ship" }));
+const allFields = [...weightFields, ...playerFields, ...shipFields, ...shipExtraFields];
 const inputStorageKey = "cifi-orbit.mtc-inputs.v1";
 const presetStorageKey = "cifi-orbit.mtc-weight-presets.v1";
 const languageStorageKey = "cifi-orbit.ui-language.v1";
@@ -157,6 +160,7 @@ function groupLabel(group: FieldGroup, language: Language) {
 
 function tabLabel(tab: ActiveTab, language: Language) {
   const text = localizedText[language];
+  if (tab === "shipInstall") return "Ship Install";
   if (tab === "settings") return text.settings;
   if (tab === "modTree") return language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations";
   if (tab === "diamonds") return text.diamonds;
@@ -164,12 +168,26 @@ function tabLabel(tab: ActiveTab, language: Language) {
   return text.inputManager;
 }
 
+const mobileTabs = [
+  { key: "inputs", icon: <EditOutlined />, ko: "입력", en: "Inputs" },
+  { key: "diamonds", icon: <SketchOutlined />, ko: "다이아", en: "Diamond" },
+  { key: "tokens", icon: <DollarCircleOutlined />, ko: "토큰", en: "Token" },
+  { key: "modTree", icon: <AppstoreOutlined />, ko: "모드", en: "Mod Tree" },
+  { key: "shipInstall", icon: <RocketOutlined />, ko: "함선", en: "Ship" },
+  { key: "settings", icon: <SettingOutlined />, ko: "설정", en: "Settings" },
+] as const;
+
 function InputManager() {
   const { message } = AntApp.useApp();
   const initialValues = useMemo(() => createInitialValues(), []);
   const [draft, setDraft] = useState<Record<string, string>>(initialValues);
   const [saved, setSaved] = useState<Record<string, string>>(initialValues);
   const [activeTab, setActiveTab] = useState<ActiveTab>("inputs");
+  const switchTab = (tab: ActiveTab) => {
+    const content = document.querySelector<HTMLElement>(".dashboard-main > .dashboard-content");
+    if (content) content.scrollTop = 0;
+    setActiveTab(tab);
+  };
   const [ready, setReady] = useState(false);
   const [weightPresets, setWeightPresets] = useState<WeightPreset[]>([]);
   const [presetName, setPresetName] = useState("");
@@ -187,7 +205,7 @@ function InputManager() {
     : isOptimizerTab ? `${tabLabel(activeTab, language)} ${text.upgradeOptimizer}`
     : tabLabel(activeTab, language);
   const headerDescription = activeTab === "settings" ? text.settingsDescription
-    : isOptimizerTab ? text.optimizerDescription : isModTreeTab ? null : text.profileDescription;
+    : isOptimizerTab ? text.optimizerDescription : isModTreeTab || activeTab === "shipInstall" ? null : text.profileDescription;
 
   useEffect(() => {
     const restored = { ...initialValues };
@@ -426,39 +444,6 @@ function InputManager() {
       ])}
     </div>;
   };
-  const renderShipProgress = () => {
-    const filledCount = shipFields.filter((field) => Boolean(draft[field.key]?.trim())).length;
-    return <section className="ship-progress-section" aria-labelledby="ship-progress-heading">
-      <div className="field-section-heading"><div><h4 id="ship-progress-heading">{text.shipProgress}</h4><p>{text.shipDescription}</p></div><Badge className="ship-progress-count" count={`${filledCount} / ${shipFields.length}`} showZero /></div>
-      <div className="ship-card-grid">
-        {shipNames.map((ship) => {
-          const shipGroup = shipFields.filter((field) => field.key === `${ship.toLowerCase()}Rank` || field.key === `${ship.toLowerCase()}Crew`);
-          const palette = shipPalette[ship];
-          const isRank = (field: FieldDefinition) => field.label.endsWith("Rank");
-          const cardStyle = {
-            "--ship-accent": palette.accent,
-            "--ship-ink": palette.ink,
-            "--ship-surface": palette.surface,
-            "--ship-border": palette.border,
-            "--ship-glow": palette.glow,
-          } as CSSProperties;
-          return <section className="ship-input-card" style={cardStyle} key={ship}>
-            <div className="ship-card-heading"><span className="ship-card-dot" /><div><h4>{ship}</h4><p>{text.rankAndCrew}</p></div></div>
-            <div className="ship-field-stack">
-              {shipGroup.map((field) => {
-                const error = errors[field.key];
-                return <label className={`ship-field ${error ? "has-error" : ""}`} key={field.key}>
-                  <span className="ship-field-label">{isRank(field) ? <TrophyOutlined aria-hidden /> : <TeamOutlined aria-hidden />}{isRank(field) ? text.rank : text.crew}</span>
-                  <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="numeric" /></Tooltip>
-                  {error && <small>{error}</small>}
-                </label>;
-              })}
-            </div>
-          </section>;
-        })}
-      </div>
-    </section>;
-  };
   const fieldPanel = (fields: FieldDefinition[], group: Exclude<FieldGroup, "ship">) => (
     <div className={`field-panel field-panel-${group}`}>
       <div className="field-panel-heading">
@@ -474,7 +459,7 @@ function InputManager() {
             {section.key === "generator" ? <><div className="generator-matrix-desktop">{renderGeneratorMatrix(sectionFields)}</div><div className="generator-matrix-mobile"><div className="player-field-grid generator-grid">{sectionFields.map((field) => renderPlayerField(field))}</div></div></> : section.key === "technology" ? <><div className="generator-tech-desktop">{renderGeneratorTechMatrix(sectionFields)}</div><div className="generator-tech-mobile">{renderGeneratorTechCards(sectionFields)}</div></> : <div className="player-field-grid">{sectionFields.map((field) => renderPlayerField(field))}</div>}
           </section>;
         })}
-      </div>{renderShipProgress()}</> : null}
+      </div></> : null}
     </div>
   );
   const settingsPanel = () => (
@@ -490,13 +475,14 @@ function InputManager() {
     <Sider className="dashboard-sider" width={272} trigger={null}>
       <div className="sidebar-brand"><div className="brand-cell"><DatabaseOutlined /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER · {APP_VERSION}</span></div></div>
       <div className="sidebar-caption">{text.workspace}</div>
-      <Menu className="sidebar-menu" theme="dark" mode="inline" selectedKeys={[activeTab]} defaultOpenKeys={["upgrade-optimizer"]} onClick={({ key }) => { if (key !== "upgrade-optimizer") setActiveTab(key as ActiveTab); }} items={[
+      <Menu className="sidebar-menu" theme="dark" mode="inline" selectedKeys={[activeTab]} defaultOpenKeys={["upgrade-optimizer"]} onClick={({ key }) => { if (key !== "upgrade-optimizer") switchTab(key as ActiveTab); }} items={[
         { key: "inputs", icon: <EditOutlined />, label: text.inputManager },
         { key: "upgrade-optimizer", icon: <TrophyOutlined />, label: text.upgradeOptimizer, children: [
           { key: "diamonds", className: "optimizer-menu-diamond", icon: <SketchOutlined />, label: text.diamonds },
           { key: "tokens", className: "optimizer-menu-token", icon: <DollarCircleOutlined />, label: text.tokens },
         ] },
         { key: "modTree", icon: <AppstoreOutlined />, label: language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations" },
+        { key: "shipInstall", icon: <AppstoreOutlined />, label: "Ship Install" },
         { key: "settings", icon: <SettingOutlined />, label: text.settings },
       ]} />
       <div className="sidebar-foot"><div className="sidebar-foot-chip"><span className="sidebar-foot-dot" />{text.localProfile}</div><p>{text.localProfileNote}</p></div>
@@ -504,14 +490,13 @@ function InputManager() {
     <Layout className="dashboard-main">
       <Header className="dashboard-header">
         <div className="dashboard-header-copy">
-          <Text className="header-eyebrow">{isOptimizerTab ? "UPGRADE OPTIMIZER" : isModTreeTab ? "MOD TREE" : activeTab === "settings" ? "SETTINGS" : "PLAYER PROFILE"} / {tabLabel(activeTab, language).toUpperCase()}</Text>
+          <Text className="header-eyebrow">{isOptimizerTab ? "UPGRADE OPTIMIZER" : isModTreeTab ? "MOD TREE" : activeTab === "shipInstall" ? "SHIP AUTOMATION" : activeTab === "settings" ? "SETTINGS" : "PLAYER PROFILE"} / {tabLabel(activeTab, language).toUpperCase()}</Text>
           <Title level={1} className="dashboard-page-title">{headerTitle}</Title>
           {headerDescription && <Paragraph className="dashboard-header-description">{headerDescription}</Paragraph>}
         </div>
         <Space className="dashboard-header-actions" size={10} wrap><Tag className="app-version-tag">{APP_VERSION}</Tag>{isModTreeTab ? <Tag color="red" icon={<AppstoreOutlined />}>PRE-OUROBOROS</Tag> : isOptimizerTab ? <Tag color={optimizerSaveStatus === "failed" ? "red" : "blue"} icon={optimizerSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{optimizerSaveStatus === "failed" ? (language === "ko" ? "저장 실패" : "Not saved") : optimizerSaveStatus === "loading" ? (language === "ko" ? "불러오는 중" : "Loading") : text.autoSaved}</Tag> : <><Tag color={inputSaveStatus === "failed" ? "red" : "green"} icon={inputSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{!ready ? text.loading : inputSaveStatus === "failed" ? text.saveFailed : text.autoSaved}</Tag>{Object.keys(errors).length > 0 && <Text type="warning">{text.invalidCalculationNote}</Text>}</>}</Space>
       </Header>
-      <nav className="mobile-workspace-nav" aria-label={language === "ko" ? "화면 이동" : "Workspace navigation"}><Select aria-label={language === "ko" ? "화면 선택" : "Select workspace"} value={activeTab} onChange={setActiveTab} options={(["inputs", "diamonds", "tokens", "modTree", "settings"] as ActiveTab[]).map(key => ({ value: key, label: tabLabel(key, language) }))} /></nav>
-      <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}`}>{isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></main> : isOptimizerTab ? <main className="optimizer-workspace">
+      <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}${activeTab === "shipInstall" ? " is-ship-install" : ""}`}>{activeTab === "shipInstall" ? <ShipInstall language={language} profile={saved} draft={draft} errors={errors} ready={ready} onInput={updateValue} /> : isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></main> : isOptimizerTab ? <main className="optimizer-workspace">
         <UpgradeOptimizer currency={activeTab} language={language} profile={saved} onSaveStatusChange={setOptimizerSaveStatus} />
       </main> : <main className="input-management-workspace">
         <section className="input-workspace">
@@ -535,6 +520,9 @@ function InputManager() {
           <Card className="input-card" variant="borderless">{fieldPanel(playerFields, "player")}</Card>
         </section>
       </main>}</Content>
+      <nav className="mobile-workspace-nav" aria-label={language === "ko" ? "화면 이동" : "Workspace navigation"}>
+        {mobileTabs.map(tab => <button key={tab.key} type="button" className={`mobile-workspace-tab${activeTab === tab.key ? " is-active" : ""}`} aria-label={tabLabel(tab.key, language)} aria-current={activeTab === tab.key ? "page" : undefined} onClick={() => switchTab(tab.key)}><span className="mobile-workspace-tab-icon" aria-hidden="true">{tab.icon}</span><span className="mobile-workspace-tab-label" aria-hidden="true">{language === "ko" ? tab.ko : tab.en}</span></button>)}
+      </nav>
     </Layout>
   </Layout>;
 }

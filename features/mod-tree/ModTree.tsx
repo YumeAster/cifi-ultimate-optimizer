@@ -1,7 +1,7 @@
 "use client";
 
 import { AimOutlined, MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent, type PointerEvent } from "react";
 import {
   preOuroborosModTreeCanvas as canvas,
   preOuroborosModTreeEdges as edges,
@@ -44,6 +44,13 @@ function svgPoint(svg: SVGSVGElement, clientX: number, clientY: number): Point |
 }
 
 const emptyProfile: PlayerProfile = {};
+const mobileTreeQuery = "(max-width:1200px)";
+const subscribeMobileTree = (onChange: () => void) => {
+  const media = window.matchMedia(mobileTreeQuery);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+};
+const mobileTreeSnapshot = () => window.matchMedia(mobileTreeQuery).matches;
 export default function ModTree({ language, profile = emptyProfile, recommendationCount = DEFAULT_RECOMMENDATION_COUNT }: { language: Language; profile?: PlayerProfile; recommendationCount?: number }) {
   const isKorean = language === "ko";
   const [query, setQuery] = useState("");
@@ -52,6 +59,10 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
   const [isDragging, setIsDragging] = useState(false);
   const [recommendationsVisible, setRecommendationsVisible] = useState(false);
   const [purchaseNotice, setPurchaseNotice] = useState("");
+  const [desktopOverviewOpen, setDesktopOverviewOpen] = useState(true);
+  const [mobileOverviewOpen, setMobileOverviewOpen] = useState(false);
+  const mobileTree = useSyncExternalStore(subscribeMobileTree, mobileTreeSnapshot, () => false);
+  const overviewOpen = mobileTree ? mobileOverviewOpen : desktopOverviewOpen;
   const svgRef = useRef<SVGSVGElement>(null);
   const dragRef = useRef<DragState | null>(null);
   const lastNodeClick = useRef<NodeClick | null>(null);
@@ -59,6 +70,7 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
   const viewportRef = useRef(viewport);
   const instanceId = useId().replace(/:/g, "");
   const helpId = `${instanceId}-help`;
+  const overviewContentId = `${instanceId}-overview-content`;
   const queryText = query.trim().toLowerCase();
   const nodeLookup = useMemo(() => new Map(nodes.map((node) => [node.key, node])), []);
   const matches = useMemo(() => nodes.filter((node) => !queryText || `${node.label} ${node.name}`.toLowerCase().includes(queryText)), [queryText]);
@@ -158,8 +170,8 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
           <button type="button" onClick={() => updateScale(.8)} disabled={viewport.scale <= MIN_TREE_SCALE} aria-label={isKorean ? "축소" : "Zoom out"}><MinusOutlined /></button><span>{Math.round(viewport.scale * 100)}%</span><button type="button" onClick={() => updateScale(1.25)} disabled={viewport.scale >= MAX_TREE_SCALE} aria-label={isKorean ? "확대" : "Zoom in"}><PlusOutlined /></button><button type="button" className="mod-tree-fit" onClick={() => setViewport(fitNodes(nodes))} aria-label={isKorean ? "전체 보기" : "Fit tree"} title={isKorean ? "전체 보기 (Home)" : "Fit tree (Home)"}><AimOutlined /></button>
         </div>
       </header>
-      <div className="mod-tree-map-layout">
-        <ModEffectOverview state={recommendations.state} profile={gameDisplay.displayProfile} language={language} ready={recommendations.ready}>
+      <div className={`mod-tree-map-layout${overviewOpen ? "" : " is-overview-collapsed"}`}>
+        <ModEffectOverview state={recommendations.state} profile={gameDisplay.displayProfile} language={language} ready={recommendations.ready} collapsed={!overviewOpen} contentId={overviewContentId} onToggle={() => mobileTree ? setMobileOverviewOpen(open => !open) : setDesktopOverviewOpen(open => !open)}>
           <div id={helpId} className="mod-tree-map-help">{isKorean ? "드래그로 이동 · 휠로 확대 · 키보드 방향키 / + − / Home" : "Drag to move · Scroll to zoom · Arrow keys / + − / Home"}<span>{recommendationCopy[language].doubleClickHelp}</span>
             <div className="mod-tree-state-legend" aria-label={isKorean ? "노드 상태" : "Node states"}>{[
               ["locked", isKorean ? "잠김" : "Locked"], ["available", isKorean ? "미구매" : "Unpurchased"],

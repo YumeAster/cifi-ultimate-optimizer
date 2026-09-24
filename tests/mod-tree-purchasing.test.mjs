@@ -128,7 +128,8 @@ test("only recommendations scroll inside the panel, tools stay separate, and the
   assert.equal((panel.match(/className="mod-rec-scroll"/g) ?? []).length, 1);
   assert.match(css, /\.dashboard-content.is-mod-tree \{[^}]*overflow-y:auto/);
   assert.match(css, /\.mod-tree-side-panel \{[^}]*min-height:min-content/);
-  assert.match(css, /grid-template-rows:minmax\(180px,1fr\) minmax\(min-content,1\.2fr\)/);
+  assert.match(css, /\.mod-tree-map-layout[^{}]*\{[^}]*grid-template-rows:minmax\(min-content,1fr\)/);
+  assert.match(css, /grid-template-rows:minmax\(330px,48dvh\) auto auto/);
   assert.match(css, /\.mod-rec-next-effects \{[^}]*border-top:1px solid var\(--surface-line\); border-bottom:1px solid var\(--surface-line\);/);
   assert.match(css, /\.mod-rec-scroll \{[^}]*overflow-y:auto/);
   assert.match(panel, /mod-rec-purchase-bar/);

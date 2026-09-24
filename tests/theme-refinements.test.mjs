@@ -52,7 +52,7 @@ test("map and portal palettes cover all themes while original resource icons sta
   assert.match(css, /--chip-ink:color-mix\(in srgb,var\(--chip-accent\) 35%,var\(--content-ink\)\)/);
   assert.match(css, /\.dashboard-shell\.ant-layout-has-sider > \.dashboard-main\.ant-layout \{ width:100%;/);
   assert.match(css, /\.mod-rec-purchase:disabled \{ opacity:1;/);
-  assert.match(css, /\.mod-tree-side-panel \{ grid-column:1 \/ -1;/);
+  assert.match(css, /\.mod-tree-side-panel \{ grid-column:1; grid-row:2;/);
   assert.match(css, /\.mod-overview-effect-name \{[^}]*text-overflow:ellipsis/);
 });
 
