@@ -23,11 +23,11 @@ const profile = {
 };
 const context = values => ({ ship: "Demeter", levels: {}, totalPoints: 8, mode: "weights", profile: values });
 
-test("release version is consistently v0.4", async () => {
+test("release version is consistently v0.4.1", async () => {
   const [page, packageText, lockText] = await Promise.all([read("app/page.tsx"), read("package.json"), read("package-lock.json")]);
   const pkg = JSON.parse(packageText), lock = JSON.parse(lockText);
-  assert.match(page, /const APP_VERSION = "v0\.4"/);
-  assert.equal(pkg.version, "0.4.0");
+  assert.match(page, /const APP_VERSION = "v0\.4\.1"/);
+  assert.equal(pkg.version, "0.4.1");
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[""].version, pkg.version);
 });
