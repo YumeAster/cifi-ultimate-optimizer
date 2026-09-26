@@ -23,6 +23,7 @@ const ZERO = parseGameEffectDecimal("0"), ONE = parseGameEffectDecimal("1");
 const unique = <T,>(values: readonly T[]) => [...new Set(values)];
 const mainResources = new Set<InstallResource>(["modPoints", "shards", "research", "academyPoints", "materials"]);
 const auxiliary = (resource: InstallResource) => resource === "cells" || /^mk[1-9]$/.test(resource) || resource === "allGenerators" || resource === "hardware" || resource === "software";
+const unitWeights = { cells: "1", modPoints: "1", shards: "1", research: "1", academyPoints: "1", materials: "1" } as const;
 export const allocatedInstallPoints = (levels: InstallLevels): number => Object.values(levels).reduce((sum, level) => sum + level, 0);
 export const installMaxLevel = (node: InstallDefinition, capExpanded = false): number => node.maxLevel * (capExpanded ? 5 : 1);
 
@@ -150,8 +151,9 @@ export function installEffects(context: ShipInstallContext, position: number, ne
  * An auxiliary may beat every direct-target purchase (and consume the whole
  * finite budget); the user explicitly permits efficiency-based extra allocation.
  * "Target" is a resource eligibility rule, not an artificial infinite priority.
- * Only the explicit weights mode consumes the current weight preset. This local
- * marginal heuristic does not establish a globally optimal final allocation. */
+ * Only the explicit weights mode consumes the current weight preset. Named modes
+ * use unit weights for all other effects once their target cannot be purchased.
+ * This marginal heuristic does not establish a globally optimal allocation. */
 function effectScore(effect: InstallEffectValue, context: ShipInstallContext): number {
   if (effect.logGain === null) throw new MissingShipInput([`${effect.resource}:scoreModel`]);
   const resource = effect.resource;
@@ -194,10 +196,44 @@ export function evaluateInstall(context: ShipInstallContext, position: number): 
 export function evaluateInstalls(context: ShipInstallContext): InstallEvaluation[] {
   return getShipInstalls(context.ship).map(node => evaluateInstall(context, node.position));
 }
+
+/** A named mode falls back only when no positive target purchase can be reached
+ * with the remaining points. Locked but reachable targets keep their mode. */
+export function usesUnitWeightFallback(context: ShipInstallContext): boolean {
+  if (context.mode === "weights") return false;
+  const allocated = allocatedInstallPoints(context.levels);
+  const remaining = context.totalPoints - allocated;
+  if (remaining <= 0) return false;
+  return !getShipInstalls(context.ship).some(node => {
+    if (installModePermission(node, context) !== "target") return false;
+    if ((context.levels[node.position] ?? 0) >= installMaxLevel(node, context.capExpanded) || context.excluded?.includes(node.position)) return false;
+    if (Math.max(0, node.unlockAt - allocated) + 1 > remaining) return false;
+    const score = evaluateInstall(context, node.position).score;
+    return score !== null && score > 0;
+  });
+}
+
+function unitWeightContext(context: ShipInstallContext): ShipInstallContext {
+  return { ...context, mode: "weights", profile: { ...context.profile, ...unitWeights } };
+}
+function effectiveRecommendationContext(context: ShipInstallContext): ShipInstallContext {
+  return usesUnitWeightFallback(context) ? unitWeightContext(context) : context;
+}
+
 export function rankInstalls(context: ShipInstallContext): InstallEvaluation[] {
-  if (context.mode !== "weights" && !getShipInstalls(context.ship).some(node => installModePermission(node, context) === "target")) return [];
-  return evaluateInstalls(context).filter(item => item.unlocked && item.affordable && !item.maxed && !item.excluded && item.permitted && !item.error && item.score !== null && item.score > 0)
+  return evaluateInstalls(effectiveRecommendationContext(context)).filter(item => item.unlocked && item.affordable && !item.maxed && !item.excluded && item.permitted && !item.error && item.score !== null && item.score > 0)
     .sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || a.position - b.position);
+}
+
+/** Replays the purchase order so detailed cards show each step's own before/after effect. */
+export function previewInstallSequenceEffects(context: ShipInstallContext, steps: readonly InstallSequenceStep[]): InstallEffectValue[][] {
+  const levels: Record<number, number> = { ...context.levels };
+  return steps.map(step => {
+    if (step.from !== (levels[step.position] ?? 0) || step.to !== step.from + 1) return [];
+    const effects = installEffects({ ...context, levels }, step.position, step.to);
+    levels[step.position] = step.to;
+    return effects;
+  });
 }
 
 export type InstallAggregateEffect = Readonly<{
@@ -258,13 +294,19 @@ export function generateSequence(context: ShipInstallContext, maxSteps = MAX_INS
   const baselineLevels: Record<number, number> = Object.fromEntries(getShipInstalls(context.ship).map(node => [node.position, context.levels[node.position] ?? 0]));
   const levels: Record<number, number> = { ...baselineLevels }, steps: InstallSequenceStep[] = [];
   let stopped: InstallSequence["stopped"] = "no-candidate";
+  let warnedFallback = false;
   const limit = Number.isSafeInteger(maxSteps) ? Math.max(0, Math.min(MAX_INSTALL_PLAN_STEPS, maxSteps)) : 0;
   if (errors.length) stopped = "invalid-input";
-  else if (context.mode !== "weights" && !getShipInstalls(context.ship).some(node => installModePermission(node, context) === "target")) {
-    stopped = "no-target"; warnings.push("이 함선에는 선택한 목표 자원의 직접 효과가 없습니다. 다른 추천 방식을 선택하세요.");
-  } else {
+  else {
     while (steps.length < limit && allocatedInstallPoints(levels) < context.totalPoints) {
-      const state = { ...context, levels }, items = evaluateInstalls(state);
+      const originalState = { ...context, levels };
+      const fallback = usesUnitWeightFallback(originalState);
+      if (fallback && !warnedFallback) {
+        warnings.push("선택한 목표 자원에 배분 가능한 Install이 없어 다른 효과를 가중치 1로 비교합니다.");
+        warnedFallback = true;
+      }
+      const state = fallback ? unitWeightContext(originalState) : originalState;
+      const items = evaluateInstalls(state);
       const eligible = sortedCandidates(items.filter(item => purchasable(item) && item.permitted && item.score !== null && item.score > 0));
       let path: InstallSequenceStep[] | null = eligible[0] ? [{ index: 1, position: eligible[0].position, from: eligible[0].level, to: eligible[0].level + 1, reason: eligible[0].reason as InstallSequenceStep["reason"], score: eligible[0].score ?? 0 }] : null;
       let pathScore = path?.[0].score ?? -Infinity;
@@ -302,10 +344,11 @@ export function validateInstallSequence(context: ShipInstallContext, steps: read
   for (const [index, step] of steps.entries()) {
     const node = getShipInstalls(context.ship).find(item => item.position === step.position);
     if (!node) { errors.push(`${index + 1}번째 Install 번호 오류`); break; }
-    const item = evaluateInstall({ ...context, levels }, step.position);
+    const state = effectiveRecommendationContext({ ...context, levels });
+    const item = evaluateInstall(state, step.position);
     if (step.index !== index + 1 || step.from !== (levels[step.position] ?? 0) || step.to !== step.from + 1 || !purchasable(item)) { errors.push(`${index + 1}번째 구매의 레벨·해금·예산·제외 조건 오류`); break; }
     if (!item.permitted) {
-      const allowedFiller = evaluateInstalls({ ...context, levels }).some(candidate => purchasable(candidate) && candidate.permitted);
+      const allowedFiller = evaluateInstalls(state).some(candidate => purchasable(candidate) && candidate.permitted);
       const futureTarget = steps.slice(index + 1).some(future => {
         const target = getShipInstalls(context.ship).find(candidate => candidate.position === future.position);
         return target && target.unlockAt > allocatedInstallPoints(levels) && installModePermission(target, context) === "target";

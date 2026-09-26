@@ -90,7 +90,7 @@ export type InstallSequence = Readonly<{
   targetLevels: InstallLevels;
   spent: number;
   remaining: number;
-  stopped: "budget" | "limit" | "no-candidate" | "no-target" | "invalid-input";
+  stopped: "budget" | "limit" | "no-candidate" | "invalid-input";
   warnings: readonly string[];
   errors: readonly string[];
   strategy: "marginal-greedy-with-unlock-lookahead";

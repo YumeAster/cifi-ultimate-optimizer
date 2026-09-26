@@ -111,5 +111,10 @@ test("approved game node arrangement and exactly five recommendation modes remai
   const view = await read("features/ship-install/ShipInstall.tsx");
   for (const label of ["MP 위주", "Shard / RP 위주", "Shard 위주", "RP 위주", "가중치 프리셋 사용"]) assert.ok(view.includes(label));
   for (const className of ["si-side", "si-recommendations", "si-detail", "si-queue"]) assert.ok(view.includes(className));
+  for (const mode of ['"detailed"', '"normal"', '"compact"']) assert.ok(view.includes(mode));
+  assert.match(view, /previewInstallSequenceEffects\(\{ \.\.\.context, levels: plan\.baselineLevels \}, plan\.steps\)/);
+  assert.match(view, /view === "compact" \? <>\s*<Icon src=\{node\.icon\} \/>/);
+  const css = await read("features/ship-install/ship-install.css");
+  assert.match(css, /\.si-queue ol\.is-compact \{ display:grid; grid-template-columns:repeat\(auto-fill/);
   assert.doesNotMatch(view, /코너 Install 해금|목표 배분 비교|가중치 프리셋과는 별도/);
 });
