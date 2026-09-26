@@ -157,8 +157,8 @@ test("Mod effect cards reuse each resource icon/color and keep generator and shi
     assert.equal(actual.icon, UPGRADE_RESOURCE_PRESENTATION.generator.icon);
   }
   for (const ship of ["cradle", "auxesia", "zagreus", "hephaestus", "demeter", "koios", "zeus"]) {
-    assert.equal(modEffectPresentation(`${ship} RP`).glyph, "rank");
-    assert.equal(modEffectPresentation(`${ship} CR`).glyph, "cost");
+    assert.equal(modEffectPresentation(`${ship} RP`).icon, UPGRADE_RESOURCE_PRESENTATION.rankPoints.icon);
+    assert.equal(modEffectPresentation(`${ship} CR`).icon, UPGRADE_RESOURCE_PRESENTATION.costReduction.icon);
   }
 });
 

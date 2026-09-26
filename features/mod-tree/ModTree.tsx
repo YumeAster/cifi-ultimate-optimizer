@@ -1,7 +1,7 @@
 "use client";
 
 import { AimOutlined, MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent, type PointerEvent } from "react";
+import { memo, useCallback, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent, type PointerEvent } from "react";
 import {
   preOuroborosModTreeCanvas as canvas,
   preOuroborosModTreeEdges as edges,
@@ -20,6 +20,7 @@ import { DEFAULT_RECOMMENDATION_COUNT, restoreRecommendationCount } from "../../
 import { doubleClickedNode, type NodeClick } from "../../lib/cifi/mod-tree/interaction";
 import ModEffectOverview from "./ModEffectOverview";
 import { useGameDisplayProfile } from "./useGameDisplayProfile";
+import type { ModEvaluation } from "../../lib/cifi/mod-tree/recommendations";
 
 type Language = "ko" | "en";
 type DragState = { pointerId: number; client: Point; start: Point; viewport: Viewport; nodeKey?: string; moved: boolean };
@@ -51,6 +52,44 @@ const subscribeMobileTree = (onChange: () => void) => {
   return () => media.removeEventListener("change", onChange);
 };
 const mobileTreeSnapshot = () => window.matchMedia(mobileTreeQuery).matches;
+const graphNodeLookup = new Map(nodes.map((node) => [node.key, node]));
+const ModTreeGraph = memo(function ModTreeGraph({ language, selectedId, ready, evaluatedByCode, recommendedCodes, topRecommendation, filtered, matchingIds, onSelect }: {
+  language: Language; selectedId: string; ready: boolean; evaluatedByCode: Map<string, ModEvaluation>;
+  recommendedCodes: Set<string>; topRecommendation?: string; filtered: boolean; matchingIds: Set<string>;
+  onSelect: (node: ModTreeNode) => void;
+}) {
+  return <>
+    {edges.map((edge) => {
+      const from = graphNodeLookup.get(edge.from);
+      const to = graphNodeLookup.get(edge.to);
+      if (!from || !to) return null;
+      const points = (edge.points?.length ? edge.points : [from, to]).map((point) => `${point.x},${point.y}`).join(" ");
+      return <g key={edge.objectName} className={filtered && !matchingIds.has(from.key) && !matchingIds.has(to.key) ? "mod-tree-link is-muted" : "mod-tree-link"}><polyline points={points} className="mod-tree-edge-shadow" /><polyline points={points} className="mod-tree-edge" /></g>;
+    })}
+    <g className="mod-tree-recommendation-halos" aria-hidden="true" pointerEvents="none">
+      {nodes.filter(node => recommendedCodes.has(node.key)).map(node => <g key={node.key} data-recommended-code={node.key} transform={`translate(${node.x} ${node.y})`} className={`mod-tree-recommendation-halo ${node.key === topRecommendation ? "is-top" : ""} ${filtered && !matchingIds.has(node.key) ? "is-muted" : ""}`}><path d={nodeFramePath(nodePresentation(node).radius)} className="mod-tree-recommendation-ripple" /></g>)}
+    </g>
+    {nodes.map((node) => {
+      const isSelected = node.key === selectedId;
+      const evaluation = ready ? evaluatedByCode.get(node.key) : undefined;
+      const progress = nodeProgress(evaluation, node.maxLevel);
+      const unaffordable = nodeUnaffordable(evaluation, node.maxLevel);
+      const levelText = evaluation ? nodeLevelText(evaluation.level, node.maxLevel) : "—/—";
+      const { radius } = nodePresentation(node);
+      const { iconSize, iconX, iconY, codeY, codeFontSize, codeWidth, codeHeight, levelY, levelFontSize } = nodeContentLayout(node, levelText);
+      const description = `${node.label}: ${node.name} · ${recommendationCopy[language].states[progress]}${unaffordable ? ` · ${recommendationCopy[language].short}` : ""} · ${levelText}${node.key === topRecommendation ? ` · ${recommendationCopy[language].first}` : ""}`;
+      return <g key={node.key} data-node-key={node.key} data-progress={progress} data-unaffordable={unaffordable} transform={`translate(${node.x} ${node.y})`} className={`mod-tree-node progress-${progress} ${unaffordable ? "is-unaffordable" : ""} ${isSelected ? "is-selected" : ""} ${recommendedCodes.has(node.key) ? "is-recommended" : ""} ${node.key === topRecommendation ? "is-top-recommendation" : ""} ${filtered && !matchingIds.has(node.key) ? "is-muted" : ""}`} role="button" tabIndex={isSelected ? 0 : -1} aria-label={description} aria-pressed={isSelected} onClick={(event) => { if (event.detail === 0) onSelect(node); }} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.stopPropagation(); onSelect(node); } }}>
+        <title>{description}</title>
+        <path d={nodeFramePath(radius)} className="mod-tree-node-frame" />
+        <svg className="mod-tree-node-icon" x={iconX} y={iconY} width={iconSize} height={iconSize} overflow="visible" aria-hidden="true"><ModTreeIcon node={node} /></svg>
+        <rect className="mod-tree-code-badge" x={-codeWidth / 2} y={codeY - codeHeight / 2} width={codeWidth} height={codeHeight} rx=".8" aria-hidden="true" />
+        <text className="mod-tree-node-code" textAnchor="middle" y={codeY} dominantBaseline="central" style={{ fontSize: codeFontSize }}>{node.label}</text>
+        <text className="mod-tree-node-level" textAnchor="middle" y={levelY} dominantBaseline="central" style={{ fontSize: levelFontSize }}>{levelText}</text>
+        {(progress === "maxed" || unaffordable) && <g className="mod-tree-node-state-mark" transform={`translate(${radius * .76} ${-radius * .76})`} aria-hidden="true" pointerEvents="none"><circle r="3.4" /><path d={progress === "maxed" ? "M -1.6 0 L -.4 1.2 L 1.8 -1.3" : "M -1.5 0 H 1.5"} /></g>}
+      </g>;
+    })}
+  </>;
+});
 export default function ModTree({ language, profile = emptyProfile, recommendationCount = DEFAULT_RECOMMENDATION_COUNT }: { language: Language; profile?: PlayerProfile; recommendationCount?: number }) {
   const isKorean = language === "ko";
   const [query, setQuery] = useState("");
@@ -68,22 +107,25 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
   const lastNodeClick = useRef<NodeClick | null>(null);
   const pendingDoubleClick = useRef<string | null>(null);
   const viewportRef = useRef(viewport);
+  const pendingViewportRef = useRef<Viewport | null>(null);
+  const viewportFrameRef = useRef<number | null>(null);
   const instanceId = useId().replace(/:/g, "");
   const helpId = `${instanceId}-help`;
   const overviewContentId = `${instanceId}-overview-content`;
   const queryText = query.trim().toLowerCase();
-  const nodeLookup = useMemo(() => new Map(nodes.map((node) => [node.key, node])), []);
+  const nodeLookup = graphNodeLookup;
   const matches = useMemo(() => nodes.filter((node) => !queryText || `${node.label} ${node.name}`.toLowerCase().includes(queryText)), [queryText]);
   const matchingIds = useMemo(() => new Set(matches.map((node) => node.key)), [matches]);
   const recommendations = useModRecommendations(profile);
   const gameDisplay = useGameDisplayProfile(profile, recommendations.state, recommendations.ready);
   const evaluatedByCode = useMemo(() => new Map(recommendations.evaluations.map(row => [row.code, row])), [recommendations.evaluations]);
   const visibleRecommendationCount = restoreRecommendationCount(recommendationCount);
-  const recommendedCodes = new Set(recommendationsVisible ? recommendations.ranked.slice(0, visibleRecommendationCount).map(row => row.code) : []);
+  const recommendedCodes = useMemo(() => new Set(recommendationsVisible ? recommendations.ranked.slice(0, visibleRecommendationCount).map(row => row.code) : []), [recommendationsVisible, recommendations.ranked, visibleRecommendationCount]);
   const topRecommendation = recommendationsVisible ? recommendations.ranked[0]?.code : undefined;
   const filtered = Boolean(queryText);
 
   useEffect(() => { viewportRef.current = viewport; }, [viewport]);
+  useEffect(() => () => { if (viewportFrameRef.current !== null) cancelAnimationFrame(viewportFrameRef.current); }, []);
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
@@ -106,10 +148,10 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
   }, []);
 
   const updateScale = (factor: number) => setViewport((current) => zoomViewport(current, current.scale * factor, { x: canvas.width / 2, y: canvas.height / 2 }));
-  const selectNode = (node: ModTreeNode, focus = false) => {
+  const selectNode = useCallback((node: ModTreeNode, focus = false) => {
     setSelectedId(node.key);
     if (focus) setViewport((current) => focusViewport(node, Math.max(current.scale, 3), canvas));
-  };
+  }, []);
   const purchaseNode = (code: string) => {
     if (!recommendationsVisible) return;
     if (recommendations.applyOne(code)) setPurchaseNotice(`${recommendationCopy[language].purchaseDone}: ${code}`);
@@ -130,15 +172,22 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
     const point = svgPoint(event.currentTarget, event.clientX, event.clientY);
     if (!point) return;
     if (!drag.moved && Math.hypot(event.clientX - drag.client.x, event.clientY - drag.client.y) < 5) return;
-    drag.moved = true;
-    setIsDragging(true);
-    setViewport(panViewport(drag.viewport, drag.start, point));
+    if (!drag.moved) { drag.moved = true; setIsDragging(true); }
+    pendingViewportRef.current = panViewport(drag.viewport, drag.start, point);
+    if (viewportFrameRef.current === null) viewportFrameRef.current = requestAnimationFrame(() => {
+      viewportFrameRef.current = null;
+      const next = pendingViewportRef.current;
+      pendingViewportRef.current = null;
+      if (next) setViewport(next);
+    });
   };
   const endDrag = (event: PointerEvent<SVGSVGElement>, cancelled = false) => {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
     dragRef.current = null;
     setIsDragging(false);
+    if (viewportFrameRef.current !== null) { cancelAnimationFrame(viewportFrameRef.current); viewportFrameRef.current = null; }
+    if (pendingViewportRef.current) { setViewport(pendingViewportRef.current); pendingViewportRef.current = null; }
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
     if (!cancelled && !drag.moved && drag.nodeKey) {
       const node = nodeLookup.get(drag.nodeKey);
@@ -185,40 +234,7 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
             <defs><pattern id={`${instanceId}-grid`} width="30" height="30" patternUnits="userSpaceOnUse"><path className="mod-tree-grid-line" d="M 30 0 L 0 0 0 30" fill="none" strokeWidth="1" /></pattern></defs>
             <rect width={canvas.width} height={canvas.height} className="mod-tree-backdrop" /><rect width={canvas.width} height={canvas.height} fill={`url(#${instanceId}-grid)`} />
             <g transform={`translate(${viewport.x} ${viewport.y}) scale(${viewport.scale})`}>
-              {edges.map((edge) => {
-                const from = nodeLookup.get(edge.from);
-                const to = nodeLookup.get(edge.to);
-                if (!from || !to) return null;
-                const points = (edge.points?.length ? edge.points : [from, to]).map((point) => `${point.x},${point.y}`).join(" ");
-                return <g key={edge.objectName} className={filtered && !matchingIds.has(from.key) && !matchingIds.has(to.key) ? "mod-tree-link is-muted" : "mod-tree-link"}><polyline points={points} className="mod-tree-edge-shadow" /><polyline points={points} className="mod-tree-edge" /></g>;
-              })}
-              <g className="mod-tree-recommendation-halos" aria-hidden="true" pointerEvents="none">
-                {nodes.filter(node => recommendedCodes.has(node.key)).map(node => {
-                  const path = nodeFramePath(nodePresentation(node).radius);
-                  return <g key={node.key} data-recommended-code={node.key} transform={`translate(${node.x} ${node.y})`} className={`mod-tree-recommendation-halo ${node.key === topRecommendation ? "is-top" : ""} ${filtered && !matchingIds.has(node.key) ? "is-muted" : ""}`}>
-                    <path d={path} className="mod-tree-recommendation-ripple" />
-                  </g>;
-                })}
-              </g>
-              {nodes.map((node) => {
-                const isSelected = node.key === selectedId;
-                const evaluation = recommendations.ready ? evaluatedByCode.get(node.key) : undefined;
-                const progress = nodeProgress(evaluation, node.maxLevel);
-                const unaffordable = nodeUnaffordable(evaluation, node.maxLevel);
-                const levelText = evaluation ? nodeLevelText(evaluation.level, node.maxLevel) : "—/—";
-                const { radius } = nodePresentation(node);
-                const { iconSize, iconX, iconY, codeY, codeFontSize, codeWidth, codeHeight, levelY, levelFontSize } = nodeContentLayout(node, levelText);
-                const description = `${node.label}: ${node.name} · ${recommendationCopy[language].states[progress]}${unaffordable ? ` · ${recommendationCopy[language].short}` : ""} · ${levelText}${node.key === topRecommendation ? ` · ${recommendationCopy[language].first}` : ""}`;
-                return <g key={node.key} data-node-key={node.key} data-progress={progress} data-unaffordable={unaffordable} transform={`translate(${node.x} ${node.y})`} className={`mod-tree-node progress-${progress} ${unaffordable ? "is-unaffordable" : ""} ${isSelected ? "is-selected" : ""} ${recommendedCodes.has(node.key) ? "is-recommended" : ""} ${node.key === topRecommendation ? "is-top-recommendation" : ""} ${filtered && !matchingIds.has(node.key) ? "is-muted" : ""}`} role="button" tabIndex={isSelected ? 0 : -1} aria-label={description} aria-pressed={isSelected} onClick={(event) => { if (event.detail === 0) selectNode(node); }} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.stopPropagation(); selectNode(node); } }}>
-                  <title>{description}</title>
-                  <path d={nodeFramePath(radius)} className="mod-tree-node-frame" />
-                  <svg className="mod-tree-node-icon" x={iconX} y={iconY} width={iconSize} height={iconSize} overflow="visible" aria-hidden="true"><ModTreeIcon node={node} /></svg>
-                  <rect className="mod-tree-code-badge" x={-codeWidth / 2} y={codeY - codeHeight / 2} width={codeWidth} height={codeHeight} rx=".8" aria-hidden="true" />
-                  <text className="mod-tree-node-code" textAnchor="middle" y={codeY} dominantBaseline="central" style={{ fontSize: codeFontSize }}>{node.label}</text>
-                  <text className="mod-tree-node-level" textAnchor="middle" y={levelY} dominantBaseline="central" style={{ fontSize: levelFontSize }}>{levelText}</text>
-                  {(progress === "maxed" || unaffordable) && <g className="mod-tree-node-state-mark" transform={`translate(${radius * .76} ${-radius * .76})`} aria-hidden="true" pointerEvents="none"><circle r="3.4" /><path d={progress === "maxed" ? "M -1.6 0 L -.4 1.2 L 1.8 -1.3" : "M -1.5 0 H 1.5"} /></g>}
-                </g>;
-              })}
+              <ModTreeGraph language={language} selectedId={selectedId} ready={recommendations.ready} evaluatedByCode={evaluatedByCode} recommendedCodes={recommendedCodes} topRecommendation={topRecommendation} filtered={filtered} matchingIds={matchingIds} onSelect={selectNode} />
             </g>
           </svg>
         </div>

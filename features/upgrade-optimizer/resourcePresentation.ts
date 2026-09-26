@@ -10,7 +10,10 @@ export type UpgradeVisualResource =
   | "levelPoints"
   | "tick"
   | "operations"
-  | "loopMods";
+  | "loopMods"
+  | "costReduction"
+  | "rankPoints"
+  | "technology";
 
 export type UpgradeResourcePresentation = Readonly<{
   label: string;
@@ -35,6 +38,9 @@ export const UPGRADE_RESOURCE_PRESENTATION: Readonly<Record<UpgradeVisualResourc
   tick: { label: "Tick", accent: "#df923e", rgb: "223,146,62", icon: "./assets/resources/tick.png" },
   operations: { label: "Operations", accent: "#ffd40a", rgb: "255,212,10", icon: "./assets/resources/operations.png" },
   loopMods: { label: "Loop Mods", accent: "#d90f2d", rgb: "217,15,45", icon: "./assets/resources/loop-mods.png" },
+  costReduction: { label: "Cost Reduction", accent: "#9faab8", rgb: "159,170,184", icon: "./assets/resources/cost-reduction.png" },
+  rankPoints: { label: "Rank Points", accent: "#ffffff", rgb: "255,255,255", icon: "./assets/resources/rank-points.png" },
+  technology: { label: "Technology", accent: "#ff9a31", rgb: "255,154,49", icon: "./assets/resources/technology.png" },
 });
 
 const generatorPresentation: Readonly<Record<GeneratorId, Readonly<{ label: string; accent: string; rgb: string }>>> = Object.freeze({

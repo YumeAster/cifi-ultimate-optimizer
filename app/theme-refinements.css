@@ -87,7 +87,7 @@
 .dashboard-shell .upgrade-multiplier-chip strong b,
 .dashboard-shell .upgrade-multiplier-chip strong .anticon { color:var(--chip-ink); }
 .dashboard-shell .upgrade-chip-label :is(img,svg) { filter:none; }
-.dashboard-shell .upgrade-chip-label .generator-source-icon { filter:drop-shadow(0 0 3px color-mix(in srgb,var(--generator-icon-accent) 72%,transparent)); }
+.dashboard-shell .upgrade-chip-label .generator-source-icon { filter:drop-shadow(0 0 3px var(--chip-accent)); }
 .dashboard-shell .generator-matrix-row-label { color:color-mix(in srgb,var(--resource-accent) 35%,var(--content-ink)); }
 .dashboard-shell .settings-option .ant-typography-secondary { color:var(--content-muted); }
 .dashboard-shell .ant-btn-primary:not(:disabled) { color:#fff; background:var(--action-bg); border-color:var(--action-bg); }

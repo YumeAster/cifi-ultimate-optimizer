@@ -4,7 +4,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { SHIPS, INSTALL_ROWS, getShipInstalls } from "../../lib/cifi/ship-install/catalog";
+import { SHIPS, SHIP_MAX_EVOLUTION, INSTALL_ROWS, getShipInstalls } from "../../lib/cifi/ship-install/catalog";
 import { evaluateInstall, rankInstalls, generateSequence, aggregateEffects, validateInstallSequence } from "../../lib/cifi/ship-install/engine";
 import { SHIP_INSTALL_EXTRA_FIELDS, combineModLevels } from "../../lib/cifi/ship-install/profile";
 import type { InstallEvaluation, InstallSequence, RecommendationMode, ShipInstallContext } from "../../lib/cifi/ship-install/types";
@@ -75,6 +75,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
     return () => { active = false; };
   }, []);
   const ship = state.selectedShip;
+  const maxEvolution = SHIP_MAX_EVOLUTION[ship];
   const workspace = state.ships[ship];
   const slot = workspace.selectedSlot;
   const nodes = getShipInstalls(ship);
@@ -157,7 +158,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
           <label className="si-stat">SHIP RANK<Icon src={glyph("rank")} /><input aria-label={`${ship} Rank`} inputMode="numeric" value={draft[`${ship.toLowerCase()}Rank`] ?? ""} onChange={event => onInput(`${ship.toLowerCase()}Rank`, event.target.value)} disabled={!enabled} aria-invalid={Boolean(errors[`${ship.toLowerCase()}Rank`])} placeholder="—" />{errors[`${ship.toLowerCase()}Rank`] && <small className="si-error">{errors[`${ship.toLowerCase()}Rank`]}</small>}</label>
           <label className="si-stat" title={t("배분한 포인트를 포함한 총 Install 포인트. Ship Rank와는 별개야.", "Total Install points, including allocated points. Separate from Ship Rank.")}>CURRENT INSTALLS<Icon src={glyph("installs")} /><input aria-label="Current Installs" inputMode="numeric" value={workspace.draftTotalPoints} onChange={event => edit("totalPoints", event.target.value)} disabled={!enabled} maxLength={10} /></label>
           <label className="si-stat">CREW PRINTED<Icon src={glyph("crew")} /><input aria-label={`${ship} Crew`} inputMode="numeric" value={draft[`${ship.toLowerCase()}Crew`] ?? ""} onChange={event => onInput(`${ship.toLowerCase()}Crew`, event.target.value)} disabled={!enabled} aria-invalid={Boolean(errors[`${ship.toLowerCase()}Crew`])} placeholder="—" />{errors[`${ship.toLowerCase()}Crew`] && <small className="si-error">{errors[`${ship.toLowerCase()}Crew`]}</small>}</label>
-          <div className="si-stat si-evolution"><label>EVOLUTION <select aria-label="Evolution" value={workspace.evolution} disabled={!enabled} onChange={event => edit("evolution", event.target.value)}>{Array.from({ length: 8 }, (_, n) => <option key={n} value={n}>{n} / 7</option>)}</select></label><div className="si-stars">{Array.from({ length: 7 }, (_, n) => <button key={n} aria-label={`Evolution ${n + 1}`} aria-pressed={workspace.evolution > n} disabled={!enabled} onClick={() => edit("evolution", String(workspace.evolution === n + 1 ? n : n + 1))}><span>{workspace.evolution > n ? "★" : ""}</span></button>)}</div></div>
+          <div className="si-stat si-evolution"><label>EVOLUTION <select aria-label="Evolution" value={workspace.evolution} disabled={!enabled} onChange={event => edit("evolution", event.target.value)}>{Array.from({ length: maxEvolution + 1 }, (_, n) => <option key={n} value={n}>{n} / {maxEvolution}</option>)}</select></label><div className="si-stars">{Array.from({ length: maxEvolution }, (_, n) => <button key={n} aria-label={`Evolution ${n + 1}`} aria-pressed={workspace.evolution > n} disabled={!enabled} onClick={() => edit("evolution", String(workspace.evolution === n + 1 ? n : n + 1))}><span>{workspace.evolution > n ? "★" : ""}</span></button>)}</div></div>
         </div>
         <details className="si-advanced"><summary>{t("추가 계산 입력", "Additional calculation inputs")}</summary><div className="si-extra-grid">{SHIP_INSTALL_EXTRA_FIELDS.map(field => sharedInput(field.key, ko ? field.label : field.enLabel))}<label className="si-check"><input type="checkbox" checked={workspace.capExpanded} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { capExpanded: event.target.checked }))} />FA1 · {t("최대 레벨 ×5", "Level cap ×5")}</label><small>{t("진화는 진행도 기록용이야. 장비·배지·진화 보정은 아직 자동 반영하지 않아.", "Evolution records progress only. Gear, badge and evolution modifiers are not applied automatically.")}</small></div></details>
       </section>

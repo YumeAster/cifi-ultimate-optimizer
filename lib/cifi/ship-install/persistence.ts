@@ -1,4 +1,5 @@
 import type { ShipId } from "../upgrades/types.ts";
+import { SHIP_MAX_EVOLUTION } from "./catalog.ts";
 
 /** Separate from both the shared player-input document and weight presets. */
 export const SHIP_INSTALL_STORAGE_KEY = "cifi-ultimate.ship-install.v1";
@@ -124,7 +125,7 @@ function sumLevels(levels: SavedShipLevels): number {
 }
 
 /** Never restore a partial/forged queue whose replay differs from its target. */
-function restoreLoadout(raw: unknown): SavedShipLoadout | null {
+function restoreLoadout(raw: unknown, ship: ShipId): SavedShipLoadout | null {
   if (!record(raw)) return null;
   const baselineLevels = restoreLevels(own(raw, "baselineLevels"), true);
   const targetLevels = restoreLevels(own(raw, "targetLevels"), true);
@@ -136,7 +137,7 @@ function restoreLoadout(raw: unknown): SavedShipLoadout | null {
   const contextFingerprint = own(raw, "contextFingerprint");
   const savedAt = own(raw, "savedAt");
   if (!baselineLevels || !targetLevels || !Array.isArray(rawSteps) || rawSteps.length > MAX_SAVED_SHIP_STEPS || !isMode(mode)
-    || !safeInteger(totalPoints, MAX_SHIP_INSTALL_POINTS) || !safeInteger(evolution, 7) || typeof capExpanded !== "boolean"
+    || !safeInteger(totalPoints, MAX_SHIP_INSTALL_POINTS) || !safeInteger(evolution, SHIP_MAX_EVOLUTION[ship]) || typeof capExpanded !== "boolean"
     || typeof contextFingerprint !== "string" || !contextFingerprint.length || contextFingerprint.length > 2_048
     || typeof savedAt !== "string" || savedAt.length > 40 || !Number.isFinite(Date.parse(savedAt))) return null;
   const replay = { ...baselineLevels };
@@ -177,15 +178,23 @@ function restoreWorkspace(raw: unknown, ship: ShipId, issues: string[]): ShipIns
   const rawTotal = own(raw, "totalPoints");
   const rawEvolution = own(raw, "evolution");
   let totalPoints = safeInteger(rawTotal, MAX_SHIP_INSTALL_POINTS) ? rawTotal : 0;
-  let evolution = safeInteger(rawEvolution, 7) ? rawEvolution : 0;
-  if (!safeInteger(rawTotal, MAX_SHIP_INSTALL_POINTS) || !safeInteger(rawEvolution, 7)) issues.push(`${ship}: invalid progress repaired`);
+  const maxEvolution = SHIP_MAX_EVOLUTION[ship];
+  let evolution = safeInteger(rawEvolution, 7) ? Math.min(rawEvolution, maxEvolution) : 0;
+  if (!safeInteger(rawTotal, MAX_SHIP_INSTALL_POINTS) || !safeInteger(rawEvolution, maxEvolution)) issues.push(`${ship}: invalid progress repaired`);
   const rawDraftTotal = own(raw, "draftTotalPoints");
   const rawDraftEvolution = own(raw, "draftEvolution");
   const draftTotalPoints = rawInput(rawDraftTotal, totalPoints);
-  const draftEvolution = rawInput(rawDraftEvolution, evolution);
+  let draftEvolution = rawInput(rawDraftEvolution, evolution);
+  // Older versions offered 0–7 for every ship. Preserve progress while
+  // repairing those impossible values to the ship's real maximum.
+  const oldDraftValue = parseShipInstallInteger(draftEvolution, 7);
+  if (oldDraftValue !== null && oldDraftValue > maxEvolution) {
+    draftEvolution = String(maxEvolution);
+    issues.push(`${ship}: evolution above ship maximum repaired`);
+  }
   if ((rawDraftTotal !== undefined && rawDraftTotal !== draftTotalPoints) || (rawDraftEvolution !== undefined && rawDraftEvolution !== draftEvolution)) issues.push(`${ship}: invalid progress input repaired`);
   totalPoints = parseShipInstallInteger(draftTotalPoints, MAX_SHIP_INSTALL_POINTS) ?? totalPoints;
-  evolution = parseShipInstallInteger(draftEvolution, 7) ?? evolution;
+  evolution = parseShipInstallInteger(draftEvolution, maxEvolution) ?? evolution;
   const rawExcluded = own(raw, "excluded");
   const excluded = Array.isArray(rawExcluded) ? [...new Set(rawExcluded.slice(0, 100).filter(isPosition))].sort((a, b) => a - b) : [];
   if (!Array.isArray(rawExcluded) || rawExcluded.length !== excluded.length) issues.push(`${ship}: invalid exclusions repaired`);
@@ -196,7 +205,7 @@ function restoreWorkspace(raw: unknown, ship: ShipId, issues: string[]): ShipIns
   const loadouts = { ...defaults.loadouts };
   for (const slot of SHIP_INSTALL_SLOTS) {
     const candidate = own(own(raw, "loadouts"), slot);
-    loadouts[slot] = restoreLoadout(candidate);
+    loadouts[slot] = restoreLoadout(candidate, ship);
     if (candidate !== null && candidate !== undefined && loadouts[slot] === null) issues.push(`${ship}: invalid Loadout ${slot} omitted`);
   }
   return { levels, draftLevels, totalPoints, draftTotalPoints, evolution, draftEvolution, excluded, mode: isMode(mode) ? mode : "weights", selectedSlot: isSlot(selectedSlot) ? selectedSlot : 1, capExpanded: typeof capExpanded === "boolean" ? capExpanded : false, loadouts };
@@ -259,7 +268,7 @@ export function updateShipInstallInput(state: ShipInstallPersistentState, ship: 
     return withWorkspace(state, ship, { ...previous, draftLevels: { ...previous.draftLevels, [field]: raw }, levels: { ...previous.levels, [field]: parsed ?? previous.levels[field] } });
   }
   if (field !== "totalPoints" && field !== "evolution") throw new Error("Unknown Ship Install input");
-  const parsed = parseShipInstallInteger(raw, field === "evolution" ? 7 : MAX_SHIP_INSTALL_POINTS);
+  const parsed = parseShipInstallInteger(raw, field === "evolution" ? SHIP_MAX_EVOLUTION[ship] : MAX_SHIP_INSTALL_POINTS);
   return withWorkspace(state, ship, field === "totalPoints" ? { ...previous, draftTotalPoints: raw, totalPoints: parsed ?? previous.totalPoints } : { ...previous, draftEvolution: raw, evolution: parsed ?? previous.evolution });
 }
 export function updateShipInstallWorkspace(state: ShipInstallPersistentState, ship: ShipId, patch: { mode?: SavedShipRecommendationMode; excluded?: readonly number[]; capExpanded?: boolean }): ShipInstallPersistentState {
@@ -278,7 +287,7 @@ export function setShipInstallLevels(state: ShipInstallPersistentState, ship: Sh
 }
 export function saveShipInstallLoadout(state: ShipInstallPersistentState, ship: ShipId, slot: ShipInstallSlot, plan: SavedShipLoadout): ShipInstallPersistentState {
   if (!isShip(ship) || !isSlot(slot)) throw new Error("Unknown Ship Install slot");
-  const validated = restoreLoadout(plan);
+  const validated = restoreLoadout(plan, ship);
   if (!validated) throw new Error("Invalid or oversized Ship Install purchase plan");
   const previous = state.ships[ship];
   return withWorkspace(state, ship, { ...previous, selectedSlot: slot, loadouts: { ...previous.loadouts, [slot]: validated } });

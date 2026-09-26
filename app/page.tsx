@@ -3,12 +3,14 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography } from "antd";
 import koKR from "antd/locale/ko_KR";
-import { AppstoreOutlined, CheckCircleFilled, DatabaseOutlined, DeleteOutlined, DollarCircleOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, SketchOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
+import { AppstoreOutlined, CheckCircleFilled, DatabaseOutlined, DeleteOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
 import ModTree from "../features/mod-tree/ModTree";
 import { GAME_DISPLAY_EXTRA_INPUTS as gameDisplayInputs, migrateGameDisplayInputs } from "../lib/cifi/mod-tree/gameDisplayInputs";
 import { recommendationCopy } from "../features/mod-tree/recommendationCopy";
 import { DEFAULT_RECOMMENDATION_COUNT, MOD_RECOMMENDATION_COUNT_KEY, RECOMMENDATION_COUNTS, restoreRecommendationCount } from "../lib/cifi/mod-tree/preferences";
 import UpgradeOptimizer from "../features/upgrade-optimizer/UpgradeOptimizer";
+import ResourceIcon from "../features/upgrade-optimizer/ResourceIcon";
+import { UPGRADE_RESOURCE_PRESENTATION, type UpgradeVisualResource } from "../features/upgrade-optimizer/resourcePresentation";
 import ShipInstall from "../features/ship-install/ShipInstall";
 import { SHIP_INSTALL_EXTRA_FIELDS } from "../lib/cifi/ship-install/profile";
 import { getInputFieldHelp, inputFieldLabels, inputSectionCopy, localizedText } from "./content/inputCopy";
@@ -21,7 +23,7 @@ import "./theme-refinements.css";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
-const APP_VERSION = "v0.4.1";
+const APP_VERSION = "v0.4.2";
 
 type FieldGroup = "weights" | "player" | "ship";
 type OptimizerTab = "diamonds" | "tokens";
@@ -111,6 +113,10 @@ const weightPalette: Record<string, ResourcePalette> = {
   costReduction: shipPalette.Cradle,
   rankPoints: { accent: "#ffffff", ink: "#536171", surface: "#ffffff", border: "#d9dee6", glow: "rgba(114, 125, 142, .16)" },
 };
+const playerSectionIcons: Readonly<Record<string, UpgradeVisualResource>> = {
+  generator: "generator", level: "levelPoints", technology: "technology", loop: "loopMods",
+  shards: "shards", research: "research", academy: "academyPoints", gameDisplay: "operations",
+};
 const shipFields: FieldDefinition[] = shipNames.flatMap((ship) => [
   { key: `${ship.toLowerCase()}Rank`, label: `${ship} Rank`, kind: "integer", group: "ship" },
   { key: `${ship.toLowerCase()}Crew`, label: `${ship} Crew`, kind: "integer", group: "ship" },
@@ -170,8 +176,8 @@ function tabLabel(tab: ActiveTab, language: Language) {
 
 const mobileTabs = [
   { key: "inputs", icon: <EditOutlined />, ko: "입력", en: "Inputs" },
-  { key: "diamonds", icon: <SketchOutlined />, ko: "다이아", en: "Diamond" },
-  { key: "tokens", icon: <DollarCircleOutlined />, ko: "토큰", en: "Token" },
+  { key: "diamonds", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.diamond.icon} />, ko: "다이아", en: "Diamond" },
+  { key: "tokens", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.token.icon} />, ko: "토큰", en: "Token" },
   { key: "modTree", icon: <AppstoreOutlined />, ko: "모드", en: "Mod Tree" },
   { key: "shipInstall", icon: <RocketOutlined />, ko: "함선", en: "Ship" },
   { key: "settings", icon: <SettingOutlined />, ko: "설정", en: "Settings" },
@@ -372,7 +378,7 @@ function InputManager() {
     const error = errors[field.key];
     const palette = weightPalette[field.key];
     return <section className={`weight-input-card ${error ? "has-error" : ""}`} style={resourceCardStyle(palette)} key={field.key}>
-      <div className="weight-card-heading"><span className="weight-card-dot" /><div><h4>{fieldLabel(field, language)}</h4><p>{text.recommended} {field.recommended}</p></div></div>
+      <div className="weight-card-heading"><ResourceIcon className="weight-card-icon" icon={UPGRADE_RESOURCE_PRESENTATION[field.key as UpgradeVisualResource].icon} color={field.key === "rankPoints" ? undefined : palette.accent} /><div><h4>{fieldLabel(field, language)}</h4><p>{text.recommended} {field.recommended}</p></div></div>
       <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="numeric" /></Tooltip>
       {error && <small>{error}</small>}
     </section>;
@@ -455,7 +461,7 @@ function InputManager() {
           const sectionFields = fields.filter((field) => section.keys.includes(field.key));
           const filledCount = sectionFields.filter((field) => Boolean(draft[field.key]?.trim())).length;
           return <section className={`player-input-card section-${section.key} ${section.wide ? "is-wide" : ""}`} style={resourceCardStyle(section.palette)} key={section.key}>
-            <div className="player-card-heading"><span className="player-card-dot" /><div><h4>{language === "ko" ? section.title : section.enTitle}</h4><p>{language === "ko" ? section.description : section.enDescription}</p></div><Badge className="player-input-count" count={`${filledCount} / ${sectionFields.length}`} showZero /></div>
+            <div className="player-card-heading"><ResourceIcon className="player-card-icon" icon={UPGRADE_RESOURCE_PRESENTATION[playerSectionIcons[section.key]].icon} color={section.palette.accent} /><div><h4>{language === "ko" ? section.title : section.enTitle}</h4><p>{language === "ko" ? section.description : section.enDescription}</p></div><Badge className="player-input-count" count={`${filledCount} / ${sectionFields.length}`} showZero /></div>
             {section.key === "generator" ? <><div className="generator-matrix-desktop">{renderGeneratorMatrix(sectionFields)}</div><div className="generator-matrix-mobile"><div className="player-field-grid generator-grid">{sectionFields.map((field) => renderPlayerField(field))}</div></div></> : section.key === "technology" ? <><div className="generator-tech-desktop">{renderGeneratorTechMatrix(sectionFields)}</div><div className="generator-tech-mobile">{renderGeneratorTechCards(sectionFields)}</div></> : <div className="player-field-grid">{sectionFields.map((field) => renderPlayerField(field))}</div>}
           </section>;
         })}
@@ -478,8 +484,8 @@ function InputManager() {
       <Menu className="sidebar-menu" theme="dark" mode="inline" selectedKeys={[activeTab]} defaultOpenKeys={["upgrade-optimizer"]} onClick={({ key }) => { if (key !== "upgrade-optimizer") switchTab(key as ActiveTab); }} items={[
         { key: "inputs", icon: <EditOutlined />, label: text.inputManager },
         { key: "upgrade-optimizer", icon: <TrophyOutlined />, label: text.upgradeOptimizer, children: [
-          { key: "diamonds", className: "optimizer-menu-diamond", icon: <SketchOutlined />, label: text.diamonds },
-          { key: "tokens", className: "optimizer-menu-token", icon: <DollarCircleOutlined />, label: text.tokens },
+          { key: "diamonds", className: "optimizer-menu-diamond", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.diamond.icon} />, label: text.diamonds },
+          { key: "tokens", className: "optimizer-menu-token", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.token.icon} />, label: text.tokens },
         ] },
         { key: "modTree", icon: <AppstoreOutlined />, label: language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations" },
         { key: "shipInstall", icon: <AppstoreOutlined />, label: "Ship Install" },

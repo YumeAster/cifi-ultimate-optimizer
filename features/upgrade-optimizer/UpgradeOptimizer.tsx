@@ -2,13 +2,14 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { App as AntApp, Badge, Button, Input, InputNumber, Popconfirm, Progress, Tag, Tooltip } from "antd";
-import { ArrowRightOutlined, CheckCircleFilled, CloseOutlined, DollarCircleOutlined, LockOutlined, ReloadOutlined, SketchOutlined, ThunderboltFilled } from "@ant-design/icons";
+import { ArrowRightOutlined, CheckCircleFilled, CloseOutlined, LockOutlined, ReloadOutlined, ThunderboltFilled } from "@ant-design/icons";
 import { evaluateUpgrade, parseCifiNumber, rankUpgrades, simulateBudget } from "../../lib/cifi/upgrades/engine";
 import { addCifiDecimals, compareCifiDecimals, decimalToString, parseCifiDecimal, subtractCifiDecimals } from "../../lib/cifi/upgrades/decimal";
 import { DIAMOND_UPGRADES, TOKEN_UPGRADES, UPGRADE_RULESET_META } from "../../lib/cifi/upgrades/rules";
 import type { Currency, GeneratorId, OptimizerState, ShipId, UpgradeCategory, UpgradeRule, UpgradeWeights } from "../../lib/cifi/upgrades/types";
 import { getGeneratorPresentation, getUpgradeVisualResources, UPGRADE_RESOURCE_PRESENTATION, type UpgradeVisualResource } from "./resourcePresentation";
 import { blankStoredProfile, restoreOptimizerProfile, type StoredOptimizerProfile } from "../../lib/cifi/upgrades/profile";
+import ResourceIcon from "./ResourceIcon";
 
 type Language = "ko" | "en";
 type OptimizerTab = "diamonds" | "tokens";
@@ -31,9 +32,7 @@ type UpgradeCardStyle = CSSProperties & {
 
 function GeneratorSourceIcon({ generator }: Readonly<{ generator: GeneratorId }>) {
   const palette = getGeneratorPresentation(generator);
-  return <img className="generator-source-icon" aria-hidden="true" src={UPGRADE_RESOURCE_PRESENTATION.generator.icon} alt="" style={{
-    "--generator-icon-accent": palette.accent,
-  } as CSSProperties} />;
+  return <ResourceIcon className="generator-source-icon" icon={UPGRADE_RESOURCE_PRESENTATION.generator.icon} color={palette.accent} />;
 }
 
 function upgradeCardStyle(resources: readonly UpgradeVisualResource[], generator?: GeneratorId, oneTimeAccent?: string): UpgradeCardStyle {
@@ -290,7 +289,7 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
       <p className="optimizer-local-notice">{language === "ko" ? "이 화면은 구매 기록과 예상 계획만 편집합니다. 실제 게임의 재화는 사용하지 않습니다. 해금은 저장한 진행도를 기준으로 계산합니다." : "This edits local purchase records and plans only. It never spends in-game currency. Unlocks use saved progress."}</p>
       {storageFailed && <p className="optimizer-storage-warning" role="alert">{language === "ko" ? "브라우저 저장소를 읽거나 저장하지 못했습니다. 현재 변경은 새로고침하면 사라질 수 있습니다." : "Browser storage could not be read or saved. Current changes may be lost on reload."}</p>}
       <div className={`optimizer-control-card ${currency === "token" ? "has-time" : ""}`}>
-        <div className="optimizer-currency-mark">{currency === "diamond" ? <SketchOutlined /> : <DollarCircleOutlined />}</div>
+        <div className="optimizer-currency-mark"><ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION[currency].icon} /></div>
         <label className="optimizer-budget-field"><span>{text.budget}</span><Input value={stored.budgets[currency]} status={parsedBudget.invalid ? "error" : undefined} onChange={(event) => commit((current) => ({ ...current, budgets: { ...current.budgets, [currency]: event.target.value } }))} placeholder="0, 12.5k, 2e6" inputMode="text" />{parsedBudget.invalid && <small>{text.invalidBudget}</small>}</label>
         {currency === "token" && <label className="optimizer-time-field"><span>{text.time}</span><InputNumber min={1} max={24} step={0.5} value={stored.longRunHours} addonAfter={text.hours} onChange={(value) => commit((current) => ({ ...current, longRunHours: typeof value === "number" ? value : 24 }))} /></label>}
         <div className="optimizer-profile-link"><span><CheckCircleFilled /> {text.profileLink}</span><strong>{unlockedGenerators} / 8 {text.generators} · {unlockedShips} / 7 {text.ships}</strong><small>{text.profileLinkNote}</small></div>
@@ -326,8 +325,8 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
                 const headingIcons = visualResources.map((resource) => UPGRADE_RESOURCE_PRESENTATION[resource]);
                 return <article className={`optimizer-upgrade-card ${isOneTime ? "is-one-time" : "is-repeatable"} ${isSuggested ? "is-suggested" : ""} ${!evaluation.unlocked ? "is-locked" : ""} ${evaluation.atMax ? "is-maxed" : ""}`} style={upgradeCardStyle(visualResources, primaryGenerator, isOneTime ? oneTimeAccent(evaluation.rule.id) : undefined)} data-upgrade-resources={visualResources.join(" ")} key={evaluation.rule.id}>
                   <div className="optimizer-upgrade-heading">
-                    {isOneTime ? <span className="one-time-letter" aria-hidden="true">{evaluation.rule.id.slice(0, 1)}</span> : <span className="upgrade-leading-icon">{primaryGenerator ? <GeneratorSourceIcon generator={primaryGenerator} /> : <img src={UPGRADE_RESOURCE_PRESENTATION[visualResources[0]].icon} alt="" />}</span>}
-                    <div className="optimizer-upgrade-title"><div className="optimizer-upgrade-meta"><span>{evaluation.rule.id}</span><span className="optimizer-resource-markers" aria-label={resourceLabels} title={resourceLabels}>{headingIcons.map((palette) => <img src={palette.icon} alt="" key={palette.label} />)}</span></div><h4>{evaluation.rule.name}</h4></div>
+                    {isOneTime ? <span className="one-time-letter" aria-hidden="true">{evaluation.rule.id.slice(0, 1)}</span> : <span className="upgrade-leading-icon">{primaryGenerator ? <GeneratorSourceIcon generator={primaryGenerator} /> : <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION[visualResources[0]].icon} color={UPGRADE_RESOURCE_PRESENTATION[visualResources[0]].accent} />}</span>}
+                    <div className="optimizer-upgrade-title"><div className="optimizer-upgrade-meta"><span>{evaluation.rule.id}</span><span className="optimizer-resource-markers" aria-label={resourceLabels} title={resourceLabels}>{headingIcons.map((palette) => <ResourceIcon icon={palette.icon} color={palette.accent} key={palette.label} />)}</span></div><h4>{evaluation.rule.name}</h4></div>
                     <Tooltip title={!evaluation.unlocked ? getUnlockReason(evaluation) : undefined}><Tag icon={!evaluation.unlocked ? <LockOutlined /> : evaluation.atMax ? <CheckCircleFilled /> : undefined}>{status}</Tag></Tooltip>
                     {isOneTime && evaluation.atMax && <Button className="one-time-cancel" size="small" type="text" icon={<CloseOutlined />} onClick={() => updateLevel(evaluation.rule.id, evaluation.rule.maxLevel, 0)}>{language === "ko" ? "구매 취소" : "Undo"}</Button>}
                   </div>
@@ -341,7 +340,7 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
                         ? (chip.amountPerLevel ?? 0) * projectedLevel
                         : multiplierAtLevel(chip.factors ?? [], projectedLevel);
                       return <div className="upgrade-multiplier-chip" key={chip.key} style={{ "--chip-accent": palette.accent, "--chip-rgb": palette.rgb } as CSSProperties}>
-                        <span className="upgrade-chip-label">{chip.generator ? <GeneratorSourceIcon generator={chip.generator} /> : <img src={UPGRADE_RESOURCE_PRESENTATION[chip.resource].icon} alt="" />}{chip.label}</span>
+                        <span className="upgrade-chip-label">{chip.generator ? <GeneratorSourceIcon generator={chip.generator} /> : <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION[chip.resource].icon} color={palette.accent} />}{chip.label}</span>
                         <strong>{chip.kind === "additive" ? "+" : "x"}{formatNumber(currentEffect)} <ArrowRightOutlined /> <b>{chip.kind === "additive" ? "+" : "x"}{formatNumber(projectedEffect)}</b></strong>
                       </div>;
                     })}

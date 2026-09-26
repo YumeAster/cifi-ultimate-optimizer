@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
@@ -30,13 +31,24 @@ test("the static social preview points to an existing PNG", async () => {
 
 test("every resource icon resolves in both deployment modes", async () => {
   const icons = new Set(Object.values(UPGRADE_RESOURCE_PRESENTATION).map((resource) => resource.icon));
-  assert.equal(icons.size, 14);
+  assert.equal(icons.size, 17);
   for (const icon of icons) {
     assert.ok(icon.startsWith("./assets/resources/"), `unexpected resource path: ${icon}`);
     await assertPng(resolve(publicRoot, icon));
   }
   assert.equal(UPGRADE_RESOURCE_PRESENTATION.token.icon, UPGRADE_RESOURCE_PRESENTATION.adTokens.icon);
   assert.notEqual(UPGRADE_RESOURCE_PRESENTATION.token.icon, UPGRADE_RESOURCE_PRESENTATION.arcadePoints.icon);
+});
+
+test("every displayed resource icon matches its exported APK asset", async () => {
+  const provenance = JSON.parse(await readFile(resolve(publicRoot, "assets/resources/provenance.json"), "utf8"));
+  const exported = new Map(provenance.records.map(record => [record.file, record]));
+  for (const icon of new Set(Object.values(UPGRADE_RESOURCE_PRESENTATION).map(resource => resource.icon))) {
+    const file = icon.split("/").at(-1);
+    const record = exported.get(file);
+    assert.ok(record && ["Texture2D", "Sprite"].includes(record.sourceType), file);
+    assert.equal(createHash("sha256").update(await readFile(resolve(publicRoot, icon))).digest("hex"), record.sha256, file);
+  }
 });
 
 test("the Windows launcher keeps the readiness check as a real pipeline", async () => {

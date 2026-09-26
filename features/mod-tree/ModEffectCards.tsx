@@ -1,13 +1,14 @@
-import { ArrowRightOutlined, PercentageOutlined, TrophyOutlined, UnlockOutlined, ToolOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, UnlockOutlined, ToolOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import type { CSSProperties } from "react";
 import type { ModEffectComparison } from "../../lib/cifi/mod-tree/effectComparison";
 import { modEffectPresentation, type ModEffectPresentation } from "./effectPresentation";
 import { recommendationCopy } from "./recommendationCopy";
 import { modContentEffect } from "../../lib/cifi/mod-tree/contentEffects";
 import { getInputFieldLabel } from "../../app/content/inputCopy";
+import ResourceIcon from "../upgrade-optimizer/ResourceIcon";
 
 export function ModEffectIcon({ palette }: { palette: ModEffectPresentation }) {
-  return palette.generator || palette.nodeIcon ? <img className="generator-source-icon" aria-hidden="true" src={palette.icon} alt="" style={{ "--generator-icon-accent": palette.accent } as CSSProperties} /> : palette.glyph === "rank" ? <TrophyOutlined aria-hidden="true" /> : palette.glyph === "cost" ? <PercentageOutlined aria-hidden="true" /> : <img src={palette.icon} alt="" />;
+  return <ResourceIcon className={palette.generator || palette.nodeIcon ? "generator-source-icon" : ""} icon={palette.icon} color={palette.accent} />;
 }
 
 export default function ModEffectCards({ code, effects, language, level, nextLevel }: { code: string; effects: ModEffectComparison[]; language: "ko" | "en"; level: number; nextLevel: number }) {

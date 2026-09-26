@@ -4,9 +4,14 @@ import type { InstallDefinition, InstallDependency, InstallEffectRule, InstallRe
 /** Stable sheet positions; native Unity corner suffixes are NOT these IDs. */
 export const INSTALL_ROWS = [[8, 4, 6, 9], [2, 1, 3], [10, 7, 5, 11]] as const;
 
-export const SHIPS: readonly Readonly<{ id: ShipId; name: string; image: string }>[] =
+/** Ship-specific stage counts: https://cifi.game-vault.net/wiki/The_Cradle (and each ship page). */
+export const SHIP_MAX_EVOLUTION: Readonly<Record<ShipId, number>> = Object.freeze({
+  Cradle: 7, Auxesia: 4, Zagreus: 4, Hephaestus: 5, Demeter: 3, Koios: 4, Zeus: 6,
+});
+
+export const SHIPS: readonly Readonly<{ id: ShipId; name: string; image: string; maxEvolution: number }>[] =
   (["Cradle", "Auxesia", "Zagreus", "Hephaestus", "Demeter", "Koios", "Zeus"] as const)
-    .map(id => ({ id, name: id, image: `/assets/ship-install/${id.toLowerCase()}.png` }));
+    .map(id => ({ id, name: id, image: `/assets/ship-install/${id.toLowerCase()}.png`, maxEvolution: SHIP_MAX_EVOLUTION[id] }));
 
 type Row = readonly [name: string, maxLevel: number, unlockAt: number, coefficientPercent: number,
   resources: readonly InstallResource[], dependency?: InstallDependency];

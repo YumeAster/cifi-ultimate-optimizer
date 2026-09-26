@@ -11,8 +11,8 @@ const direct: Record<string, UpgradeVisualResource> = {
 
 /** Same resource art and palette as the Diamond/Token cards. */
 export function modEffectPresentation(label: string, iconCategory?: string): ModEffectPresentation {
-  if (iconCategory === "rank") return { label, accent: "#ffc85c", rgb: "255,200,92", icon: "", glyph: "rank" };
-  if (iconCategory === "cost") return { label, accent: "#6fc5f3", rgb: "111,197,243", icon: "", glyph: "cost" };
+  if (iconCategory === "rank") return { ...UPGRADE_RESOURCE_PRESENTATION.rankPoints, label, accent: "#ffc85c", rgb: "255,200,92" };
+  if (iconCategory === "cost") return { ...UPGRADE_RESOURCE_PRESENTATION.costReduction, label, accent: "#6fc5f3", rgb: "111,197,243" };
   if (label === "Robotic Miners" || iconCategory === "roboticMiners") {
     return { label, accent: "#42e7ef", rgb: "66,231,239", icon: "./assets/mod-tree/sprite-2974.png", nodeIcon: true };
   }
@@ -30,7 +30,7 @@ export function modEffectPresentation(label: string, iconCategory?: string): Mod
   if (resource) return { ...UPGRADE_RESOURCE_PRESENTATION[resource], label };
   const generator = label.match(/^(MK[1-8]) (Output|CR|Production cost|Manual purchase count|Generator)$/);
   if (generator) return { ...UPGRADE_RESOURCE_PRESENTATION.generator, ...getGeneratorPresentation(generator[1] as GeneratorId), label, generator: generator[1] as GeneratorId };
-  if (label.endsWith(" RP") || label.endsWith(" SP")) return { label, accent: "#ffc85c", rgb: "255,200,92", icon: "", glyph: "rank" };
-  if (label.endsWith(" CR")) return { label, accent: "#6fc5f3", rgb: "111,197,243", icon: "", glyph: "cost" };
+  if (label.endsWith(" RP") || label.endsWith(" SP")) return { ...UPGRADE_RESOURCE_PRESENTATION.rankPoints, label, accent: "#ffc85c", rgb: "255,200,92" };
+  if (label.endsWith(" CR")) return { ...UPGRADE_RESOURCE_PRESENTATION.costReduction, label, accent: "#6fc5f3", rgb: "111,197,243" };
   return { ...UPGRADE_RESOURCE_PRESENTATION.loopMods, label };
 }

@@ -8,6 +8,7 @@ import {
   updateShipInstallInput, updateShipInstallWorkspace, setShipInstallLevels,
   selectShipInstallShip, selectShipInstallLoadout, saveShipInstallLoadout, isShipLoadoutStale, fingerprintShipInstallContext,
 } from "../lib/cifi/ship-install/persistence.ts";
+import { SHIP_MAX_EVOLUTION } from "../lib/cifi/ship-install/catalog.ts";
 
 const levels = (values = {}) => ({ ...Object.fromEntries(Array.from({ length: 11 }, (_, index) => [index + 1, 0])), ...values });
 function plan(overrides = {}) {
@@ -57,6 +58,25 @@ test("valid edits, selected ship and mode survive serialization without leaking 
   assert.deepEqual(restored.state.ships.Zagreus.excluded, [1, 11]);
   assert.deepEqual(restored.state.ships.Cradle, initial.ships.Cradle);
   assert.equal(initial.ships.Zagreus.levels[4], 0);
+});
+
+test("evolution inputs enforce each ship cap and repair legacy 7-stage values", () => {
+  let state = createDefaultShipInstallState();
+  for (const ship of SHIP_INSTALL_SHIPS) {
+    const cap = SHIP_MAX_EVOLUTION[ship];
+    state = updateShipInstallInput(state, ship, "evolution", String(cap));
+    assert.equal(state.ships[ship].evolution, cap);
+    state = updateShipInstallInput(state, ship, "evolution", String(cap + 1));
+    assert.equal(state.ships[ship].evolution, cap);
+    assert.equal(state.ships[ship].draftEvolution, String(cap + 1));
+  }
+  const raw = JSON.parse(serializeShipInstallState(createDefaultShipInstallState()));
+  raw.ships.Demeter.evolution = 7;
+  raw.ships.Demeter.draftEvolution = "7";
+  const restored = restoreShipInstallState(raw);
+  assert.equal(restored.status, "repaired");
+  assert.equal(restored.state.ships.Demeter.evolution, 3);
+  assert.equal(restored.state.ships.Demeter.draftEvolution, "3");
 });
 
 test("incomplete/invalid raw input remains durable but does not enter calculation levels", () => {
