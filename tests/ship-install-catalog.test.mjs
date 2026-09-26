@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { INSTALLS, INSTALL_ROWS, SHIPS, getShipInstalls } from "../lib/cifi/ship-install/catalog.ts";
+import { INSTALLS, INSTALL_ROWS, SHIPS, SHIP_MAX_EVOLUTION, getShipInstalls } from "../lib/cifi/ship-install/catalog.ts";
 
 const auditUrl = new URL("../public/assets/ship-install/provenance.json", import.meta.url);
 const audit = existsSync(auditUrl) ? JSON.parse(readFileSync(auditUrl, "utf8")) : null;
@@ -15,6 +15,11 @@ test("the seven ordinary ships have 77 distinct stable install positions", () =>
     assert.deepEqual(getShipInstalls(ship.id).map(node => node.position), Array.from({ length: 11 }, (_, i) => i + 1));
     assert.ok(getShipInstalls(ship.id).every(node => node.effects.length > 0));
   }
+});
+
+test("each ship exposes its own evolution cap", () => {
+  assert.deepEqual(SHIP_MAX_EVOLUTION, { Cradle: 7, Auxesia: 4, Zagreus: 4, Hephaestus: 5, Demeter: 3, Koios: 4, Zeus: 6 });
+  for (const ship of SHIPS) assert.equal(ship.maxEvolution, SHIP_MAX_EVOLUTION[ship.id]);
 });
 
 test("all 231 cap, coefficient and unlock fields match independently extracted native data", {

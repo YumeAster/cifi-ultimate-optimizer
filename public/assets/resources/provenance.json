@@ -1,0 +1,125 @@
+{
+  "apkSha256": "f8d7eb41ab4b34382f0d2c559e47b16108eb37c090a5d80072bbef54ed29d476",
+  "method": "Read-only Unity Texture2D/Sprite export; unmodified game pixels",
+  "records": [
+    {
+      "file": "level-points.png",
+      "sourceType": "Texture2D",
+      "sourceName": "LevelPoints-128",
+      "pathId": 220,
+      "sha256": "9b9a176219887b544869fe07e2de97326c3d97b3ddfe8d791be13cf0d0ed0d1b"
+    },
+    {
+      "file": "academy-points.png",
+      "sourceType": "Texture2D",
+      "sourceName": "AcademyPoints-128",
+      "pathId": 364,
+      "sha256": "ef553d67efc307cc22984888d1ed7f8c69306f9288adcede082710170fa5763a"
+    },
+    {
+      "file": "cells.png",
+      "sourceType": "Texture2D",
+      "sourceName": "ResourceCells-128",
+      "pathId": 419,
+      "sha256": "b3742d59a74dde483c76934de625e7351d7f4a94e16958d525c548b322e82836"
+    },
+    {
+      "file": "diamonds.png",
+      "sourceType": "Texture2D",
+      "sourceName": "ResourceDiamond-128",
+      "pathId": 585,
+      "sha256": "7805f54a722da8ea5b195026f8907e926f1795940d49a07a1280c67fe19694d9"
+    },
+    {
+      "file": "research-points.png",
+      "sourceType": "Texture2D",
+      "sourceName": "ResearchPoints-128",
+      "pathId": 651,
+      "sha256": "a16f98759da55a6747a19c7130d17bf862b98ccaaac0682ced6dda1534a42520"
+    },
+    {
+      "file": "shards.png",
+      "sourceType": "Texture2D",
+      "sourceName": "Shards-128",
+      "pathId": 852,
+      "sha256": "9bfd3d847327b195bf35011148fc6170b3de47cd31ec3d015abdf5fcce4e0fb0"
+    },
+    {
+      "file": "rank-points.png",
+      "sourceType": "Texture2D",
+      "sourceName": "RankPoints-128",
+      "pathId": 857,
+      "sha256": "a01eba6c96be3e854e18bc873230fffbb17f229100d7b695f801d7e3bf7dbfda"
+    },
+    {
+      "file": "ad-tokens.png",
+      "sourceType": "Texture2D",
+      "sourceName": "AdTokens-128",
+      "pathId": 885,
+      "sha256": "c285087cb59a5f5efa7152aa74dad2d908a8142bd2887b6a21c2a545479c2bcf"
+    },
+    {
+      "file": "operations.png",
+      "sourceType": "Texture2D",
+      "sourceName": "Operations-128",
+      "pathId": 898,
+      "sha256": "2cb652b2ff3c217e2467b55b4e676d41fe8c17561b3e86e21ad69285134bf28b"
+    },
+    {
+      "file": "loop-mods.png",
+      "sourceType": "Texture2D",
+      "sourceName": "LM-LoopMods-128",
+      "pathId": 1143,
+      "sha256": "e125d61bc3fb339847f86c0562fcdd49fc88560a4cfac7ba8d1a1412a81d9f9b"
+    },
+    {
+      "file": "tick.png",
+      "sourceType": "Texture2D",
+      "sourceName": "LM-TickTime-128",
+      "pathId": 1276,
+      "sha256": "649092495ff2b5701e0a7dc21a8308a2334599b3dea45a720178678ed611160d"
+    },
+    {
+      "file": "mod-points.png",
+      "sourceType": "Texture2D",
+      "sourceName": "ModPoints-128",
+      "pathId": 1573,
+      "sha256": "9af0540ce16c9102efe2f0ce803616c0095c647c81d4aac31434154ecf651a87"
+    },
+    {
+      "file": "arcade-points.png",
+      "sourceType": "Texture2D",
+      "sourceName": "Resource-ArcadePoints-64",
+      "pathId": 1668,
+      "sha256": "54a5abc7e50f82eb071a824b815cd267b81b1b79ee141065907213fa05d93ed8"
+    },
+    {
+      "file": "cost-reduction.png",
+      "sourceType": "Texture2D",
+      "sourceName": "LM-GeneratorCost-128",
+      "pathId": 1709,
+      "sha256": "5b32efb39a8e44d29b3a7860aa5dcae607daf04d3cf6cb2e10969b7e5ca51e6d"
+    },
+    {
+      "file": "technology.png",
+      "sourceType": "Texture2D",
+      "sourceName": "RU-Tech1-128",
+      "pathId": 1927,
+      "sha256": "a57276e86dac2bc689a45b3c27ad38cbf32d5de89ce34df92a37fcccf8acb776"
+    },
+    {
+      "file": "materials.png",
+      "sourceType": "Sprite",
+      "sourceName": "Materials",
+      "pathId": 2889,
+      "sha256": "7e750fafc87bac310c16ef9f16c67d41ad5d6f636abb9a5d649ac80893e3756f"
+    },
+    {
+      "file": "generator.png",
+      "sourceType": "Sprite",
+      "sourceName": "AllGens",
+      "pathId": 4713,
+      "sha256": "d4f1211c5eee31d252419f84f16e3527e9f83e937263b29cf9350614f807d5c8"
+    }
+  ]
+}
