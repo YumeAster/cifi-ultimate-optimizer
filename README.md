@@ -1,4 +1,4 @@
-# CIFI Ultimate Optimizer v0.4
+# CIFI Ultimate Optimizer v0.4.1
 
 A local-first web prototype for CIFI player progression input and Weight presets.
 

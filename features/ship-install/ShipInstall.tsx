@@ -15,6 +15,7 @@ import {
   type ShipInstallPersistentState, type SavedShipLoadout,
 } from "../../lib/cifi/ship-install/persistence";
 import { MOD_STORAGE_KEY, restoreModState } from "../../lib/cifi/mod-tree/recommendations";
+import { publicAssetUrl } from "../../lib/cifi/publicAssetUrl";
 import "./ship-install.css";
 
 type Props = {
@@ -22,8 +23,10 @@ type Props = {
   profile: Record<string, string>; draft: Record<string, string>; errors: Record<string, string>;
   onInput: (key: string, value: string) => void;
 };
-const asset = (path: string) => path.startsWith("/assets/") ? `.${path}` : path;
-const glyph = (name: string) => `./assets/ship-install/${name}.png`;
+// CSS mask URLs resolve from the bundled stylesheet, not the document URL.
+// An absolute, deployment-base-aware URL keeps Pages from requesting assets/assets/.
+const asset = (path: string) => publicAssetUrl(path, typeof document === "undefined" ? "/" : new URL(".", document.baseURI).pathname);
+const glyph = (name: string) => `/assets/ship-install/${name}.png`;
 const modes: Record<RecommendationMode, [string, string]> = {
   mp: ["MP 위주", "MP first"], "shards-research": ["Shard / RP 위주", "Shard / RP first"],
   shards: ["Shard 위주", "Shard first"], research: ["RP 위주", "RP first"], weights: ["가중치 프리셋 사용", "Use current weights"],
