@@ -1,4 +1,4 @@
-# CIFI Ultimate Optimizer v0.4.4.1
+# CIFI Ultimate Optimizer v0.4.5
 
 A local-first web prototype for CIFI player progression input and Weight presets.
 
@@ -60,6 +60,8 @@ node --experimental-strip-types tests/mod-tree-recommendations.test.mjs
 - Ship Rank/Crew and other shared profile inputs remain local to the browser.
 - Purchases and bulk application change browser-local records only, not the game. The recommendation and effect calculations are estimates; compare important purchases with the current game.
 - Existing single-allocation saves are migrated into the Loadout selected when that save was made; the other two allocations start at zero.
+- The selected Loadout can undo the last recorded one-level purchase (including a bulk recommendation step) or reset its levels and saved order after confirmation. Direct level edits clear that Loadout's purchase history.
+- Settings can export and import all known app-local data as a JSON backup. Import backs up current data first, asks for confirmation, and replaces only this app's keys; no file is uploaded to a server.
 
 ## Included Shape
 
