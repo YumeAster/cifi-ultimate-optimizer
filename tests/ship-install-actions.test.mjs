@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { buyShipInstallLevel, applyShipInstallRecommendation } from "../lib/cifi/ship-install/actions.ts";
 import { getShipInstalls } from "../lib/cifi/ship-install/catalog.ts";
-import { createDefaultShipInstallState, updateShipInstallInput, selectShipInstallLoadout, serializeShipInstallState, restoreShipInstallState } from "../lib/cifi/ship-install/persistence.ts";
+import { createDefaultShipInstallState, updateShipInstallInput, selectShipInstallLoadout, serializeShipInstallState, restoreShipInstallState, undoShipInstallPurchase, resetShipInstallLoadout, saveShipInstallLoadout, renameShipInstallLoadout } from "../lib/cifi/ship-install/persistence.ts";
 
 const ship = "Cradle";
 const context = state => ({ ship, levels: state.ships[ship].levels, totalPoints: state.ships[ship].totalPoints,
@@ -59,6 +59,40 @@ test("bulk apply and manual purchase change only the selected Loadout", () => {
   assert.equal(state.ships[ship].levels[1], 2);
   state = selectShipInstallLoadout(state, ship, 2);
   assert.equal(state.ships[ship].levels[1], 1);
+});
+
+test("Undo removes one latest purchase, including the last bulk step, only in the selected slot", () => {
+  let state = applyShipInstallRecommendation(initial(3), context(initial(3)), plan());
+  assert.deepEqual(state.ships[ship].slotPurchaseHistory[1], [1, 1]);
+  state = selectShipInstallLoadout(state, ship, 2);
+  state = buyShipInstallLevel(state, context(state), 1);
+  state = undoShipInstallPurchase(state, ship);
+  assert.equal(state.ships[ship].levels[1], 0);
+  assert.equal(undoShipInstallPurchase(state, ship), null);
+  state = selectShipInstallLoadout(state, ship, 1);
+  state = undoShipInstallPurchase(state, ship);
+  assert.equal(state.ships[ship].levels[1], 1);
+  assert.deepEqual(state.ships[ship].slotPurchaseHistory[1], [1]);
+  state = restoreShipInstallState(serializeShipInstallState(state)).state;
+  assert.deepEqual(state.ships[ship].slotPurchaseHistory[1], [1]);
+});
+
+test("direct level edit clears Undo history; reset clears only selected slot allocation and saved plan", () => {
+  let state = applyShipInstallRecommendation(initial(3), context(initial(3)), plan());
+  state = selectShipInstallLoadout(state, ship, 2);
+  state = buyShipInstallLevel(state, context(state), 1);
+  state = renameShipInstallLoadout(state, ship, 2, "Cells focus");
+  const recommended = plan();
+  state = saveShipInstallLoadout(state, ship, 2, { ...recommended, mode: "weights", totalPoints: 3, evolution: 0, capExpanded: false, contextFingerprint: "test", savedAt: "2026-09-27T00:00:00.000Z" });
+  state = updateShipInstallInput(state, ship, 1, "2");
+  assert.equal(undoShipInstallPurchase(state, ship), null);
+  state = resetShipInstallLoadout(state, ship);
+  assert.equal(state.ships[ship].levels[1], 0);
+  assert.equal(state.ships[ship].loadouts[2], null);
+  assert.equal(state.ships[ship].loadoutNames[2], "Cells focus");
+  state = selectShipInstallLoadout(state, ship, 1);
+  assert.equal(state.ships[ship].levels[1], 2);
+  assert.deepEqual(state.ships[ship].slotPurchaseHistory[1], [1, 1]);
 });
 
 test("Ship Install UI exposes double-click and fresh-recommendation bulk controls", async () => {

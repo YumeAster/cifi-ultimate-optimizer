@@ -12,6 +12,7 @@ import UpgradeOptimizer from "../features/upgrade-optimizer/UpgradeOptimizer";
 import ResourceIcon from "../features/upgrade-optimizer/ResourceIcon";
 import { UPGRADE_RESOURCE_PRESENTATION, type UpgradeVisualResource } from "../features/upgrade-optimizer/resourcePresentation";
 import ShipInstall from "../features/ship-install/ShipInstall";
+import DataTransfer from "../features/settings/DataTransfer";
 import { SHIP_INSTALL_EXTRA_FIELDS, SHIP_INSTALL_POST_OURO_FIELDS } from "../lib/cifi/ship-install/profile";
 import { getInputFieldHelp, inputFieldLabels, inputSectionCopy, localizedText } from "./content/inputCopy";
 import { isRecord, researchCountExceedsTotal, restoreWeightPresets, validateInput, type FieldKind, type WeightPreset } from "./content/profileValidation";
@@ -475,6 +476,7 @@ function InputManager() {
         <section className="settings-option"><Text className="section-kicker">{text.appearance}</Text><Select className="settings-theme-select" aria-label={text.appearance} value={theme} onChange={updateTheme} options={themeOptions[language]} /></section>
         <section className="settings-option"><Text className="section-kicker">{text.displayLanguage}</Text><Space className="language-toggle settings-language-toggle" size={3}><Button type={language === "ko" ? "primary" : "default"} aria-pressed={language === "ko"} onClick={() => updateLanguage("ko")}>한국어</Button><Button type={language === "en" ? "primary" : "default"} aria-pressed={language === "en"} onClick={() => updateLanguage("en")}>EN</Button></Space></section>
         <section className="settings-option"><Text className="section-kicker">{recommendationCopy[language].countSetting}</Text><Select className="settings-theme-select" aria-label={recommendationCopy[language].countSetting} value={modRecommendationCount} disabled={!ready} onChange={updateModRecommendationCount} options={RECOMMENDATION_COUNTS.map(value => ({ value, label: language === "ko" ? `${value}개` : String(value) }))} /><Text type="secondary">{recommendationCopy[language].countHelp}</Text></section>
+        <DataTransfer language={language} />
       </div>
     </Card>
   );
