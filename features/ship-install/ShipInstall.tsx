@@ -67,7 +67,7 @@ function LoadoutQueue({ language, context, plan, stale, onSelect, onCopy }: {
         const node = nodes.find(item => item.position === step.position)!;
         const label = `${step.index}. ${node.name} · ${String(step.position).padStart(2, "0")} · Lv.${step.from} → Lv.${step.to}`;
         return <li key={step.index}><button title={label} aria-label={label} onClick={() => onSelect(step.position)}>
-          {view === "compact" ? <><Icon src={node.icon} /><span className="si-step-index">{String(step.index).padStart(2, "0")}</span></>
+          {view === "compact" ? <><span className="si-step-index">{String(step.index).padStart(2, "0")}</span><Icon src={node.icon} /><Code position={step.position} /></>
             : <><span className="si-step-main"><span className="si-step-index">{String(step.index).padStart(2, "0")}</span><Icon src={node.icon} /><Code position={step.position} />{view === "detailed" && <strong className="si-step-name">{node.name}</strong>}<span className="si-step-level">{step.from}<i>→</i><b>{step.to}</b></span></span>
               {view === "detailed" && !stale && <span className="si-step-effects">{stepEffects[step.index - 1]?.map((effect, index) => <span key={`${effect.resource}-${index}`}><span className="si-step-effect-label">{effect.label}</span><span className="si-step-effect-values">{effect.currentDisplay}<i>→</i><b>{effect.nextDisplay}</b></span></span>)}{!stepEffects[step.index - 1]?.length && <span>{t("표시할 효과 없음", "No effect to display")}</span>}</span>}
               {step.reason === "prerequisite" && <small>{t("해금", "Unlock")}</small>}</>}
