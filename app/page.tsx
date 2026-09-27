@@ -23,7 +23,7 @@ import "./theme-refinements.css";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
-const APP_VERSION = "v0.4.3.1";
+const APP_VERSION = "v0.4.3.2";
 
 type FieldGroup = "weights" | "player" | "ship";
 type OptimizerTab = "diamonds" | "tokens";
