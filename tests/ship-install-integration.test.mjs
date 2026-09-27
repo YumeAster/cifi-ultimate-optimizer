@@ -23,11 +23,11 @@ const profile = {
 };
 const context = values => ({ ship: "Demeter", levels: {}, totalPoints: 8, mode: "weights", profile: values });
 
-test("release version is consistently v0.4.3", async () => {
+test("release version is consistently v0.4.3.1", async () => {
   const [page, packageText, lockText] = await Promise.all([read("app/page.tsx"), read("package.json"), read("package-lock.json")]);
   const pkg = JSON.parse(packageText), lock = JSON.parse(lockText);
-  assert.match(page, /const APP_VERSION = "v0\.4\.3"/);
-  assert.equal(pkg.version, "0.4.3");
+  assert.match(page, /const APP_VERSION = "v0\.4\.3\.1"/);
+  assert.equal(pkg.version, "0.4.3.1");
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[""].version, pkg.version);
 });
@@ -113,8 +113,11 @@ test("approved game node arrangement and exactly five recommendation modes remai
   for (const className of ["si-side", "si-recommendations", "si-detail", "si-queue"]) assert.ok(view.includes(className));
   for (const mode of ['"detailed"', '"normal"', '"compact"']) assert.ok(view.includes(mode));
   assert.match(view, /previewInstallSequenceEffects\(\{ \.\.\.context, levels: plan\.baselineLevels \}, plan\.steps\)/);
-  assert.match(view, /view === "compact" \? <>\s*<Icon src=\{node\.icon\} \/>/);
+  assert.match(view, /view === "compact" \? <>\s*<span className="si-step-index">.*?<\/span><Icon src=\{node\.icon\} \/><Code position=\{step\.position\} \/>/);
   const css = await read("features/ship-install/ship-install.css");
   assert.match(css, /\.si-queue ol\.is-compact \{ display:grid; grid-template-columns:repeat\(auto-fill/);
+  assert.match(css, /\.si-queue ol\.is-compact \.si-step-index \{ position:absolute; left:5px; top:5px;/);
+  assert.match(css, /\.si-queue ol\.is-compact \.si-icon \{ position:absolute; left:50%; top:46%;/);
+  assert.match(css, /\.si-queue ol\.is-compact \.si-code \{ position:absolute; left:50%; bottom:5px;/);
   assert.doesNotMatch(view, /코너 Install 해금|목표 배분 비교|가중치 프리셋과는 별도/);
 });
