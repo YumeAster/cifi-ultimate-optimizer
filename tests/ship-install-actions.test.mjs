@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { buyShipInstallLevel, applyShipInstallRecommendation } from "../lib/cifi/ship-install/actions.ts";
 import { getShipInstalls } from "../lib/cifi/ship-install/catalog.ts";
-import { createDefaultShipInstallState, updateShipInstallInput, serializeShipInstallState, restoreShipInstallState } from "../lib/cifi/ship-install/persistence.ts";
+import { createDefaultShipInstallState, updateShipInstallInput, selectShipInstallLoadout, serializeShipInstallState, restoreShipInstallState } from "../lib/cifi/ship-install/persistence.ts";
 
 const ship = "Cradle";
 const context = state => ({ ship, levels: state.ships[ship].levels, totalPoints: state.ships[ship].totalPoints,
@@ -44,6 +44,21 @@ test("bulk apply commits every generated step at once and refuses stale or forge
   assert.throws(() => applyShipInstallRecommendation(state, context(state), { ...recommended, targetLevels: { ...levels(), 1: 3 } }), /does not match/);
   assert.throws(() => applyShipInstallRecommendation(state, context(state), { ...recommended, steps: [{ ...recommended.steps[0], position: 2 }] }), /구매|레벨/);
   assert.throws(() => applyShipInstallRecommendation(state, context(state), { ...recommended, errors: ["invalid"] }), /no longer current/);
+});
+
+test("bulk apply and manual purchase change only the selected Loadout", () => {
+  let state = applyShipInstallRecommendation(initial(3), context(initial(3)), plan());
+  state = selectShipInstallLoadout(state, ship, 2);
+  assert.equal(state.ships[ship].levels[1], 0);
+  state = buyShipInstallLevel(state, context(state), 1);
+  assert.equal(state.ships[ship].levels[1], 1);
+  state = selectShipInstallLoadout(state, ship, 3);
+  assert.equal(state.ships[ship].levels[1], 0);
+  state = restoreShipInstallState(serializeShipInstallState(state)).state;
+  state = selectShipInstallLoadout(state, ship, 1);
+  assert.equal(state.ships[ship].levels[1], 2);
+  state = selectShipInstallLoadout(state, ship, 2);
+  assert.equal(state.ships[ship].levels[1], 1);
 });
 
 test("Ship Install UI exposes double-click and fresh-recommendation bulk controls", async () => {

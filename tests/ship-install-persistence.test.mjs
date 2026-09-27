@@ -6,7 +6,7 @@ import {
   createDefaultShipInstallState, restoreShipInstallState, serializeShipInstallState,
   readShipInstallState, commitShipInstallState, parseShipInstallInteger,
   updateShipInstallInput, updateShipInstallWorkspace, setShipInstallLevels,
-  selectShipInstallShip, selectShipInstallLoadout, saveShipInstallLoadout, isShipLoadoutStale, fingerprintShipInstallContext,
+  selectShipInstallShip, selectShipInstallLoadout, renameShipInstallLoadout, saveShipInstallLoadout, isShipLoadoutStale, fingerprintShipInstallContext,
 } from "../lib/cifi/ship-install/persistence.ts";
 import { SHIP_MAX_EVOLUTION } from "../lib/cifi/ship-install/catalog.ts";
 
@@ -49,13 +49,16 @@ test("valid edits, selected ship and mode survive serialization without leaking 
   state = selectShipInstallLoadout(state, "Zagreus", 3);
   const restored = restoreShipInstallState(serializeShipInstallState(state));
   assert.equal(restored.status, "restored");
-  assert.equal(restored.state.ships.Zagreus.levels[4], 12);
+  assert.equal(restored.state.ships.Zagreus.levels[4], 0);
+  assert.equal(restored.state.ships.Zagreus.slotLevels[1][4], 12);
   assert.equal(restored.state.ships.Zagreus.totalPoints, 103);
   assert.equal(restored.state.ships.Zagreus.evolution, 3);
   assert.equal(restored.state.ships.Zagreus.selectedSlot, 3);
-  assert.equal(restored.state.ships.Zagreus.mode, "mp");
+  assert.equal(restored.state.ships.Zagreus.mode, "weights");
+  assert.equal(restored.state.ships.Zagreus.slotModes[1], "mp");
   assert.equal(restored.state.ships.Zagreus.capExpanded, true);
-  assert.deepEqual(restored.state.ships.Zagreus.excluded, [1, 11]);
+  assert.deepEqual(restored.state.ships.Zagreus.excluded, []);
+  assert.deepEqual(restored.state.ships.Zagreus.slotExcluded[1], [1, 11]);
   assert.deepEqual(restored.state.ships.Cradle, initial.ships.Cradle);
   assert.equal(initial.ships.Zagreus.levels[4], 0);
 });
@@ -101,7 +104,7 @@ test("incomplete/invalid raw input remains durable but does not enter calculatio
   assert.equal(parseShipInstallInteger(" 004 "), 4);
 });
 
-test("all fixed slots store independent plans and selection never rewrites actual progress", () => {
+test("all fixed slots store independent plans and allocations", () => {
   let state = setShipInstallLevels(createDefaultShipInstallState(), "Cradle", levels({ 2: 12 }));
   state = updateShipInstallInput(state, "Cradle", "totalPoints", "80");
   for (const slot of SHIP_INSTALL_SLOTS) state = saveShipInstallLoadout(state, "Cradle", slot, plan({ contextFingerprint: `slot-${slot}` }));
@@ -109,7 +112,7 @@ test("all fixed slots store independent plans and selection never rewrites actua
   for (const slot of SHIP_INSTALL_SLOTS) {
     state = selectShipInstallLoadout(state, "Cradle", slot);
     assert.equal(state.ships.Cradle.loadouts[slot].contextFingerprint, `slot-${slot}`);
-    assert.deepEqual(state.ships.Cradle.levels, levels({ 2: 12 }));
+    assert.deepEqual(state.ships.Cradle.levels, slot === 1 ? levels({ 2: 12 }) : levels());
     assert.equal(state.ships.Cradle.totalPoints, 80);
     assert.equal(state.ships.Cradle.mode, "weights");
   }
@@ -117,6 +120,61 @@ test("all fixed slots store independent plans and selection never rewrites actua
   assert.equal(state.ships.Auxesia.loadouts[2], null);
   assert.throws(() => selectShipInstallLoadout(state, "Cradle", 4), /slot/);
   assert.throws(() => saveShipInstallLoadout(state, "Cradle", 0, plan()), /slot/);
+});
+
+test("Loadout levels, drafts, recommendation options and names remain independent after reload", () => {
+  let state = createDefaultShipInstallState();
+  state = updateShipInstallInput(state, "Cradle", "totalPoints", "50");
+  state = updateShipInstallInput(state, "Cradle", 1, "7");
+  state = updateShipInstallWorkspace(state, "Cradle", { mode: "mp", excluded: [4] });
+  state = renameShipInstallLoadout(state, "Cradle", 1, "MP farming");
+  state = selectShipInstallLoadout(state, "Cradle", 2);
+  assert.equal(state.ships.Cradle.levels[1], 0);
+  assert.equal(state.ships.Cradle.mode, "weights");
+  assert.deepEqual(state.ships.Cradle.excluded, []);
+  state = updateShipInstallInput(state, "Cradle", 1, "3");
+  state = updateShipInstallWorkspace(state, "Cradle", { mode: "shards", excluded: [6] });
+  state = renameShipInstallLoadout(state, "Cradle", 2, "Shard route");
+  state = selectShipInstallLoadout(state, "Cradle", 3);
+  assert.equal(state.ships.Cradle.levels[1], 0);
+  state = restoreShipInstallState(serializeShipInstallState(state)).state;
+  state = selectShipInstallLoadout(state, "Cradle", 1);
+  assert.equal(state.ships.Cradle.levels[1], 7);
+  assert.equal(state.ships.Cradle.draftLevels[1], "7");
+  assert.equal(state.ships.Cradle.mode, "mp");
+  assert.deepEqual(state.ships.Cradle.excluded, [4]);
+  assert.equal(state.ships.Cradle.loadoutNames[1], "MP farming");
+  state = selectShipInstallLoadout(state, "Cradle", 2);
+  assert.equal(state.ships.Cradle.levels[1], 3);
+  assert.equal(state.ships.Cradle.mode, "shards");
+  assert.deepEqual(state.ships.Cradle.excluded, [6]);
+  assert.equal(state.ships.Cradle.loadoutNames[2], "Shard route");
+  assert.equal(state.ships.Cradle.totalPoints, 50, "ship-wide available points are shared");
+  assert.throws(() => renameShipInstallLoadout(state, "Cradle", 2, "x".repeat(33)), /name/);
+});
+
+test("existing one-map saves migrate only the formerly selected Loadout", () => {
+  let state = createDefaultShipInstallState();
+  state = selectShipInstallLoadout(state, "Cradle", 2);
+  state = updateShipInstallInput(state, "Cradle", 1, "9");
+  state = updateShipInstallWorkspace(state, "Cradle", { mode: "research", excluded: [3] });
+  const legacy = JSON.parse(serializeShipInstallState(state));
+  for (const ship of SHIP_INSTALL_SHIPS) {
+    delete legacy.ships[ship].slotLevels;
+    delete legacy.ships[ship].slotDraftLevels;
+    delete legacy.ships[ship].slotModes;
+    delete legacy.ships[ship].slotExcluded;
+    delete legacy.ships[ship].loadoutNames;
+  }
+  const restored = restoreShipInstallState(legacy);
+  assert.equal(restored.status, "restored");
+  assert.equal(restored.state.ships.Cradle.levels[1], 9);
+  assert.equal(restored.state.ships.Cradle.slotLevels[1][1], 0);
+  assert.equal(restored.state.ships.Cradle.slotLevels[3][1], 0);
+  assert.equal(restored.state.ships.Cradle.slotModes[2], "research");
+  assert.deepEqual(restored.state.ships.Cradle.slotExcluded[2], [3]);
+  assert.equal(restored.state.ships.Cradle.loadoutNames[2], "Loadout 2");
+  assert.equal(restoreShipInstallState(serializeShipInstallState(restored.state)).status, "restored");
 });
 
 test("saved plans clone queue and level maps and only explicit saves update them", () => {
@@ -170,9 +228,12 @@ test("repair preserves valid ships/slots while reporting malformed fields", () =
   raw.ships.Cradle.loadouts[4] = plan();
   raw.ships.Koios.levels[4] = -1;
   raw.ships.Koios.draftLevels[4] = "bad";
+  raw.ships.Koios.slotLevels[1][4] = -1;
+  raw.ships.Koios.slotDraftLevels[1][4] = "bad";
   raw.ships.Koios.totalPoints = Number.MAX_SAFE_INTEGER + 1;
   raw.ships.Koios.draftTotalPoints = "bad";
   raw.ships.Koios.excluded = [1, 1, 12, -1, "2", 3];
+  raw.ships.Koios.slotExcluded[1] = [1, 1, 12, -1, "2", 3];
   raw.ships.Koios.mode = "invalid";
   raw.ships.Zeus.draftTotalPoints = "9".repeat(129);
   raw.ships.Zeus.draftEvolution = { invalid: true };
@@ -195,6 +256,8 @@ test("restore only copies whitelisted own properties and never prototype payload
   const malicious = JSON.parse(serializeShipInstallState(defaults));
   malicious.ships.Cradle.levels = JSON.parse('{"__proto__":{"polluted":true},"constructor":{"prototype":{"polluted":true}},"1":8}');
   malicious.ships.Cradle.draftLevels = { 1: "8" };
+  malicious.ships.Cradle.slotLevels[1] = malicious.ships.Cradle.levels;
+  malicious.ships.Cradle.slotDraftLevels[1] = { 1: "8" };
   const raw = JSON.stringify(malicious).replace('"ships":{', '"__proto__":{"polluted":true},"ships":{"__proto__":{"polluted":true},');
   const restored = restoreShipInstallState(raw);
   assert.equal({}.polluted, undefined);

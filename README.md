@@ -1,4 +1,4 @@
-# CIFI Ultimate Optimizer v0.4.4
+# CIFI Ultimate Optimizer v0.4.4.1
 
 A local-first web prototype for CIFI player progression input and Weight presets.
 
@@ -54,11 +54,12 @@ node --experimental-strip-types tests/mod-tree-recommendations.test.mjs
 
 ## Ship Install
 
-- Seven ships and 77 Install nodes with three saved Loadout slots per ship.
+- Seven ships and 77 Install nodes with three named Loadout slots per ship. Each slot keeps its own levels, recommendation mode, exclusions, and saved purchase order; the ship's total Install points, rank, crew, and evolution stay shared.
 - Pre-Ouroboros scope ends at Zeus and Generator MK8. Ouroboros ship, traversal, gems, and MK9+ are reserved for a separate post-Ouroboros update.
 - Five recommendation modes, a purchase-order plan, and a final-effects view. Double-click an Install node to record one purchase, or apply every step of a fresh generated/saved recommendation to the current web levels in one action.
 - Ship Rank/Crew and other shared profile inputs remain local to the browser.
 - Purchases and bulk application change browser-local records only, not the game. The recommendation and effect calculations are estimates; compare important purchases with the current game.
+- Existing single-allocation saves are migrated into the Loadout selected when that save was made; the other two allocations start at zero.
 
 ## Included Shape
 
