@@ -12,7 +12,7 @@ import UpgradeOptimizer from "../features/upgrade-optimizer/UpgradeOptimizer";
 import ResourceIcon from "../features/upgrade-optimizer/ResourceIcon";
 import { UPGRADE_RESOURCE_PRESENTATION, type UpgradeVisualResource } from "../features/upgrade-optimizer/resourcePresentation";
 import ShipInstall from "../features/ship-install/ShipInstall";
-import { SHIP_INSTALL_EXTRA_FIELDS } from "../lib/cifi/ship-install/profile";
+import { SHIP_INSTALL_EXTRA_FIELDS, SHIP_INSTALL_POST_OURO_FIELDS } from "../lib/cifi/ship-install/profile";
 import { getInputFieldHelp, inputFieldLabels, inputSectionCopy, localizedText } from "./content/inputCopy";
 import { isRecord, researchCountExceedsTotal, restoreWeightPresets, validateInput, type FieldKind, type WeightPreset } from "./content/profileValidation";
 import { DEFAULT_WEIGHT_PRESET_ID, DEFAULT_WEIGHT_VALUES, commitWeightPreset, matchingWeightPreset, storeWeightPreset } from "./content/weightPresets";
@@ -122,7 +122,8 @@ const shipFields: FieldDefinition[] = shipNames.flatMap((ship) => [
   { key: `${ship.toLowerCase()}Crew`, label: `${ship} Crew`, kind: "integer", group: "ship" },
 ]);
 
-const shipExtraFields: FieldDefinition[] = SHIP_INSTALL_EXTRA_FIELDS.map(field => ({ key: field.key, label: field.enLabel, koLabel: field.label, kind: "short", group: "ship" }));
+const shipExtraFields: FieldDefinition[] = [...SHIP_INSTALL_EXTRA_FIELDS, ...SHIP_INSTALL_POST_OURO_FIELDS]
+  .map(field => ({ key: field.key, label: field.enLabel, koLabel: field.label, kind: "short", group: "ship" }));
 const allFields = [...weightFields, ...playerFields, ...shipFields, ...shipExtraFields];
 const inputStorageKey = "cifi-orbit.mtc-inputs.v1";
 const presetStorageKey = "cifi-orbit.mtc-weight-presets.v1";

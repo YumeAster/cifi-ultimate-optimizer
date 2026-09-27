@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  aggregateEffects, evaluateInstall, formatInstallNumber, generateSequence,
+  aggregateEffects, evaluateInstall, evaluateInstalls, formatInstallNumber, generateSequence,
   installEffects, installMaxLevel, installModePermission, previewInstallSequenceEffects, rankInstalls, usesUnitWeightFallback,
   validateInstallContext, validateInstallSequence,
 } from "../lib/cifi/ship-install/engine.ts";
@@ -53,6 +53,7 @@ test("a missing field is not silently converted into a legitimate zero", () => {
   assert.equal(missing.effects[0].next, null);
   assert.equal(missing.score, null);
   assert.ok(missing.missing.includes("cradleCrew"));
+  assert.deepEqual(missing.modelIssues, [], "an unavailable score is a consequence of the missing Crew, not a second input");
   const zero = evaluateInstall(context({ profile: profile({ cradleCrew: "0" }) }), 1);
   assert.equal(zero.effects[0].next, "1");
   assert.equal(zero.score, 0);
@@ -66,20 +67,26 @@ test("shared inputs are reused and zero dependencies remain zero", () => {
   assert.equal(readInstallDependency(context({ modLevelsTotal: "1200" }), "LM").coefficient, 12n);
 });
 
-test("native totals include Manual MK9 and Tech MK9–12 without duplicating shared Software fields", () => {
+test("Pre-Ouroboros totals use MK1–8 and ignore saved later-game inputs", () => {
   const state = context({ profile: profile({ manualMk9: "20", hardwareTechMk9To12: "14", softwareTechMk9To12: "16" }) });
   const exact = dependency => {
     const result = readInstallDependency(state, dependency);
     return Number(result.coefficient) * 10 ** result.exponent;
   };
-  assert.equal(exact("G"), 100);
-  assert.equal(exact("TH"), 30);
-  assert.equal(exact("TS"), 40);
-  assert.equal(exact("T"), 70);
-  assert.ok(activeInstallGenerators(state).includes(9));
-  const missing = evaluateInstall(context({ ship: "Auxesia", levels: { 1: 5 }, profile: profile({ softwareTechMk9To12: "" }) }), 3);
-  assert.ok(missing.missing.includes("softwareTechMk9To12"));
-  assert.equal(missing.effects[0].next, null);
+  assert.equal(exact("G"), 80);
+  assert.equal(exact("TH"), 16);
+  assert.equal(exact("TS"), 24);
+  assert.equal(exact("T"), 40);
+  assert.ok(!activeInstallGenerators(state).includes(9));
+  assert.throws(() => activeInstallGenerators({ ...state, activeGenerators: [9] }), /activeGenerators/);
+  const blankLater = profile({ manualMk9: "", hardwareTechMk9To12: "", softwareTechMk9To12: "" });
+  for (const ship of SHIPS) {
+    const evaluations = evaluateInstalls({ ...state, ship: ship.id, profile: blankLater });
+    assert.deepEqual(evaluations.flatMap(item => item.missing), [], `${ship.id}: fully entered Pre-Ouroboros fields should not ask for later inputs`);
+  }
+  const auxesia = evaluateInstall({ ...state, ship: "Auxesia", levels: { 1: 5 }, profile: blankLater }, 3);
+  assert.notEqual(auxesia.effects[0].next, null);
+  assert.ok(auxesia.score !== null);
 });
 
 test("native Loop Mods total adds shared extras and preserves unknown inputs", () => {
@@ -233,7 +240,7 @@ test("direct summaries do not exponentiate whole-generator effects into Cells", 
   const score = evaluateInstall(state, 8).score;
   const one = evaluateInstall({ ...state, activeGenerators: [1] }, 8).score;
   assert.ok(Math.abs(score - one * 2) < 1e-12);
-  assert.deepEqual(activeInstallGenerators({ ...state, activeGenerators: [1,1,9] }), [1,9]);
+  assert.deepEqual(activeInstallGenerators({ ...state, activeGenerators: [1,1,8] }), [1,8]);
 });
 
 test("Demeter Operations are additive, next-Run only, without fabricated score", () => {
@@ -244,6 +251,8 @@ test("Demeter Operations are additive, next-Run only, without fabricated score",
   assert.equal(effect.next, "200");
   assert.equal(effect.logGain, null);
   assert.equal(evaluateInstall(state, 1).score, null);
+  assert.deepEqual(evaluateInstall(state, 1).missing, []);
+  assert.deepEqual(evaluateInstall(state, 1).modelIssues, ["operations:scoreModel"]);
   assert.equal(installEffects({ ...state, modifiers: { multiplier: "7", operationsMultiplier: "3" } }, 1)[0].current, "300");
 });
 
