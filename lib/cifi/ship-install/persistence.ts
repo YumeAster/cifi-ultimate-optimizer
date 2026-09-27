@@ -11,6 +11,7 @@ export const MAX_SHIP_INSTALL_STORAGE_LENGTH = 8_000_000;
 export const MAX_SHIP_INSTALL_LEVEL = 1_000_000;
 export const MAX_SHIP_INSTALL_POINTS = 1_000_000_000;
 const MAX_RAW_INPUT_LENGTH = 128;
+export const MAX_SHIP_LOADOUT_NAME_LENGTH = 32;
 const MODES = ["mp", "shards-research", "shards", "research", "weights"] as const;
 const REASONS = ["target", "auxiliary", "prerequisite", "weighted"] as const;
 const POSITIONS = Array.from({ length: 11 }, (_, index) => index + 1);
@@ -38,6 +39,7 @@ export interface SavedShipLoadout {
   readonly savedAt: string;
 }
 export interface ShipInstallWorkspace {
+  /** The visible fields below mirror only selectedSlot; each slot owns its own allocation and recommendation options. */
   readonly levels: SavedShipLevels;
   /** Keep incomplete edits durable without feeding them into the optimizer. */
   readonly draftLevels: Readonly<Record<number, string>>;
@@ -49,6 +51,11 @@ export interface ShipInstallWorkspace {
   readonly excluded: readonly number[];
   readonly mode: SavedShipRecommendationMode;
   readonly selectedSlot: ShipInstallSlot;
+  readonly slotLevels: Readonly<Record<ShipInstallSlot, SavedShipLevels>>;
+  readonly slotDraftLevels: Readonly<Record<ShipInstallSlot, Readonly<Record<number, string>>>>;
+  readonly slotModes: Readonly<Record<ShipInstallSlot, SavedShipRecommendationMode>>;
+  readonly slotExcluded: Readonly<Record<ShipInstallSlot, readonly number[]>>;
+  readonly loadoutNames: Readonly<Record<ShipInstallSlot, string>>;
   readonly loadouts: Readonly<Record<ShipInstallSlot, SavedShipLoadout | null>>;
 }
 export interface ShipInstallPersistentState {
@@ -90,8 +97,11 @@ function levelsDraft(levels: SavedShipLevels): Record<number, string> {
   return Object.fromEntries(POSITIONS.map(position => [position, String(levels[position])]));
 }
 function defaultWorkspace(): ShipInstallWorkspace {
-  const levels = blankLevels();
-  return { levels, draftLevels: levelsDraft(levels), totalPoints: 0, draftTotalPoints: "0", evolution: 0, draftEvolution: "0", capExpanded: false, excluded: [], mode: "weights", selectedSlot: 1, loadouts: { 1: null, 2: null, 3: null } };
+  const slotLevels = Object.fromEntries(SHIP_INSTALL_SLOTS.map(slot => [slot, blankLevels()])) as Record<ShipInstallSlot, SavedShipLevels>;
+  const slotDraftLevels = Object.fromEntries(SHIP_INSTALL_SLOTS.map(slot => [slot, levelsDraft(slotLevels[slot])])) as Record<ShipInstallSlot, Readonly<Record<number, string>>>;
+  return { levels: slotLevels[1], draftLevels: slotDraftLevels[1], totalPoints: 0, draftTotalPoints: "0", evolution: 0, draftEvolution: "0", capExpanded: false, excluded: [], mode: "weights", selectedSlot: 1,
+    slotLevels, slotDraftLevels, slotModes: { 1: "weights", 2: "weights", 3: "weights" }, slotExcluded: { 1: [], 2: [], 3: [] },
+    loadoutNames: { 1: "Loadout 1", 2: "Loadout 2", 3: "Loadout 3" }, loadouts: { 1: null, 2: null, 3: null } };
 }
 export function createDefaultShipInstallState(): ShipInstallPersistentState {
   return { version: SHIP_INSTALL_SCHEMA_VERSION, selectedShip: "Cradle", ships: Object.fromEntries(SHIP_INSTALL_SHIPS.map(ship => [ship, defaultWorkspace()])) as Record<ShipId, ShipInstallWorkspace> };
@@ -202,13 +212,61 @@ function restoreWorkspace(raw: unknown, ship: ShipId, issues: string[]): ShipIns
   const selectedSlot = own(raw, "selectedSlot");
   const capExpanded = own(raw, "capExpanded");
   if (!isMode(mode) || !isSlot(selectedSlot) || typeof capExpanded !== "boolean") issues.push(`${ship}: invalid options repaired`);
+  const activeSlot = isSlot(selectedSlot) ? selectedSlot : 1;
+  const slotLevels = { ...defaults.slotLevels };
+  const slotDraftLevels = { ...defaults.slotDraftLevels };
+  const slotModes = { ...defaults.slotModes };
+  const slotExcluded = { ...defaults.slotExcluded };
+  const loadoutNames = { ...defaults.loadoutNames };
+  const storedSlotLevels = own(raw, "slotLevels");
+  // Pre-slot saves had a single level map. Keep it in the slot the user was viewing;
+  // the other two slots start empty rather than silently inheriting that allocation.
+  if (storedSlotLevels === undefined) {
+    slotLevels[activeSlot] = levels;
+    slotDraftLevels[activeSlot] = draftLevels;
+    slotModes[activeSlot] = isMode(mode) ? mode : "weights";
+    slotExcluded[activeSlot] = excluded;
+  } else {
+    for (const slot of SHIP_INSTALL_SLOTS) {
+      const restored = restoreLevels(own(storedSlotLevels, slot), true);
+      if (!restored) issues.push(`${ship}: invalid Loadout ${slot} levels repaired`);
+      const safe = restored ?? blankLevels();
+      const rawDrafts = own(own(raw, "slotDraftLevels"), slot);
+      const drafts: Record<number, string> = {};
+      if (!record(rawDrafts)) issues.push(`${ship}: invalid Loadout ${slot} inputs repaired`);
+      for (const position of POSITIONS) {
+        const draft = own(rawDrafts, position);
+        drafts[position] = rawInput(draft, safe[position]);
+        if (draft !== undefined && draft !== drafts[position]) issues.push(`${ship}: invalid Loadout ${slot} input repaired`);
+        const valid = parseShipInstallInteger(drafts[position]);
+        if (valid !== null) safe[position] = valid;
+      }
+      slotLevels[slot] = safe;
+      slotDraftLevels[slot] = drafts;
+      const slotMode = own(own(raw, "slotModes"), slot);
+      const rawSlotExcluded = own(own(raw, "slotExcluded"), slot);
+      slotModes[slot] = isMode(slotMode) ? slotMode : "weights";
+      slotExcluded[slot] = Array.isArray(rawSlotExcluded) ? [...new Set(rawSlotExcluded.slice(0, 100).filter(isPosition))].sort((a, b) => a - b) : [];
+      if (!isMode(slotMode) || !Array.isArray(rawSlotExcluded) || rawSlotExcluded.length !== slotExcluded[slot].length)
+        issues.push(`${ship}: invalid Loadout ${slot} options repaired`);
+    }
+  }
+  const storedNames = own(raw, "loadoutNames");
+  if (storedNames !== undefined) for (const slot of SHIP_INSTALL_SLOTS) {
+    const name = own(storedNames, slot);
+    if (typeof name === "string" && name.length <= MAX_SHIP_LOADOUT_NAME_LENGTH && !/[\x00-\x1f\x7f]/.test(name)) loadoutNames[slot] = name;
+    else issues.push(`${ship}: invalid Loadout ${slot} name repaired`);
+  }
   const loadouts = { ...defaults.loadouts };
   for (const slot of SHIP_INSTALL_SLOTS) {
     const candidate = own(own(raw, "loadouts"), slot);
     loadouts[slot] = restoreLoadout(candidate, ship);
     if (candidate !== null && candidate !== undefined && loadouts[slot] === null) issues.push(`${ship}: invalid Loadout ${slot} omitted`);
   }
-  return { levels, draftLevels, totalPoints, draftTotalPoints, evolution, draftEvolution, excluded, mode: isMode(mode) ? mode : "weights", selectedSlot: isSlot(selectedSlot) ? selectedSlot : 1, capExpanded: typeof capExpanded === "boolean" ? capExpanded : false, loadouts };
+  return { levels: slotLevels[activeSlot], draftLevels: slotDraftLevels[activeSlot], totalPoints, draftTotalPoints, evolution, draftEvolution,
+    excluded: slotExcluded[activeSlot], mode: slotModes[activeSlot], selectedSlot: activeSlot,
+    slotLevels, slotDraftLevels, slotModes, slotExcluded, loadoutNames,
+    capExpanded: typeof capExpanded === "boolean" ? capExpanded : false, loadouts };
 }
 
 export function restoreShipInstallState(raw: unknown): ShipInstallRestoreResult {
@@ -257,7 +315,15 @@ export function selectShipInstallShip(state: ShipInstallPersistentState, ship: S
 }
 export function selectShipInstallLoadout(state: ShipInstallPersistentState, ship: ShipId, slot: ShipInstallSlot): ShipInstallPersistentState {
   if (!isShip(ship) || !isSlot(slot)) throw new Error("Unknown Ship Install slot");
-  return withWorkspace(state, ship, { ...state.ships[ship], selectedSlot: slot });
+  const previous = state.ships[ship];
+  return withWorkspace(state, ship, { ...previous, selectedSlot: slot, levels: previous.slotLevels[slot], draftLevels: previous.slotDraftLevels[slot],
+    mode: previous.slotModes[slot], excluded: previous.slotExcluded[slot] });
+}
+export function renameShipInstallLoadout(state: ShipInstallPersistentState, ship: ShipId, slot: ShipInstallSlot, name: string): ShipInstallPersistentState {
+  if (!isShip(ship) || !isSlot(slot)) throw new Error("Unknown Ship Install slot");
+  if (typeof name !== "string" || name.length > MAX_SHIP_LOADOUT_NAME_LENGTH || /[\x00-\x1f\x7f]/.test(name)) throw new Error("Invalid Ship Install Loadout name");
+  const previous = state.ships[ship];
+  return withWorkspace(state, ship, { ...previous, loadoutNames: { ...previous.loadoutNames, [slot]: name } });
 }
 export function updateShipInstallInput(state: ShipInstallPersistentState, ship: ShipId, field: number | "totalPoints" | "evolution", raw: string): ShipInstallPersistentState {
   if (!isShip(ship) || typeof raw !== "string" || raw.length > MAX_RAW_INPUT_LENGTH) throw new Error("Invalid Ship Install input");
@@ -265,7 +331,11 @@ export function updateShipInstallInput(state: ShipInstallPersistentState, ship: 
   if (typeof field === "number") {
     if (!isPosition(field)) throw new Error("Unknown Install position");
     const parsed = parseShipInstallInteger(raw);
-    return withWorkspace(state, ship, { ...previous, draftLevels: { ...previous.draftLevels, [field]: raw }, levels: { ...previous.levels, [field]: parsed ?? previous.levels[field] } });
+    const draftLevels = { ...previous.draftLevels, [field]: raw };
+    const levels = { ...previous.levels, [field]: parsed ?? previous.levels[field] };
+    return withWorkspace(state, ship, { ...previous, draftLevels, levels,
+      slotDraftLevels: { ...previous.slotDraftLevels, [previous.selectedSlot]: draftLevels },
+      slotLevels: { ...previous.slotLevels, [previous.selectedSlot]: levels } });
   }
   if (field !== "totalPoints" && field !== "evolution") throw new Error("Unknown Ship Install input");
   const parsed = parseShipInstallInteger(raw, field === "evolution" ? SHIP_MAX_EVOLUTION[ship] : MAX_SHIP_INSTALL_POINTS);
@@ -277,20 +347,28 @@ export function updateShipInstallWorkspace(state: ShipInstallPersistentState, sh
   if (patch.capExpanded !== undefined && typeof patch.capExpanded !== "boolean") throw new Error("Invalid Install cap setting");
   if (patch.excluded !== undefined && (!Array.isArray(patch.excluded) || patch.excluded.some(position => !isPosition(position)))) throw new Error("Invalid Install exclusions");
   const previous = state.ships[ship];
-  return withWorkspace(state, ship, { ...previous, mode: patch.mode ?? previous.mode, capExpanded: patch.capExpanded ?? previous.capExpanded, excluded: patch.excluded === undefined ? previous.excluded : [...new Set(patch.excluded)].sort((a, b) => a - b) });
+  const mode = patch.mode ?? previous.mode;
+  const excluded = patch.excluded === undefined ? previous.excluded : [...new Set(patch.excluded)].sort((a, b) => a - b);
+  return withWorkspace(state, ship, { ...previous, mode, capExpanded: patch.capExpanded ?? previous.capExpanded, excluded,
+    slotModes: { ...previous.slotModes, [previous.selectedSlot]: mode }, slotExcluded: { ...previous.slotExcluded, [previous.selectedSlot]: excluded } });
 }
 export function setShipInstallLevels(state: ShipInstallPersistentState, ship: ShipId, levels: SavedShipLevels): ShipInstallPersistentState {
   if (!isShip(ship)) throw new Error("Unknown Ship Install ship");
   const safe = restoreLevels(levels, true);
   if (!safe) throw new Error("Invalid Ship Install levels");
-  return withWorkspace(state, ship, { ...state.ships[ship], levels: safe, draftLevels: levelsDraft(safe) });
+  const previous = state.ships[ship];
+  const draftLevels = levelsDraft(safe);
+  return withWorkspace(state, ship, { ...previous, levels: safe, draftLevels,
+    slotLevels: { ...previous.slotLevels, [previous.selectedSlot]: safe },
+    slotDraftLevels: { ...previous.slotDraftLevels, [previous.selectedSlot]: draftLevels } });
 }
 export function saveShipInstallLoadout(state: ShipInstallPersistentState, ship: ShipId, slot: ShipInstallSlot, plan: SavedShipLoadout): ShipInstallPersistentState {
   if (!isShip(ship) || !isSlot(slot)) throw new Error("Unknown Ship Install slot");
   const validated = restoreLoadout(plan, ship);
   if (!validated) throw new Error("Invalid or oversized Ship Install purchase plan");
   const previous = state.ships[ship];
-  return withWorkspace(state, ship, { ...previous, selectedSlot: slot, loadouts: { ...previous.loadouts, [slot]: validated } });
+  return withWorkspace(state, ship, { ...previous, selectedSlot: slot, levels: previous.slotLevels[slot], draftLevels: previous.slotDraftLevels[slot],
+    mode: previous.slotModes[slot], excluded: previous.slotExcluded[slot], loadouts: { ...previous.loadouts, [slot]: validated } });
 }
 export function isShipLoadoutStale(plan: SavedShipLoadout | null, contextFingerprint: string): boolean {
   return plan !== null && plan.contextFingerprint !== contextFingerprint;
