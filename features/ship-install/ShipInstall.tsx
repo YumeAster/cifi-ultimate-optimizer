@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { SHIPS, SHIP_MAX_EVOLUTION, INSTALL_ROWS, getShipInstalls } from "../../lib/cifi/ship-install/catalog";
-import { evaluateInstall, rankInstalls, generateSequence, aggregateEffects, validateInstallSequence } from "../../lib/cifi/ship-install/engine";
+import { evaluateInstall, rankInstalls, generateSequence, aggregateEffects, previewInstallSequenceEffects, usesUnitWeightFallback, validateInstallSequence } from "../../lib/cifi/ship-install/engine";
 import { SHIP_INSTALL_EXTRA_FIELDS, combineModLevels } from "../../lib/cifi/ship-install/profile";
 import type { InstallEvaluation, InstallSequence, RecommendationMode, ShipInstallContext } from "../../lib/cifi/ship-install/types";
 import {
@@ -42,6 +42,41 @@ function stateClass(row: InstallEvaluation, rank: number) {
   if (rank === 0) return "is-top";
   if (rank > 0) return "is-recommended";
   return "is-available";
+}
+
+type QueueView = "detailed" | "normal" | "compact";
+function LoadoutQueue({ language, context, plan, stale, onSelect, onCopy }: {
+  language: "ko" | "en"; context: ShipInstallContext;
+  plan: Pick<InstallSequence, "steps" | "baselineLevels"> | null;
+  stale: boolean; onSelect: (position: number) => void; onCopy: () => void;
+}) {
+  const [view, setView] = useState<QueueView>("normal");
+  const nodes = getShipInstalls(context.ship);
+  const stepEffects = useMemo(() => view === "detailed" && plan && !stale
+    ? previewInstallSequenceEffects({ ...context, levels: plan.baselineLevels }, plan.steps)
+    : [], [context, plan, stale, view]);
+  const t = (kr: string, en: string) => language === "ko" ? kr : en;
+  return <section className="si-queue">
+    <header><h3>{t("Loadout 강화 순서", "Loadout purchase order")} <small>{plan?.steps.length ?? 0}</small></h3><button disabled={!plan?.steps.length || stale} onClick={onCopy}>{t("복사", "Copy")}</button></header>
+    <div className="si-queue-views" role="group" aria-label={t("강화 순서 보기 방식", "Purchase order view")}>
+      {(["detailed", "normal", "compact"] as const).map(mode => <button key={mode} type="button" aria-pressed={view === mode} onClick={() => setView(mode)}>{mode === "detailed" ? t("자세히", "Detailed") : mode === "normal" ? t("일반", "Normal") : t("컴팩트", "Compact")}</button>)}
+    </div>
+    {stale && <p className="si-notice">{t("저장 후 입력값이 변경됐어. 다시 생성하면 새 조건으로 계산돼.", "Inputs changed since saving. Regenerate for current conditions.")}</p>}
+    <ol className={`${stale ? "is-stale" : ""} is-${view}`}>
+      {plan?.steps.map(step => {
+        const node = nodes.find(item => item.position === step.position)!;
+        const label = `${step.index}. ${node.name} · ${String(step.position).padStart(2, "0")} · Lv.${step.from} → Lv.${step.to}`;
+        return <li key={step.index}><button title={label} aria-label={label} onClick={() => onSelect(step.position)}>
+          {view === "compact" ? <><Icon src={node.icon} /><span className="si-step-index">{String(step.index).padStart(2, "0")}</span></>
+            : <><span className="si-step-main"><span className="si-step-index">{String(step.index).padStart(2, "0")}</span><Icon src={node.icon} /><Code position={step.position} />{view === "detailed" && <strong className="si-step-name">{node.name}</strong>}<span className="si-step-level">{step.from}<i>→</i><b>{step.to}</b></span></span>
+              {view === "detailed" && !stale && <span className="si-step-effects">{stepEffects[step.index - 1]?.map((effect, index) => <span key={`${effect.resource}-${index}`}><span className="si-step-effect-label">{effect.label}</span><span className="si-step-effect-values">{effect.currentDisplay}<i>→</i><b>{effect.nextDisplay}</b></span></span>)}{!stepEffects[step.index - 1]?.length && <span>{t("표시할 효과 없음", "No effect to display")}</span>}</span>}
+              {step.reason === "prerequisite" && <small>{t("해금", "Unlock")}</small>}</>}
+        </button></li>;
+      })}
+    </ol>
+    {!plan?.steps.length && <p className="si-empty">{t("포인트와 현재 레벨을 입력한 뒤 추천 순서를 생성해줘.", "Enter points and current levels, then generate an order.")}</p>}
+    <footer>{t("한 단계 = 1 Install · 현재 레벨부터 추천", "One step = one Install · starts at current levels")}</footer>
+  </section>;
 }
 
 export default function ShipInstall({ language, profile, draft, errors, ready, onInput }: Props) {
@@ -84,6 +119,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
   const fingerprint = useMemo(() => fingerprintShipInstallContext({ model: "ship-install-base-v1", ...context, evolution: workspace.evolution }), [context, workspace.evolution]);
   const evaluations = useMemo(() => nodes.map(node => evaluateInstall(context, node.position)), [nodes, context]);
   const ranked = useMemo(() => rankInstalls(context), [context]);
+  const unitFallback = useMemo(() => usesUnitWeightFallback(context), [context]);
   const detail = evaluations.find(row => row.position === selected) ?? evaluations[0];
   const savedPlan = workspace.loadouts[slot];
   const freshPending = pending?.fingerprint === fingerprint ? pending : null;
@@ -125,7 +161,6 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
       if (revision !== generation.current) return;
       setPending({ plan: result, fingerprint });
       if (result.errors.length) setNotice(result.errors.join(" · "));
-      else if (result.stopped === "no-target") setNotice(t("이 함선에는 선택한 자원의 직접 효과가 없어. 다른 추천 방식을 선택해줘.", "This ship has no direct effect for the selected resource. Choose another mode."));
       else if (!result.steps.length) setNotice(t("배분 가능한 대상이 없어. 입력값·남은 포인트·추천 방식을 확인해줘.", "No eligible allocation. Check inputs, remaining points and recommendation mode."));
       else if (result.stopped === "limit") setNotice(t("2,000단계까지 생성했어. 남은 포인트가 있어.", "Generated the first 2,000 steps; points remain."));
     } catch { if (revision === generation.current) setNotice(t("추천 계산에 실패했어. 입력값을 확인해줘.", "Calculation failed. Check your inputs.")); }
@@ -163,6 +198,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
         <details className="si-advanced"><summary>{t("추가 계산 입력", "Additional calculation inputs")}</summary><div className="si-extra-grid">{SHIP_INSTALL_EXTRA_FIELDS.map(field => sharedInput(field.key, ko ? field.label : field.enLabel))}<label className="si-check"><input type="checkbox" checked={workspace.capExpanded} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { capExpanded: event.target.checked }))} />FA1 · {t("최대 레벨 ×5", "Level cap ×5")}</label><small>{t("진화는 진행도 기록용이야. 장비·배지·진화 보정은 아직 자동 반영하지 않아.", "Evolution records progress only. Gear, badge and evolution modifiers are not applied automatically.")}</small></div></details>
       </section>
       <section className="si-toolbar"><strong>Loadout {slot}</strong><span className={remaining < 0 ? "si-error" : ""}>{t("남은 포인트", "Remaining")} <b>{remaining.toLocaleString()}</b></span><div className="si-tools"><label htmlFor="si-mode">{t("추천 방식", "Recommendation mode")}</label><select id="si-mode" value={workspace.mode} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { mode: event.target.value as RecommendationMode }))}>{Object.entries(modes).map(([value, label]) => <option key={value} value={value}>{label[ko ? 0 : 1]}</option>)}</select><button className="si-primary" disabled={!enabled || busy || invalidDraft || remaining <= 0} onClick={generate}>{busy ? t("계산 중…", "Calculating…") : t("추천 순서 생성", "Generate order")}</button><button disabled={!freshPending?.plan.steps.length || Boolean(freshPending?.plan.errors.length)} onClick={savePlan}>{t("저장", "Save")}</button></div></section>
+      {unitFallback && !invalidDraft && <p className="si-fallback-note" role="status">{t("선택한 추천 방식에 맞는 업그레이드가 없어, 나머지 효과를 가중치 1로 계산 중이야.", "No eligible upgrade matches this mode; other effects are compared with weight 1.")}</p>}
       {(notice || invalidDraft || remaining < 0) && <p className="si-notice" role="status">{invalidDraft ? t("Install 입력값을 0 이상의 정수로 확인해줘. 계산은 마지막 유효값을 유지해.", "Use non-negative integer Install values. Calculations retain the last valid value.") : remaining < 0 ? t("현재 Install 레벨 합계가 총 포인트를 초과했어.", "Allocated levels exceed total Install points.") : notice}</p>}
       <div className="si-main-grid">
         <section className="si-map-panel"><div className="si-tabs" role="tablist"><button role="tab" aria-selected={tab === "installs"} onClick={() => setTab("installs")}>Install</button><button role="tab" aria-selected={tab === "effects"} onClick={() => setTab("effects")}>{t("최종 효과", "Final effects")}</button></div>
@@ -174,7 +210,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
         <aside className="si-side"><section className="si-recommendations"><h3>{t("지금 가능한 추천", "Available recommendations")}</h3><div className="si-rec-list">{ranked.slice(0, 11).map((row, index) => <button key={row.position} className={`si-rec ${stateClass(row, index)}`} onClick={() => setSelected(row.position)}><span>{index + 1}</span><Icon src={row.node.icon} /><span><strong>{row.node.name}</strong><small><Code position={row.position} /> {row.effects.map(effect => effect.label).join(" / ")}</small></span><b>›</b></button>)}{!ranked.length && <p className="si-empty">{t("추천 가능한 Install이 없어. Crew·효과 입력값과 포인트를 확인해줘.", "No recommendation. Check Crew, effect inputs and points.")}</p>}</div></section>
           <section className="si-detail"><h3>{t("노드 정보", "Node information")}</h3><div className="si-detail-name"><Icon src={detail.node.icon} /><div><Code position={detail.position} /><h4>{detail.node.name}</h4></div></div><div className="si-detail-effects"><div className="si-subtitle"><span>{t("다음 레벨 효과", "Next-level effects")}</span><strong>Lv.{detail.level} → Lv.{Math.min(detail.level + 1, detail.maxLevel)}</strong></div>{detail.effects.map((effect, index) => <div className="si-effect-card" key={index}><strong>{effect.label}</strong><span>{effect.currentDisplay}<i>→</i><b>{effect.nextDisplay}</b></span></div>)}{detail.missing.length > 0 && <p className="si-error">{t("입력 / 계산 모델 확인", "Check inputs / calculation model")}: {detail.missing.map(key => ({ modLevelsTotal: t("Mod Tree 레벨 + 지도 밖 Mod 레벨 합계", "Mod Tree levels + off-map Mod levels"), "hardware:scoreModel": t("Hardware 효율 모델 미검증", "Hardware scoring not verified"), "software:scoreModel": t("Software 효율 모델 미검증", "Software scoring not verified"), "operations:scoreModel": t("Operations 효율 모델 미검증", "Operations scoring not verified") } as Record<string, string>)[key] ?? key).join(", ")}</p>}{detail.node.verification?.includes("tooltip-conflict") && <p className="si-error">{t("설명문과 계산식이 달라. 확인한 계산식의 계수를 사용해.", "Tooltip differs from the calculation. Uses the verified calculation coefficient.")}</p>}</div><div className="si-detail-edit"><label>{t("현재 레벨", "Current level")}<input aria-label={t("Install 현재 레벨", "Current Install level")} value={workspace.draftLevels[detail.position]} onChange={event => edit(detail.position, event.target.value)} disabled={!enabled} inputMode="numeric" maxLength={7} /><small>/ {detail.maxLevel}</small></label><label>{t("목표 레벨", "Target level")}<output>{!stale ? plan?.targetLevels[detail.position] ?? "—" : "—"}</output></label></div><label className="si-check"><input type="checkbox" checked={workspace.excluded.includes(detail.position)} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { excluded: event.target.checked ? [...workspace.excluded, detail.position] : workspace.excluded.filter(position => position !== detail.position) }))} />{t("추천에서 제외", "Exclude from recommendations")}</label>{!detail.unlocked && <div className="si-unlock"><strong>{t("해금 조건", "Unlock condition")}</strong><span>{t("Install 배분", "Allocated Installs")} {detail.allocated} / {detail.node.unlockAt}</span></div>}{detail.error && <p className="si-error">{detail.error}</p>}<button className="si-primary si-buy" disabled={!enabled || invalidDraft || !detail.unlocked || !detail.affordable || detail.maxed || Boolean(detail.error)} onClick={() => { if (detail.unlocked && detail.affordable && !detail.maxed && !detail.error) edit(detail.position, String(detail.level + 1)); }}>{t("구매", "Buy")} · 1 pt</button></section>
         </aside>
-        <section className="si-queue"><header><h3>{t("Loadout 강화 순서", "Loadout purchase order")} <small>{plan?.steps.length ?? 0}</small></h3><button disabled={!plan?.steps.length || stale} onClick={copyPlan}>{t("복사", "Copy")}</button></header>{stale && <p className="si-notice">{t("저장 후 입력값이 변경됐어. 다시 생성하면 새 조건으로 계산돼.", "Inputs changed since saving. Regenerate for current conditions.")}</p>}<ol className={stale ? "is-stale" : ""}>{plan?.steps.map(step => { const node = nodes.find(item => item.position === step.position)!; return <li key={step.index}><button title={`${node.name} · ${step.reason}`} onClick={() => setSelected(step.position)}><span className="si-step-index">{String(step.index).padStart(2,"0")}</span><Icon src={node.icon} /><Code position={step.position} /><span className="si-step-level">{step.from}<i>→</i><b>{step.to}</b></span>{step.reason === "prerequisite" && <small>{t("해금", "Unlock")}</small>}</button></li>; })}</ol>{!plan?.steps.length && <p className="si-empty">{t("포인트와 현재 레벨을 입력한 뒤 추천 순서를 생성해줘.", "Enter points and current levels, then generate an order.")}</p>}<footer>{t("한 단계 = 1 Install · 현재 레벨부터 추천", "One step = one Install · starts at current levels")}</footer></section>
+        <LoadoutQueue language={language} context={context} plan={plan} stale={stale} onSelect={setSelected} onCopy={copyPlan} />
       </div>
     </div>
   </main>;

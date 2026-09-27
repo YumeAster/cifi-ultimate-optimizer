@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   aggregateEffects, evaluateInstall, formatInstallNumber, generateSequence,
-  installEffects, installMaxLevel, installModePermission, rankInstalls,
+  installEffects, installMaxLevel, installModePermission, previewInstallSequenceEffects, rankInstalls, usesUnitWeightFallback,
   validateInstallContext, validateInstallSequence,
 } from "../lib/cifi/ship-install/engine.ts";
 import { getShipInstalls, SHIPS } from "../lib/cifi/ship-install/catalog.ts";
@@ -130,11 +130,40 @@ test("exclusions, invalid caps, impossible baselines and budgets are respected",
   assert.equal(generateSequence(context({ totalPoints: 0 })).stopped, "budget");
 });
 
-test("MP mode cannot fabricate an MP target for Cradle", () => {
-  const result = generateSequence(context({ mode: "mp", totalPoints: 300 }));
-  assert.equal(result.stopped, "no-target");
-  assert.equal(result.steps.length, 0);
-  assert.equal(rankInstalls(context({ mode: "mp", totalPoints: 300 })).length, 0);
+test("named mode without an eligible target uses unit weights for other effects", () => {
+  const state = context({ mode: "mp", totalPoints: 20 });
+  assert.equal(usesUnitWeightFallback(state), true);
+  const ranked = rankInstalls(state);
+  assert.ok(ranked.length > 0);
+  assert.ok(ranked.every(item => item.reason === "weighted"));
+  const plan = generateSequence(state);
+  assert.ok(plan.steps.length > 0);
+  assert.ok(plan.warnings.some(warning => warning.includes("가중치 1")));
+  assert.deepEqual(validateInstallSequence(state, plan.steps), []);
+  const changedPreset = { ...state, profile: profile(zeroWeights) };
+  assert.deepEqual(generateSequence(changedPreset).steps, plan.steps, "fallback ignores the saved weight preset");
+});
+
+test("a reachable target keeps its named mask, but a target beyond the budget falls back", () => {
+  const reachable = context({ ship: "Zagreus", mode: "mp", totalPoints: 6 });
+  assert.equal(usesUnitWeightFallback(reachable), false);
+  assert.ok(rankInstalls(reachable).every(item => item.reason !== "weighted"));
+  assert.equal(usesUnitWeightFallback({ ...reachable, totalPoints: 4 }), true);
+  assert.ok(rankInstalls({ ...reachable, totalPoints: 4 }).some(item => item.reason === "weighted"));
+  const maxedTarget = { ...reachable, levels: { 1: 5, 3: 10 }, totalPoints: 16 };
+  assert.equal(usesUnitWeightFallback(maxedTarget), true);
+  assert.deepEqual(validateInstallSequence(maxedTarget, generateSequence(maxedTarget).steps), []);
+});
+
+test("detailed effects replay each purchase level without mutating the baseline", () => {
+  const state = context({ totalPoints: 2, profile: profile({ cradleCrew: "10" }) });
+  const steps = [
+    { index: 1, position: 1, from: 0, to: 1, reason: "weighted", score: 1 },
+    { index: 2, position: 1, from: 1, to: 2, reason: "weighted", score: 1 },
+  ];
+  const previews = previewInstallSequenceEffects(state, steps);
+  assert.deepEqual(previews.map(effects => [effects[0].currentDisplay, effects[0].nextDisplay]), [["×1", "×2"], ["×2", "×3"]]);
+  assert.deepEqual(state.levels, {});
 });
 
 test("named resource modes hard-mask non-target main resources", () => {
@@ -170,7 +199,11 @@ test("forbidden resource allocation happens only for indispensable affordable un
   assert.deepEqual(plan.steps.slice(0, 25).map(step => [step.position, step.reason]), Array.from({ length: 25 }, () => [2, "prerequisite"]));
   assert.equal(plan.steps[25].position, 6);
   assert.deepEqual(validateInstallSequence(state, plan.steps), []);
-  assert.equal(generateSequence({ ...state, totalPoints: 25 }).steps.length, 0);
+  const noRoomForTarget = { ...state, totalPoints: 25 };
+  const fallback = generateSequence(noRoomForTarget);
+  assert.equal(fallback.steps.length, 25);
+  assert.ok(fallback.steps.every(step => step.reason === "weighted"));
+  assert.deepEqual(validateInstallSequence(noRoomForTarget, fallback.steps), []);
   const unnecessary = { ...state, excluded: [1] };
   assert.ok(validateInstallSequence(unnecessary, plan.steps).length);
 });
