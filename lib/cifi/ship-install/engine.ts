@@ -21,6 +21,7 @@ export const INSTALL_RESOURCE_LABELS: Readonly<Record<InstallResource, string>> 
 };
 const ZERO = parseGameEffectDecimal("0"), ONE = parseGameEffectDecimal("1");
 const unique = <T,>(values: readonly T[]) => [...new Set(values)];
+const isModelIssue = (key: string) => key === "scoreRange" || /:(?:scoreModel|effectRange|effectVerification)$/.test(key);
 const mainResources = new Set<InstallResource>(["modPoints", "shards", "research", "academyPoints", "materials"]);
 const auxiliary = (resource: InstallResource) => resource === "cells" || /^mk[1-9]$/.test(resource) || resource === "allGenerators" || resource === "hardware" || resource === "software";
 const unitWeights = { cells: "1", modPoints: "1", shards: "1", research: "1", academyPoints: "1", materials: "1" } as const;
@@ -179,17 +180,28 @@ export function evaluateInstall(context: ShipInstallContext, position: number): 
   const level = context.levels[position] ?? 0, maxLevel = installMaxLevel(node, context.capExpanded);
   const allocated = allocatedInstallPoints(context.levels), remaining = Math.max(0, context.totalPoints - allocated);
   const reason = installModePermission(node, context), effects = installEffects(context, position);
-  const missing = effects.flatMap(effect => effect.missing), warnings = effects.flatMap(effect => effect.warnings);
+  const effectIssues = effects.flatMap(effect => effect.missing);
+  const missing = effectIssues.filter(key => !isModelIssue(key));
+  const modelIssues = effectIssues.filter(isModelIssue);
+  const warnings = effects.flatMap(effect => effect.warnings);
   let score: number | null = 0;
   for (const effect of effects) {
+    // A missing effect input already explains why its score is unavailable.
+    // Scoring it again would fabricate a second :scoreModel "input" warning.
+    if (effect.missing.length) { score = null; break; }
     try { score += effectScore(effect, context); }
-    catch (error) { score = null; missing.push(...(error instanceof MissingShipInput ? error.keys : ["scoreRange"])); break; }
+    catch (error) {
+      score = null;
+      for (const key of error instanceof MissingShipInput ? error.keys : ["scoreRange"])
+        (isModelIssue(key) ? modelIssues : missing).push(key);
+      break;
+    }
   }
-  if (score !== null && !Number.isFinite(score)) { score = null; missing.push("scoreRange"); }
+  if (score !== null && !Number.isFinite(score)) { score = null; modelIssues.push("scoreRange"); }
   return { node, position, level, maxLevel, allocated, remaining,
     unlocked: allocated >= node.unlockAt, affordable: !errors.length && remaining >= 1,
     maxed: level >= maxLevel, excluded: context.excluded?.includes(position) ?? false,
-    permitted: reason !== "forbidden", reason, effects, missing: unique(missing), warnings: unique(warnings), score,
+    permitted: reason !== "forbidden", reason, effects, missing: unique(missing), modelIssues: unique(modelIssues), warnings: unique(warnings), score,
     error: errors.length ? errors.join(" ") : null };
 }
 

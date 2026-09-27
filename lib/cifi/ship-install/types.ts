@@ -71,7 +71,10 @@ export type InstallEvaluation = Readonly<{
   permitted: boolean;
   reason: "target" | "auxiliary" | "weighted" | "forbidden";
   effects: readonly InstallEffectValue[];
+  /** Actual missing or invalid player inputs, never internal scoring keys. */
   missing: readonly string[];
+  /** An effect or recommendation model that cannot currently be scored. */
+  modelIssues: readonly string[];
   warnings: readonly string[];
   score: number | null;
   error: string | null;

@@ -1,5 +1,4 @@
 import { parseCifiDecimal } from "../upgrades/decimal.ts";
-import { readGameDisplayInput } from "../mod-tree/gameDisplayInputs.ts";
 import {
   addGameEffectDecimals, compareGameEffectDecimals, gameEffectExact, parseGameEffectDecimal,
   type GameEffectDecimal,
@@ -10,6 +9,10 @@ export const SHIP_INSTALL_EXTRA_FIELDS = [
   { key: "automationsOwned", label: "현재 Automation 수", enLabel: "Current Automations" },
   { key: "ticksThisRun", label: "이번 Run Tick 수", enLabel: "Ticks this Run" },
   { key: "missionsDone", label: "완료한 Mission 수", enLabel: "Completed Missions" },
+] as const;
+// Keep previously saved later-game inputs restorable, but do not request them
+// from the Pre-Ouroboros Ship Install calculator.
+export const SHIP_INSTALL_POST_OURO_FIELDS = [
   { key: "manualMk9", label: "Manual MK9 (미해금이면 0)", enLabel: "Manual MK9 (0 if locked)" },
   { key: "hardwareTechMk9To12", label: "Hardware Tech 합계 (MK9–12)", enLabel: "Hardware Tech subtotal (MK9–12)" },
 ] as const;
@@ -65,16 +68,11 @@ export function readInstallDependency(context: ShipInstallContext, dependency?: 
   if (!dependency) return parseGameEffectDecimal("1");
   const profile = context.profile;
   switch (dependency) {
-    case "G": return sumShipInputs(profile, [...keys("manualMk"), "manualMk9"]);
+    case "G": return sumShipInputs(profile, keys("manualMk"));
     case "G2": return readShipNumber(profile, "manualMk2");
     case "G3": return readShipNumber(profile, "manualMk3");
-    case "TH": return sumShipInputs(profile, [...keys("hardwareTechMk"), "hardwareTechMk9To12"]);
-    case "TS": {
-      // The existing Mod Tree display input is authoritative for the later MK subtotal.
-      // Preflight preserves actionable missing keys instead of flattening its exception.
-      sumShipInputs(profile, [...keys("softwareTechMk"), "softwareTechMk9To12"]);
-      return parseCifiDecimal(readGameDisplayInput(profile, "totalSoftwareLevelsMK1To12"));
-    }
+    case "TH": return sumShipInputs(profile, keys("hardwareTechMk"));
+    case "TS": return sumShipInputs(profile, keys("softwareTechMk"));
     case "T": return addGameEffectDecimals(readInstallDependency(context, "TH"), readInstallDependency(context, "TS"));
     case "LM": return readShipNumber({ modLevelsTotal: context.modLevelsTotal ?? "" }, "modLevelsTotal");
     case "S+O": return sumShipInputs(profile, ["studiesDone", "operationsDone"]);
@@ -85,15 +83,15 @@ export function readInstallDependency(context: ShipInstallContext, dependency?: 
   }
 }
 
-/** An explicit active range wins; otherwise use all nine native manual counts. */
+/** The Pre-Ouroboros calculator uses MK1–8 even if later-game data was saved. */
 export function activeInstallGenerators(context: ShipInstallContext): number[] {
   if (context.activeGenerators !== undefined) {
-    if (context.activeGenerators.some(id => !Number.isSafeInteger(id) || id < 1 || id > 9)) throw new MissingShipInput(["activeGenerators"]);
+    if (context.activeGenerators.some(id => !Number.isSafeInteger(id) || id < 1 || id > 8)) throw new MissingShipInput(["activeGenerators"]);
     return [...new Set(context.activeGenerators)].sort((a, b) => a - b);
   }
   // Read every field so blank and zero are not treated as equivalent.
   const active: number[] = [], missing: string[] = [];
-  for (let id = 1; id <= 9; id++) {
+  for (let id = 1; id <= 8; id++) {
     try { if (compareGameEffectDecimals(readShipNumber(context.profile, `manualMk${id}`), parseGameEffectDecimal("0")) > 0) active.push(id); }
     catch (error) { if (error instanceof MissingShipInput) missing.push(...error.keys); else throw error; }
   }

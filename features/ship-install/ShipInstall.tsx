@@ -44,6 +44,19 @@ function stateClass(row: InstallEvaluation, rank: number) {
   return "is-available";
 }
 
+function missingInputLabel(key: string, language: "ko" | "en"): string {
+  const ko = language === "ko";
+  if (key === "modLevelsTotal") return ko ? "Mod Tree 레벨 합계 · 지도 밖 Mod 레벨" : "Mod Tree levels · off-map Mod levels";
+  if (key === "extraModLevels") return ko ? "지도 밖 Mod 레벨 (입력값 관리)" : "Off-map Mod levels (Inputs)";
+  const generator = /^(manualMk|hardwareTechMk|softwareTechMk)([1-8])$/.exec(key);
+  if (generator) return `${generator[1] === "manualMk" ? "Manual" : generator[1] === "hardwareTechMk" ? "Hardware Tech" : "Software Tech"} MK${generator[2]}`;
+  const crew = /^([a-z]+)Crew$/.exec(key);
+  if (crew) return `${crew[1][0].toUpperCase()}${crew[1].slice(1)} Crew`;
+  return ({ automationsOwned: "Automation", ticksThisRun: ko ? "이번 Run Tick" : "Ticks this Run", missionsDone: ko ? "완료 Mission" : "Completed Missions",
+    loopsFilled: "Loop Filled", loopResets: "Loop Resets", operationsDone: ko ? "완료 Operation" : "Operations Done", studiesDone: ko ? "완료 Study" : "Studies Done",
+    completedResearches: ko ? "완료 Research" : "Completed Researches", totalResearchLevels: ko ? "전체 Research 레벨" : "Total Research Levels" } as Record<string, string>)[key] ?? key;
+}
+
 type QueueView = "detailed" | "normal" | "compact";
 function LoadoutQueue({ language, context, plan, stale, onSelect, onCopy }: {
   language: "ko" | "en"; context: ShipInstallContext;
@@ -91,7 +104,8 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
   const [pending, setPending] = useState<{ plan: InstallSequence; fingerprint: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
-  const [mappedModLevels, setMappedModLevels] = useState<string>();
+  // A fresh Mod Tree has zero purchases; a corrupt/unreadable save remains unknown.
+  const [mappedModLevels, setMappedModLevels] = useState<string | undefined>("0");
   const modLevelsTotal = useMemo(() => combineModLevels(mappedModLevels, profile), [mappedModLevels, profile]);
   const generation = useRef(0);
   useEffect(() => {
@@ -104,7 +118,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
     try {
       const raw = localStorage.getItem(MOD_STORAGE_KEY);
       if (raw) setMappedModLevels(String(Object.values(restoreModState(JSON.parse(raw)).levels).reduce((a, b) => a + b, 0)));
-    } catch { /* An unavailable Mod Tree stays unknown rather than becoming zero. */ }
+    } catch { setMappedModLevels(undefined); }
     setLoaded(true);
     });
     return () => { active = false; };
@@ -208,7 +222,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
           <p className="si-model-note">{t("기본 효과 예상 · 장비·배지 등 추가 보정 미포함. 실제 게임 최종값과 차이가 날 수 있어.", "Base-effect estimate · excludes additional gear/badge modifiers. Final in-game values may differ.")}</p>
         </section>
         <aside className="si-side"><section className="si-recommendations"><h3>{t("지금 가능한 추천", "Available recommendations")}</h3><div className="si-rec-list">{ranked.slice(0, 11).map((row, index) => <button key={row.position} className={`si-rec ${stateClass(row, index)}`} onClick={() => setSelected(row.position)}><span>{index + 1}</span><Icon src={row.node.icon} /><span><strong>{row.node.name}</strong><small><Code position={row.position} /> {row.effects.map(effect => effect.label).join(" / ")}</small></span><b>›</b></button>)}{!ranked.length && <p className="si-empty">{t("추천 가능한 Install이 없어. Crew·효과 입력값과 포인트를 확인해줘.", "No recommendation. Check Crew, effect inputs and points.")}</p>}</div></section>
-          <section className="si-detail"><h3>{t("노드 정보", "Node information")}</h3><div className="si-detail-name"><Icon src={detail.node.icon} /><div><Code position={detail.position} /><h4>{detail.node.name}</h4></div></div><div className="si-detail-effects"><div className="si-subtitle"><span>{t("다음 레벨 효과", "Next-level effects")}</span><strong>Lv.{detail.level} → Lv.{Math.min(detail.level + 1, detail.maxLevel)}</strong></div>{detail.effects.map((effect, index) => <div className="si-effect-card" key={index}><strong>{effect.label}</strong><span>{effect.currentDisplay}<i>→</i><b>{effect.nextDisplay}</b></span></div>)}{detail.missing.length > 0 && <p className="si-error">{t("입력 / 계산 모델 확인", "Check inputs / calculation model")}: {detail.missing.map(key => ({ modLevelsTotal: t("Mod Tree 레벨 + 지도 밖 Mod 레벨 합계", "Mod Tree levels + off-map Mod levels"), "hardware:scoreModel": t("Hardware 효율 모델 미검증", "Hardware scoring not verified"), "software:scoreModel": t("Software 효율 모델 미검증", "Software scoring not verified"), "operations:scoreModel": t("Operations 효율 모델 미검증", "Operations scoring not verified") } as Record<string, string>)[key] ?? key).join(", ")}</p>}{detail.node.verification?.includes("tooltip-conflict") && <p className="si-error">{t("설명문과 계산식이 달라. 확인한 계산식의 계수를 사용해.", "Tooltip differs from the calculation. Uses the verified calculation coefficient.")}</p>}</div><div className="si-detail-edit"><label>{t("현재 레벨", "Current level")}<input aria-label={t("Install 현재 레벨", "Current Install level")} value={workspace.draftLevels[detail.position]} onChange={event => edit(detail.position, event.target.value)} disabled={!enabled} inputMode="numeric" maxLength={7} /><small>/ {detail.maxLevel}</small></label><label>{t("목표 레벨", "Target level")}<output>{!stale ? plan?.targetLevels[detail.position] ?? "—" : "—"}</output></label></div><label className="si-check"><input type="checkbox" checked={workspace.excluded.includes(detail.position)} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { excluded: event.target.checked ? [...workspace.excluded, detail.position] : workspace.excluded.filter(position => position !== detail.position) }))} />{t("추천에서 제외", "Exclude from recommendations")}</label>{!detail.unlocked && <div className="si-unlock"><strong>{t("해금 조건", "Unlock condition")}</strong><span>{t("Install 배분", "Allocated Installs")} {detail.allocated} / {detail.node.unlockAt}</span></div>}{detail.error && <p className="si-error">{detail.error}</p>}<button className="si-primary si-buy" disabled={!enabled || invalidDraft || !detail.unlocked || !detail.affordable || detail.maxed || Boolean(detail.error)} onClick={() => { if (detail.unlocked && detail.affordable && !detail.maxed && !detail.error) edit(detail.position, String(detail.level + 1)); }}>{t("구매", "Buy")} · 1 pt</button></section>
+          <section className="si-detail"><h3>{t("노드 정보", "Node information")}</h3><div className="si-detail-name"><Icon src={detail.node.icon} /><div><Code position={detail.position} /><h4>{detail.node.name}</h4></div></div><div className="si-detail-effects"><div className="si-subtitle"><span>{t("다음 레벨 효과", "Next-level effects")}</span><strong>Lv.{detail.level} → Lv.{Math.min(detail.level + 1, detail.maxLevel)}</strong></div>{detail.effects.map((effect, index) => <div className="si-effect-card" key={index}><strong>{effect.label}</strong><span>{effect.currentDisplay}<i>→</i><b>{effect.nextDisplay}</b></span></div>)}{detail.missing.length > 0 && <p className="si-error">{t("입력 필요", "Input required")}: {detail.missing.map(key => missingInputLabel(key, language)).join(", ")}</p>}{detail.modelIssues.length > 0 && <p className="si-model-issue">{t("효과 또는 추천 효율 모델의 검증이 더 필요해. 입력값 오류는 아니야.", "The effect or recommendation model needs further verification; this is not an input error.")}</p>}{detail.node.verification?.includes("tooltip-conflict") && <p className="si-error">{t("설명문과 계산식이 달라. 확인한 계산식의 계수를 사용해.", "Tooltip differs from the calculation. Uses the verified calculation coefficient.")}</p>}</div><div className="si-detail-edit"><label>{t("현재 레벨", "Current level")}<input aria-label={t("Install 현재 레벨", "Current Install level")} value={workspace.draftLevels[detail.position]} onChange={event => edit(detail.position, event.target.value)} disabled={!enabled} inputMode="numeric" maxLength={7} /><small>/ {detail.maxLevel}</small></label><label>{t("목표 레벨", "Target level")}<output>{!stale ? plan?.targetLevels[detail.position] ?? "—" : "—"}</output></label></div><label className="si-check"><input type="checkbox" checked={workspace.excluded.includes(detail.position)} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { excluded: event.target.checked ? [...workspace.excluded, detail.position] : workspace.excluded.filter(position => position !== detail.position) }))} />{t("추천에서 제외", "Exclude from recommendations")}</label>{!detail.unlocked && <div className="si-unlock"><strong>{t("해금 조건", "Unlock condition")}</strong><span>{t("Install 배분", "Allocated Installs")} {detail.allocated} / {detail.node.unlockAt}</span></div>}{detail.error && <p className="si-error">{detail.error}</p>}<button className="si-primary si-buy" disabled={!enabled || invalidDraft || !detail.unlocked || !detail.affordable || detail.maxed || Boolean(detail.error)} onClick={() => { if (detail.unlocked && detail.affordable && !detail.maxed && !detail.error) edit(detail.position, String(detail.level + 1)); }}>{t("구매", "Buy")} · 1 pt</button></section>
         </aside>
         <LoadoutQueue language={language} context={context} plan={plan} stale={stale} onSelect={setSelected} onCopy={copyPlan} />
       </div>
