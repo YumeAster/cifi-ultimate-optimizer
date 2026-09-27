@@ -13,6 +13,7 @@ import {
   SHIP_INSTALL_STORAGE_KEY, SHIP_INSTALL_SLOTS, createDefaultShipInstallState, readShipInstallState,
   commitShipInstallState, selectShipInstallShip, selectShipInstallLoadout, updateShipInstallInput,
   updateShipInstallWorkspace, saveShipInstallLoadout, renameShipInstallLoadout, fingerprintShipInstallContext,
+  undoShipInstallPurchase, resetShipInstallLoadout,
   type ShipInstallPersistentState, type SavedShipLoadout,
 } from "../../lib/cifi/ship-install/persistence";
 import { MOD_STORAGE_KEY, restoreModState } from "../../lib/cifi/mod-tree/recommendations";
@@ -105,6 +106,7 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
   const [pending, setPending] = useState<{ plan: InstallSequence; fingerprint: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
+  const [resetConfirm, setResetConfirm] = useState(false);
   // A fresh Mod Tree has zero purchases; a corrupt/unreadable save remains unknown.
   const [mappedModLevels, setMappedModLevels] = useState<string | undefined>("0");
   const modLevelsTotal = useMemo(() => combineModLevels(mappedModLevels, profile), [mappedModLevels, profile]);
@@ -154,6 +156,8 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
   const invalidDraft = Object.entries(workspace.draftLevels).some(([position, value]) => value.trim() !== "" && (!/^\d+$/.test(value.trim()) || Number(value) !== workspace.levels[Number(position)]))
     || (workspace.draftTotalPoints.trim() !== "" && (!/^\d+$/.test(workspace.draftTotalPoints.trim()) || Number(workspace.draftTotalPoints) !== workspace.totalPoints));
   const canApplyPlan = enabled && !busy && !invalidDraft && !stale && Boolean(plan?.steps.length) && !freshPending?.plan.errors.length;
+  const canUndo = enabled && !busy && !invalidDraft && workspace.slotPurchaseHistory[slot].length > 0;
+  const canReset = enabled && !busy && (allocated > 0 || Boolean(savedPlan) || Boolean(pending) || workspace.slotPurchaseHistory[slot].length > 0);
   const commit = (next: ShipInstallPersistentState) => {
     if (!enabled) return false;
     generation.current++; setBusy(false);
@@ -209,6 +213,22 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
       if (saved) setNotice(t(`${count}단계를 웹의 현재 Install 레벨에 적용했어. 실제 게임은 변경되지 않아.`, `Applied ${count} steps to this site's current Install levels. The game was not changed.`));
     } catch { setNotice(t("추천 순서가 현재 입력값과 달라졌어. 다시 생성해줘.", "The recommendation no longer matches the current inputs. Generate it again.")); }
   };
+  const undoPurchase = () => {
+    if (!canUndo) return;
+    try {
+      const next = undoShipInstallPurchase(stateRef.current, ship);
+      if (next && commit(next)) { setPending(null); setNotice(t("마지막 구매 1레벨을 되돌렸어.", "Undid the last purchased level.")); }
+    } catch { setNotice(t("되돌릴 수 없어. 현재 Loadout을 확인해줘.", "Could not undo. Check the current Loadout.")); }
+  };
+  const resetLoadout = () => {
+    if (!canReset) return;
+    try {
+      if (commit(resetShipInstallLoadout(stateRef.current, ship))) {
+        setPending(null); setResetConfirm(false);
+        setNotice(t("선택한 Loadout의 레벨과 저장된 추천 순서를 초기화했어.", "Reset levels and the saved order for the selected Loadout."));
+      }
+    } catch { setNotice(t("Loadout을 초기화하지 못했어.", "Could not reset this Loadout.")); }
+  };
   const copyPlan = async () => {
     if (!plan || stale) return;
     const text = `${ship} · ${loadoutLabel}\n${plan.steps.map(step => `${step.index}. ${String(step.position).padStart(2, "0")} ${nodes.find(node => node.position === step.position)?.name} ${step.from} → ${step.to}`).join("\n")}`;
@@ -218,8 +238,8 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
   const sharedInput = (key: string, label: string) => <label className="si-extra-field" key={key}>{label}<input aria-label={label} value={draft[key] ?? ""} onChange={event => onInput(key, event.target.value)} disabled={!enabled} aria-invalid={Boolean(errors[key])} inputMode="decimal" maxLength={128} />{errors[key] && <small className="si-error">{errors[key]}</small>}</label>;
 
   return <main className="ship-install" aria-label="Ship Install">
-    <aside className="si-fleet"><h2>{t("함선", "Fleet")}</h2><div className="si-ships">{SHIPS.map(item => <button key={item.id} className={ship === item.id ? "is-active" : ""} aria-pressed={ship === item.id} disabled={!enabled} onClick={() => { commit(selectShipInstallShip(stateRef.current, item.id)); setSelected(1); setPending(null); }}><img src={asset(item.image)} alt="" /><span>{item.name}</span></button>)}</div>
-      <div className="si-slots"><h3>Ship Loadouts</h3>{SHIP_INSTALL_SLOTS.map(number => <button key={number} aria-pressed={slot === number} className={slot === number ? "is-active" : ""} disabled={!enabled} onClick={() => { commit(selectShipInstallLoadout(stateRef.current, ship, number)); setPending(null); }}><span className="si-slot-label"><small>{number}</small>{workspace.loadoutNames[number].trim() || `Loadout ${number}`}</span><span>{workspace.loadouts[number] ? "✓" : "—"}</span></button>)}</div>
+    <aside className="si-fleet"><h2>{t("함선", "Fleet")}</h2><div className="si-ships">{SHIPS.map(item => <button key={item.id} className={ship === item.id ? "is-active" : ""} aria-pressed={ship === item.id} disabled={!enabled} onClick={() => { commit(selectShipInstallShip(stateRef.current, item.id)); setSelected(1); setPending(null); setResetConfirm(false); }}><img src={asset(item.image)} alt="" /><span>{item.name}</span></button>)}</div>
+      <div className="si-slots"><h3>Ship Loadouts</h3>{SHIP_INSTALL_SLOTS.map(number => <button key={number} aria-pressed={slot === number} className={slot === number ? "is-active" : ""} disabled={!enabled} onClick={() => { commit(selectShipInstallLoadout(stateRef.current, ship, number)); setPending(null); setResetConfirm(false); }}><span className="si-slot-label"><small>{number}</small>{workspace.loadoutNames[number].trim() || `Loadout ${number}`}</span><span>{workspace.loadouts[number] ? "✓" : "—"}</span></button>)}</div>
     </aside>
     <div className="si-workspace">
       <section className="si-information"><div className="si-title"><img src={asset(SHIPS.find(item => item.id === ship)!.image)} alt="" /><h2>{ship === "Cradle" ? "The Cradle" : ship}</h2><span>{t("함선 정보", "Ship information")}</span><span className={`si-save-state ${saveStatus !== "saved" ? "si-error" : ""}`} role="status">{!enabled ? t("불러오는 중", "Loading") : saveStatus === "failed" ? t("저장 실패 · 다시 시도", "Not saved · retry") : saveStatus === "repaired" ? t("저장 데이터 일부 복구", "Stored data repaired") : t("Install 설정 자동 저장", "Install settings saved")}{saveStatus === "failed" && <button onClick={() => commit(stateRef.current)}>{t("재시도", "Retry")}</button>}</span></div>
@@ -231,7 +251,8 @@ export default function ShipInstall({ language, profile, draft, errors, ready, o
         </div>
         <details className="si-advanced"><summary>{t("추가 계산 입력", "Additional calculation inputs")}</summary><div className="si-extra-grid">{SHIP_INSTALL_EXTRA_FIELDS.map(field => sharedInput(field.key, ko ? field.label : field.enLabel))}<label className="si-check"><input type="checkbox" checked={workspace.capExpanded} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { capExpanded: event.target.checked }))} />FA1 · {t("최대 레벨 ×5", "Level cap ×5")}</label><small>{t("진화는 진행도 기록용이야. 장비·배지·진화 보정은 아직 자동 반영하지 않아.", "Evolution records progress only. Gear, badge and evolution modifiers are not applied automatically.")}</small></div></details>
       </section>
-      <section className="si-toolbar"><label className="si-loadout-name">{t("Loadout 이름", "Loadout name")}<input aria-label={t("Loadout 이름", "Loadout name")} value={workspace.loadoutNames[slot]} maxLength={32} disabled={!enabled} onChange={event => commit(renameShipInstallLoadout(stateRef.current, ship, slot, event.target.value))} /></label><span className={remaining < 0 ? "si-error" : ""}>{t("남은 포인트", "Remaining")} <b>{remaining.toLocaleString()}</b></span><div className="si-tools"><label htmlFor="si-mode">{t("추천 방식", "Recommendation mode")}</label><select id="si-mode" value={workspace.mode} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { mode: event.target.value as RecommendationMode }))}>{Object.entries(modes).map(([value, label]) => <option key={value} value={value}>{label[ko ? 0 : 1]}</option>)}</select><button className="si-primary" disabled={!enabled || busy || invalidDraft || remaining <= 0} onClick={generate}>{busy ? t("계산 중…", "Calculating…") : t("추천 순서 생성", "Generate order")}</button><button disabled={!freshPending?.plan.steps.length || Boolean(freshPending?.plan.errors.length)} onClick={savePlan}>{t("저장", "Save")}</button><button className="si-primary" title={t("현재 조건에서 생성하거나 저장한 추천의 모든 레벨을 웹의 현재 Install에 반영해. 실제 게임은 바뀌지 않아.", "Apply every level of the current generated or saved recommendation to this site's Installs; the game is unchanged.")} disabled={!canApplyPlan} onClick={applyPlan}>{t("추천 일괄 적용", "Apply all recommendations")}{canApplyPlan ? ` · ${plan?.steps.length ?? 0}` : ""}</button></div></section>
+      <section className="si-toolbar"><label className="si-loadout-name">{t("Loadout 이름", "Loadout name")}<input aria-label={t("Loadout 이름", "Loadout name")} value={workspace.loadoutNames[slot]} maxLength={32} disabled={!enabled} onChange={event => commit(renameShipInstallLoadout(stateRef.current, ship, slot, event.target.value))} /></label><span className={remaining < 0 ? "si-error" : ""}>{t("남은 포인트", "Remaining")} <b>{remaining.toLocaleString()}</b></span><div className="si-tools"><label htmlFor="si-mode">{t("추천 방식", "Recommendation mode")}</label><select id="si-mode" value={workspace.mode} disabled={!enabled} onChange={event => commit(updateShipInstallWorkspace(stateRef.current, ship, { mode: event.target.value as RecommendationMode }))}>{Object.entries(modes).map(([value, label]) => <option key={value} value={value}>{label[ko ? 0 : 1]}</option>)}</select><button className="si-primary" disabled={!enabled || busy || invalidDraft || remaining <= 0} onClick={generate}>{busy ? t("계산 중…", "Calculating…") : t("추천 순서 생성", "Generate order")}</button><button disabled={!freshPending?.plan.steps.length || Boolean(freshPending?.plan.errors.length)} onClick={savePlan}>{t("저장", "Save")}</button><button className="si-primary" title={t("현재 조건에서 생성하거나 저장한 추천의 모든 레벨을 웹의 현재 Install에 반영해. 실제 게임은 바뀌지 않아.", "Apply every level of the current generated or saved recommendation to this site's Installs; the game is unchanged.")} disabled={!canApplyPlan} onClick={applyPlan}>{t("추천 일괄 적용", "Apply all recommendations")}{canApplyPlan ? ` · ${plan?.steps.length ?? 0}` : ""}</button><button disabled={!canUndo} title={t("선택한 Loadout에서 이 사이트의 마지막 구매 1레벨만 되돌려.", "Undo the most recent one-level purchase in this Loadout.")} onClick={undoPurchase}>{t("1개 Undo", "Undo 1")}</button><button className="si-reset-button" disabled={!canReset} onClick={() => setResetConfirm(true)}>{t("완전 초기화", "Reset Loadout")}</button></div>
+        {resetConfirm && <div className="si-reset-confirm" role="group" aria-label={t("Loadout 초기화 확인", "Confirm Loadout reset")}><span>{t(`${ship} · ${loadoutLabel}의 레벨과 저장된 추천 순서를 지울까? 다른 Loadout은 유지돼.`, `Clear levels and the saved order for ${ship} · ${loadoutLabel}? Other Loadouts stay intact.`)}</span><button onClick={() => setResetConfirm(false)}>{t("취소", "Cancel")}</button><button className="si-reset-button" onClick={resetLoadout}>{t("초기화 확인", "Confirm reset")}</button></div>}</section>
       {unitFallback && !invalidDraft && <p className="si-fallback-note" role="status">{t("선택한 추천 방식에 맞는 업그레이드가 없어, 나머지 효과를 가중치 1로 계산 중이야.", "No eligible upgrade matches this mode; other effects are compared with weight 1.")}</p>}
       {(notice || invalidDraft || remaining < 0) && <p className="si-notice" role="status">{invalidDraft ? t("Install 입력값을 0 이상의 정수로 확인해줘. 계산은 마지막 유효값을 유지해.", "Use non-negative integer Install values. Calculations retain the last valid value.") : remaining < 0 ? t("현재 Install 레벨 합계가 총 포인트를 초과했어.", "Allocated levels exceed total Install points.") : notice}</p>}
       <div className="si-main-grid">

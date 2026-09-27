@@ -1,6 +1,6 @@
 import { evaluateInstall, validateInstallSequence } from "./engine.ts";
 import { getShipInstalls } from "./catalog.ts";
-import { setShipInstallLevels, updateShipInstallInput, type ShipInstallPersistentState } from "./persistence.ts";
+import { recordShipInstallPurchases, type ShipInstallPersistentState } from "./persistence.ts";
 import type { InstallSequence, ShipInstallContext } from "./types.ts";
 
 function currentContext(state: ShipInstallPersistentState, context: ShipInstallContext): ShipInstallContext {
@@ -13,7 +13,7 @@ function currentContext(state: ShipInstallPersistentState, context: ShipInstallC
 export function buyShipInstallLevel(state: ShipInstallPersistentState, context: ShipInstallContext, position: number): ShipInstallPersistentState | null {
   const row = evaluateInstall(currentContext(state, context), position);
   if (!row.unlocked || !row.affordable || row.maxed || row.error) return null;
-  return updateShipInstallInput(state, context.ship, position, String(row.level + 1));
+  return recordShipInstallPurchases(state, context.ship, { ...state.ships[context.ship].levels, [position]: row.level + 1 }, [position]);
 }
 
 /** Apply only a fresh, replayable recommendation; one state update covers every step. */
@@ -27,5 +27,5 @@ export function applyShipInstallRecommendation(state: ShipInstallPersistentState
   const replay: Record<number, number> = Object.fromEntries(positions.map(position => [position, current.levels[position] ?? 0]));
   for (const step of plan.steps) replay[step.position] = step.to;
   if (positions.some(position => replay[position] !== plan.targetLevels[position])) throw new Error("Ship Install recommendation target does not match its steps");
-  return setShipInstallLevels(state, context.ship, replay);
+  return recordShipInstallPurchases(state, context.ship, replay, plan.steps.map(step => step.position));
 }
