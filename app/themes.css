@@ -1,3 +1,9 @@
+/* Shared scale. Radii come from these steps; breakpoints used across the app are
+   440 / 720 / 980 / 1200 / 1560px (Mod Tree and Ship Install keep their own game-matched values). */
+:root {
+  --radius-xs:4px; --radius-sm:8px; --radius-md:11px; --radius-lg:16px; --radius-xl:24px; --radius-2xl:28px; --radius-pill:999px;
+}
+
 /* Theme tokens. Every theme-dependent custom property is defined here once:
    the base block holds the Orbit defaults and each theme block lists only its overrides. */
 .dashboard-shell {
