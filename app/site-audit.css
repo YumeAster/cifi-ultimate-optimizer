@@ -11,7 +11,6 @@
   .dashboard-shell .dashboard-content { padding-top: 12px; }
 }
 @media (max-width: 440px) {
-  .optimizer-upgrade-grid { grid-template-columns: minmax(0, 1fr); }
   .generator-tech-fields { grid-template-columns: minmax(0, 1fr); }
   .generator-tech-heading { flex-wrap: wrap; gap: 4px; }
 }

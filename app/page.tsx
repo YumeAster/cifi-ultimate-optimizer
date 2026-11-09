@@ -3,7 +3,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography } from "antd";
 import koKR from "antd/locale/ko_KR";
-import { AppstoreOutlined, CheckCircleFilled, DatabaseOutlined, DeleteOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
+import { ApartmentOutlined, AppstoreOutlined, CheckCircleFilled, DeleteOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
 import { GAME_DISPLAY_EXTRA_INPUTS as gameDisplayInputs, migrateGameDisplayInputs } from "../lib/cifi/mod-tree/gameDisplayInputs";
 import { recommendationCopy } from "../features/mod-tree/recommendationCopy";
 import { DEFAULT_RECOMMENDATION_COUNT, MOD_RECOMMENDATION_COUNT_KEY, RECOMMENDATION_COUNTS, restoreRecommendationCount } from "../lib/cifi/mod-tree/preferences";
@@ -188,10 +188,19 @@ const mobileTabs = [
   { key: "inputs", icon: <EditOutlined />, ko: "입력", en: "Inputs" },
   { key: "diamonds", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.diamond.icon} />, ko: "다이아", en: "Diamond" },
   { key: "tokens", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.token.icon} />, ko: "토큰", en: "Token" },
-  { key: "modTree", icon: <AppstoreOutlined />, ko: "모드", en: "Mod Tree" },
+  { key: "modTree", icon: <ApartmentOutlined />, ko: "모드", en: "Mod Tree" },
   { key: "shipInstall", icon: <RocketOutlined />, ko: "함선", en: "Ship" },
   { key: "settings", icon: <SettingOutlined />, ko: "설정", en: "Settings" },
 ] as const;
+
+/** Orbit mark shared by the sidebar and the favicon (public/favicon.svg). */
+function BrandMark() {
+  return <svg className="brand-mark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <ellipse cx="12" cy="12" rx="9.5" ry="4.2" transform="rotate(-28 12 12)" />
+    <circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none" />
+    <circle cx="19.2" cy="7.6" r="1.7" fill="currentColor" stroke="none" />
+  </svg>;
+}
 
 function createWeightPresetId() {
   return `weight-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -393,7 +402,7 @@ function InputManager() {
     const palette = weightPalette[field.key];
     return <section className={`weight-input-card ${error ? "has-error" : ""}`} style={resourceCardStyle(palette)} key={field.key}>
       <div className="weight-card-heading"><ResourceIcon className="weight-card-icon" icon={UPGRADE_RESOURCE_PRESENTATION[field.key as UpgradeVisualResource].icon} color={field.key === "rankPoints" ? undefined : palette.accent} /><div><h4>{fieldLabel(field, language)}</h4><p>{text.recommended} {field.recommended}</p></div></div>
-      <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="numeric" /></Tooltip>
+      <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="decimal" /></Tooltip>
       {error && <small>{error}</small>}
     </section>;
   };
@@ -494,7 +503,7 @@ function InputManager() {
   );
   return <Layout className={`dashboard-shell theme-${theme}`}>
     <Sider className="dashboard-sider" width={272} trigger={null}>
-      <div className="sidebar-brand"><div className="brand-cell"><DatabaseOutlined /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER · {APP_VERSION}</span></div></div>
+      <div className="sidebar-brand"><div className="brand-cell"><BrandMark /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER</span></div></div>
       <div className="sidebar-caption">{text.workspace}</div>
       <Menu className="sidebar-menu" theme="dark" mode="inline" selectedKeys={[activeTab]} defaultOpenKeys={["upgrade-optimizer"]} onClick={({ key }) => { if (key !== "upgrade-optimizer") switchTab(key as ActiveTab); }} items={[
         { key: "inputs", icon: <EditOutlined />, label: text.inputManager },
@@ -502,8 +511,8 @@ function InputManager() {
           { key: "diamonds", className: "optimizer-menu-diamond", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.diamond.icon} />, label: text.diamonds },
           { key: "tokens", className: "optimizer-menu-token", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.token.icon} />, label: text.tokens },
         ] },
-        { key: "modTree", icon: <AppstoreOutlined />, label: language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations" },
-        { key: "shipInstall", icon: <AppstoreOutlined />, label: "Ship Install" },
+        { key: "modTree", icon: <ApartmentOutlined />, label: language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations" },
+        { key: "shipInstall", icon: <RocketOutlined />, label: "Ship Install" },
         { key: "settings", icon: <SettingOutlined />, label: text.settings },
       ]} />
       <div className="sidebar-foot"><div className="sidebar-foot-chip"><span className="sidebar-foot-dot" />{text.localProfile}</div><p>{text.localProfileNote}</p></div>

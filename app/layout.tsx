@@ -23,6 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: base,
+    icons: { icon: "/favicon.svg" },
     title: "CIFI Ultimate Optimizer",
     description: "Mod Tree·다이아/토큰 업그레이드·Ship Install 추천과 진행도 입력을 브라우저에 저장해 관리하는 CIFI 계산 도구입니다.",
     openGraph: {
