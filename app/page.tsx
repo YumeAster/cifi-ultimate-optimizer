@@ -1,7 +1,8 @@
 "use client";
 
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography } from "antd";
+import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography, theme as antdTheme } from "antd";
+import type { ThemeConfig } from "antd";
 import koKR from "antd/locale/ko_KR";
 import enUS from "antd/locale/en_US";
 import { ApartmentOutlined, AppstoreOutlined, CheckCircleFilled, DeleteOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
@@ -40,6 +41,22 @@ type OptimizerTab = "diamonds" | "tokens";
 type ActiveTab = "inputs" | OptimizerTab | "modTree" | "shipInstall" | "settings";
 type Language = "ko" | "en";
 type DashboardTheme = "orbit" | "solar" | "nebula" | "pearl" | "red";
+/** Ant Design tokens per theme, mirroring app/themes.css so components and portals start from the active palette. */
+const ANT_THEME_PALETTES: Record<DashboardTheme, { dark: boolean; primary: string; text: string; muted: string; container: string; elevated: string; border: string }> = {
+  orbit: { dark: true, primary: "#3b9dff", text: "#eef6ff", muted: "#96abc4", container: "#0d203b", elevated: "#10223a", border: "#42617e" },
+  solar: { dark: false, primary: "#1c6b9c", text: "#17334f", muted: "#526e87", container: "#fcfeff", elevated: "#f8fcff", border: "#a6c3d9" },
+  nebula: { dark: true, primary: "#00b8d6", text: "#f0f3ff", muted: "#979ab8", container: "#080e1f", elevated: "#151329", border: "#575276" },
+  pearl: { dark: false, primary: "#6650ad", text: "#332f57", muted: "#655d80", container: "#ffffff", elevated: "#faf9ff", border: "#bcb0d5" },
+  red: { dark: true, primary: "#aa3d52", text: "#fff0f2", muted: "#c6a0a9", container: "#21131d", elevated: "#25151f", border: "#80505c" },
+};
+function antThemeFor(theme: DashboardTheme): ThemeConfig {
+  const palette = ANT_THEME_PALETTES[theme];
+  return {
+    algorithm: palette.dark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+    token: { colorPrimary: palette.primary, colorInfo: palette.primary, colorText: palette.text, colorTextSecondary: palette.muted,
+      colorBgContainer: palette.container, colorBgElevated: palette.elevated, colorBorder: palette.border, colorBgLayout: "transparent" },
+  };
+}
 type FieldDefinition = { key: string; label: string; koLabel?: string; kind: FieldKind; group: FieldGroup; recommended?: string; suffix?: string; generator?: number; tech?: "hardware" | "software" };
 type FieldSection = { title: string; description: string; keys: string[] };
 type ResourcePalette = { accent: string; ink: string; surface: string; border: string; glow: string };
@@ -216,6 +233,7 @@ function InputManager() {
   const switchTab = (tab: ActiveTab) => {
     const content = document.querySelector<HTMLElement>(".dashboard-main > .dashboard-content");
     if (content) content.scrollTop = 0;
+    window.scrollTo({ top: 0 });
     setActiveTab(tab);
   };
   const [ready, setReady] = useState(false);
@@ -514,7 +532,7 @@ function InputManager() {
       </div>
     </Card>
   );
-  return <ConfigProvider locale={language === "ko" ? koKR : enUS}><Layout className={`dashboard-shell theme-${theme}`}>
+  return <ConfigProvider locale={language === "ko" ? koKR : enUS} theme={antThemeFor(theme)}><Layout className={`dashboard-shell theme-${theme}`}>
     <Sider className="dashboard-sider" aria-label={text.workspace} width={272} trigger={null}>
       <div className="sidebar-brand"><div className="brand-cell"><BrandMark /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER</span></div></div>
       <div className="sidebar-caption">{text.workspace}</div>

@@ -284,3 +284,12 @@ button,input { font:inherit; }
 .dashboard-shell .settings-workspace .ant-btn-default:not(:disabled) { color:var(--content-ink); background:var(--item-bg); border-color:var(--surface-line); }
 .dashboard-shell .settings-workspace .ant-btn-default:not(:disabled):hover { color:var(--content-ink); background:color-mix(in srgb,var(--ui-accent) 12%,var(--item-bg)); border-color:var(--ui-accent); }
 .upgrade-unlock-reason { flex:1 1 100%; margin:0; color:var(--content-muted); font-size:11px; line-height:1.4; }
+/* Phones: non-game tabs scroll the document so the browser bar can collapse and pull-to-refresh works.
+   Mod Tree and Ship Install keep their fixed, game-matched workspace. */
+@media (max-width:720px) {
+  html:has(.dashboard-content:not(.is-mod-tree):not(.is-ship-install)),html:has(.dashboard-content:not(.is-mod-tree):not(.is-ship-install)) body { height:auto; overflow:visible; }
+  .dashboard-shell:has(> .dashboard-main > .dashboard-content:not(.is-mod-tree):not(.is-ship-install)) { height:auto; min-height:100dvh; overflow:visible; }
+  .dashboard-shell .dashboard-main:has(> .dashboard-content:not(.is-mod-tree):not(.is-ship-install)) { height:auto; min-height:calc(100dvh - 20px); overflow:visible; }
+  .dashboard-shell .dashboard-main > .dashboard-content:not(.is-mod-tree):not(.is-ship-install) { flex:1 0 auto; overflow:visible; }
+  .dashboard-shell .dashboard-main:has(> .dashboard-content:not(.is-mod-tree):not(.is-ship-install)) .mobile-workspace-nav { position:sticky; bottom:max(6px,env(safe-area-inset-bottom)); }
+}
