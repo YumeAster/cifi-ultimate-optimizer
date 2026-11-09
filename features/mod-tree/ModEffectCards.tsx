@@ -16,7 +16,7 @@ export default function ModEffectCards({ code, effects, language, level, nextLev
   const content = effects.some(effect => effect.target !== "unverified") ? undefined : modContentEffect(code);
   const visible = content ? [] : effects;
   return <section className="mod-rec-next-effects" aria-label={t.effects}>
-    <h5>{t.effects}</h5>
+    <h4>{t.effects}</h4>
     <p className="mod-rec-effect-levels">Lv.{level} <ArrowRightOutlined aria-hidden="true" /> Lv.{nextLevel}</p>
     {effects.length || content ? <div className="upgrade-multiplier-grid mod-rec-effect-grid">{visible.map(effect => {
       const palette = modEffectPresentation(effect.label, effect.iconCategory);

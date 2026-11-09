@@ -9,13 +9,13 @@
 .mod-tree-v2 .mod-tree-map-layout { display:grid; grid-template-columns:260px minmax(0,1fr) 420px; grid-template-rows:minmax(min-content,1fr); align-items:stretch; min-height:min-content; flex:1 1 0; background:#07070d; }
 .mod-tree-v2 .mod-tree-overview { display:flex; flex-direction:column; contain:size; min-width:0; min-height:0; overflow:hidden; color:var(--content-ink); background:var(--item-bg); border-right:1px solid var(--surface-line); }
 .mod-tree-overview-heading { display:flex; flex:0 0 auto; align-items:center; justify-content:space-between; gap:4px; padding:5px 8px 5px 12px; }
-.mod-tree-overview-heading h3 { margin:0; font-size:16px; }
+.mod-tree-overview-heading h2 { margin:0; font-size:16px; }
 .mod-tree-overview-toggle { display:grid; place-items:center; flex:0 0 auto; width:36px; height:36px; border:1px solid var(--surface-line); border-radius:7px; background:var(--input-bg); color:var(--content-ink); cursor:pointer; }
 .mod-tree-overview-toggle-symbol { font-size:23px; line-height:1; }
 .mod-tree-overview-toggle-mobile { display:none; }
 .mod-tree-v2 .mod-tree-map-layout.is-overview-collapsed { grid-template-columns:48px minmax(0,1fr) 420px; }
 .mod-tree-overview.is-collapsed .mod-tree-overview-heading { justify-content:center; padding:5px; }
-.mod-tree-overview.is-collapsed .mod-tree-overview-heading h3 { display:none; }
+.mod-tree-overview.is-collapsed .mod-tree-overview-heading h2 { display:none; }
 .mod-tree-overview [hidden] { display:none!important; }
 .mod-tree-overview-scroll { flex:1 1 0; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; padding:0 10px 12px; font-size:12px; }
 .mod-tree-overview-scroll:focus-visible { outline:2px solid #ec7885; outline-offset:-2px; }
@@ -23,7 +23,7 @@
 .mod-tree-overview-effects { display:grid; grid-template-columns:minmax(0,1fr); gap:7px; }
 .mod-tree-overview-effects .mod-rec-effect-chip.upgrade-multiplier-chip { display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:8px; min-width:0; padding:9px 10px; }
 .mod-tree-overview-effects .upgrade-chip-label { min-width:0; white-space:nowrap; }
-.mod-tree-overview-effects .upgrade-chip-label small { font-size:9px; }
+.mod-tree-overview-effects .upgrade-chip-label small { font-size:11px; }
 .mod-tree-overview-effects .mod-rec-effect-chip.upgrade-multiplier-chip strong { display:inline-flex; align-items:center; gap:2px; flex:0 0 auto; white-space:nowrap; font-size:13px; }
 .mod-tree-overview-help { flex:0 0 auto; max-height:45%; overflow-y:auto; background:var(--item-bg); }
 .mod-tree-overview-warning { color:var(--content-muted); font-size:11px; overflow-wrap:anywhere; }
@@ -34,6 +34,7 @@
 /* Focusable SVGs can pick up the browser's rectangular focus ring on click.
    Keep keyboard controls and signal keyboard focus in the help strip instead. */
 .mod-tree-v2 .mod-tree-canvas:focus { outline:none; box-shadow:none; }
+.mod-tree-v2 .mod-tree-canvas-frame:has(.mod-tree-canvas:focus-visible) { outline:2px solid var(--mod-focus); outline-offset:-2px; }
 .mod-tree-v2 .mod-tree-map-layout:has(.mod-tree-canvas:focus-visible) .mod-tree-map-help { border-top-color:#fda2a7; }
 .mod-tree-v2 .mod-tree-node { --mod-node-frame-width:2.08; --node-line:var(--mod-available-line); --node-fill:var(--mod-available-bg); --mod-node-icon-ink:var(--mod-available-icon); }
 .mod-tree-v2 .mod-tree-node-frame { fill:var(--node-fill); stroke:var(--node-line); filter:none; stroke-width:var(--mod-node-frame-width); stroke-linejoin:round; }
@@ -87,7 +88,7 @@
   .mod-tree-v2 .mod-tree-overview { grid-column:1; grid-row:3; contain:none; height:auto; max-height:min(60dvh,560px); border-right:0; border-top:1px solid var(--surface-line); }
   .mod-tree-v2 .mod-tree-overview.is-collapsed { max-height:none; }
   .mod-tree-v2 .mod-tree-overview-heading,.mod-tree-v2 .mod-tree-overview.is-collapsed .mod-tree-overview-heading { justify-content:space-between; padding:7px 12px; }
-  .mod-tree-v2 .mod-tree-overview.is-collapsed .mod-tree-overview-heading h3 { display:block; }
+  .mod-tree-v2 .mod-tree-overview.is-collapsed .mod-tree-overview-heading h2 { display:block; }
   .mod-tree-v2 .mod-tree-overview-toggle { width:auto; min-width:70px; min-height:40px; padding:0 10px; }
   .mod-tree-v2 .mod-tree-overview-toggle-symbol { display:none; }
   .mod-tree-v2 .mod-tree-overview-toggle-mobile { display:inline; }
@@ -114,8 +115,8 @@
 .mod-rec-budget-controls { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:12px; }
 .mod-rec-budget-controls .mod-rec-field { margin-top:2px; justify-content:space-between; }
 .mod-rec-recommendations.mod-rec-section { display:flex; flex-direction:column; min-height:0; margin:0; padding:10px 0; }
-.mod-rec-recommendations h4 { flex:0 0 auto; display:flex; justify-content:space-between; gap:8px; }
-.mod-rec-recommendations h4 small { color:var(--content-muted); font-size:12px; }
+.mod-rec-recommendations h3 { flex:0 0 auto; display:flex; justify-content:space-between; gap:8px; }
+.mod-rec-recommendations h3 small { color:var(--content-muted); font-size:12px; }
 .mod-rec-scroll { flex:1 1 0; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; padding:2px 5px 2px 2px; }
 .mod-rec-scroll:focus-visible { outline:2px solid #ec7885; outline-offset:-2px; }
 .mod-rec-node-pane { display:flex; flex-direction:column; border-top:1px solid var(--surface-line); padding-top:10px; }
@@ -134,8 +135,8 @@
   .mod-tree-v2 .mod-tree-side-panel { padding:8px; }
   .mod-rec-purchase-bar { margin-top:4px; padding-top:4px; }
 }
-.mod-recommendation-panel h3 { margin:0 0 6px; font-size:17px; }
-.mod-recommendation-panel h4 { margin:0 0 8px; font-size:14px; overflow-wrap:anywhere; }
+.mod-recommendation-panel h2 { margin:0 0 6px; font-size:17px; }
+.mod-recommendation-panel h3 { margin:0 0 8px; font-size:14px; overflow-wrap:anywhere; }
 .mod-recommendation-panel .mod-rec-help { margin:6px 0 10px; font-size:12px; color:var(--content-muted); }
 .mod-rec-section { padding-top:14px; margin-top:14px; border-top:1px solid var(--surface-line); }
 .mod-rec-field { display:flex; flex-direction:column; gap:5px; margin-top:10px; }
@@ -165,7 +166,7 @@
 .mod-rec-stats>div { display:flex; justify-content:space-between; gap:8px; }
 .mod-rec-stats dd { margin:0; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
 .mod-rec-next-effects { margin:10px 0 12px; padding:10px 0; border-top:1px solid var(--surface-line); border-bottom:1px solid var(--surface-line); }
-.mod-rec-next-effects h5 { margin:0 0 6px; color:var(--content-muted); font-size:12px; }
+.mod-rec-next-effects h4 { margin:0 0 6px; color:var(--content-muted); font-size:12px; }
 .mod-rec-effect-grid.upgrade-multiplier-grid { display:flex; flex-wrap:wrap; gap:6px; }
 .mod-rec-effect-chip.upgrade-multiplier-chip { flex:0 1 auto; min-width:110px; max-width:100%; padding:8px 10px; }
 .mod-rec-effect-chip .upgrade-chip-label { font-size:12px; }
@@ -174,7 +175,7 @@
 .mod-rec-effect-levels { display:flex; align-items:center; gap:8px; margin:2px 0 9px; color:var(--content-ink); font-size:16px; font-weight:750; }
 .mod-rec-effect-uncertain { display:block; color:var(--content-muted); font-size:11px; }
 .mod-rec-unlock-conditions { margin-top:10px; padding-top:10px; border-top:1px solid var(--surface-line); }
-.mod-rec-unlock-conditions h5 { margin:0 0 6px; font-size:13px; color:var(--content-ink); }
+.mod-rec-unlock-conditions h4 { margin:0 0 6px; font-size:13px; color:var(--content-ink); }
 .mod-rec-unlock-conditions>div { display:flex; flex-wrap:wrap; gap:5px; }
 .mod-rec-action { width:100%; margin-top:8px; }
 .mod-rec-plan-actions { display:flex; gap:8px; align-items:flex-end; }
@@ -229,3 +230,6 @@
 }
 .mod-rec-confirm { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px; padding:10px 12px; border:1px solid var(--surface-line); border-radius:10px; background:var(--item-bg); }
 .mod-rec-confirm p { flex:1 1 100%; margin:0; }
+/* Locked nodes also differ by a dashed frame, not only by colour. */
+.mod-tree-v2 .mod-tree-node.progress-locked .mod-tree-node-frame { stroke-dasharray:2.4 1.6; }
+.mod-tree-v2 .mod-tree-legend-item.state-locked i { border-style:dashed; }

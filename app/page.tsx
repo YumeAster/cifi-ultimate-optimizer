@@ -179,7 +179,7 @@ function tabLabel(tab: ActiveTab, language: Language) {
   const text = localizedText[language];
   if (tab === "shipInstall") return language === "ko" ? "함선 Install" : "Ship Install";
   if (tab === "settings") return text.settings;
-  if (tab === "modTree") return language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations";
+  if (tab === "modTree") return language === "ko" ? "Mod Tree 추천" : "Mod Tree";
   if (tab === "diamonds") return text.diamonds;
   if (tab === "tokens") return text.tokens;
   return text.inputManager;
@@ -403,13 +403,19 @@ function InputManager() {
     "--resource-border": palette.border,
     "--resource-glow": palette.glow,
   }) as CSSProperties;
+  // Help text and errors are announced with the input, not only shown on hover.
+  const fieldDescription = (key: string, error?: string) => ({
+    "aria-invalid": Boolean(error),
+    "aria-describedby": error ? `field-help-${key} field-error-${key}` : `field-help-${key}`,
+  });
   const renderWeightField = (field: FieldDefinition) => {
     const error = errors[field.key];
     const palette = weightPalette[field.key];
     return <section className={`weight-input-card ${error ? "has-error" : ""}`} style={resourceCardStyle(palette)} key={field.key}>
-      <div className="weight-card-heading"><ResourceIcon className="weight-card-icon" icon={UPGRADE_RESOURCE_PRESENTATION[field.key as UpgradeVisualResource].icon} color={field.key === "rankPoints" ? undefined : palette.accent} /><div><h4>{fieldLabel(field, language)}</h4><p>{text.recommended} {field.recommended}</p></div></div>
-      <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={fieldLabel(field, language)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="decimal" /></Tooltip>
-      {error && <small>{error}</small>}
+      <div className="weight-card-heading"><ResourceIcon className="weight-card-icon" icon={UPGRADE_RESOURCE_PRESENTATION[field.key as UpgradeVisualResource].icon} color={field.key === "rankPoints" ? undefined : palette.accent} /><div><h3>{fieldLabel(field, language)}</h3><p>{text.recommended} {field.recommended}</p></div></div>
+      <Tooltip title={getInputFieldHelp(field, language)} trigger={["hover", "focus"]}><Input aria-label={fieldLabel(field, language)} {...fieldDescription(field.key, error)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode="decimal" /></Tooltip>
+      <span id={`field-help-${field.key}`} className="visually-hidden">{getInputFieldHelp(field, language)}</span>
+      {error && <small id={`field-error-${field.key}`}>{error}</small>}
     </section>;
   };
   const renderPlayerField = (field: FieldDefinition, matrixCell = false) => {
@@ -417,8 +423,9 @@ function InputManager() {
     const label = matrixCell && field.generator ? `MK${field.generator} ${fieldLabel(field, language)}` : fieldLabel(field, language);
     return <label className={`player-field ${matrixCell ? "generator-tech-matrix-field" : ""} ${error ? "has-error" : ""}`} key={field.key}>
       <span className={matrixCell ? "visually-hidden" : undefined}>{label}</span>
-      <Tooltip title={getInputFieldHelp(field, language)}><Input aria-label={label} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode={field.kind === "short" ? "text" : field.kind === "integer" || field.kind === "bar" ? "numeric" : "decimal"} suffix={field.suffix} /></Tooltip>
-      {error && <small>{error}</small>}
+      <Tooltip title={getInputFieldHelp(field, language)} trigger={["hover", "focus"]}><Input aria-label={label} {...fieldDescription(field.key, error)} value={draft[field.key] ?? ""} onChange={(event) => updateValue(field.key, event.target.value)} status={error ? "error" : undefined} placeholder={text.inputValue} inputMode={field.kind === "short" ? "text" : field.kind === "integer" || field.kind === "bar" ? "numeric" : "decimal"} suffix={field.suffix} /></Tooltip>
+      <span id={`field-help-${field.key}`} className="visually-hidden">{getInputFieldHelp(field, language)}</span>
+      {error && <small id={`field-error-${field.key}`}>{error}</small>}
     </label>;
   };
   const updateModRecommendationCount = (value: number) => {
@@ -483,14 +490,14 @@ function InputManager() {
     <div className={`field-panel field-panel-${group}`}>
       <div className="field-panel-heading">
         <div className={`panel-symbol panel-symbol-${group}`}>{group === "weights" ? "W" : "P"}</div>
-        <div className="field-panel-copy"><Title level={3}>{groupLabel(group, language)}</Title><Paragraph>{group === "weights" ? text.weightsDescription : text.playerDescription}</Paragraph></div>
+        <div className="field-panel-copy"><Title level={2}>{groupLabel(group, language)}</Title><Paragraph>{group === "weights" ? text.weightsDescription : text.playerDescription}</Paragraph></div>
       </div>
       {group === "weights" ? <div className="weight-card-grid">{fields.map(renderWeightField)}</div> : group === "player" ? <><div className="player-card-grid">
         {playerResourceSections.map((section) => {
           const sectionFields = fields.filter((field) => section.keys.includes(field.key));
           const filledCount = sectionFields.filter((field) => Boolean(draft[field.key]?.trim())).length;
           return <section className={`player-input-card section-${section.key} ${section.wide ? "is-wide" : ""}`} style={resourceCardStyle(section.palette)} key={section.key}>
-            <div className="player-card-heading"><ResourceIcon className="player-card-icon" icon={UPGRADE_RESOURCE_PRESENTATION[playerSectionIcons[section.key]].icon} color={section.palette.accent} /><div><h4>{language === "ko" ? section.title : section.enTitle}</h4><p>{language === "ko" ? section.description : section.enDescription}</p></div><Badge className="player-input-count" count={`${filledCount} / ${sectionFields.length}`} showZero /></div>
+            <div className="player-card-heading"><ResourceIcon className="player-card-icon" icon={UPGRADE_RESOURCE_PRESENTATION[playerSectionIcons[section.key]].icon} color={section.palette.accent} /><div><h3>{language === "ko" ? section.title : section.enTitle}</h3><p>{language === "ko" ? section.description : section.enDescription}</p></div><Badge className="player-input-count" count={`${filledCount} / ${sectionFields.length}`} showZero /></div>
             {section.key === "generator" ? <><div className="generator-matrix-desktop">{renderGeneratorMatrix(sectionFields)}</div><div className="generator-matrix-mobile"><div className="player-field-grid generator-grid">{sectionFields.map((field) => renderPlayerField(field))}</div></div></> : section.key === "technology" ? <><div className="generator-tech-desktop">{renderGeneratorTechMatrix(sectionFields)}</div><div className="generator-tech-mobile">{renderGeneratorTechCards(sectionFields)}</div></> : <div className="player-field-grid">{sectionFields.map((field) => renderPlayerField(field))}</div>}
           </section>;
         })}
@@ -508,7 +515,7 @@ function InputManager() {
     </Card>
   );
   return <ConfigProvider locale={language === "ko" ? koKR : enUS}><Layout className={`dashboard-shell theme-${theme}`}>
-    <Sider className="dashboard-sider" width={272} trigger={null}>
+    <Sider className="dashboard-sider" aria-label={text.workspace} width={272} trigger={null}>
       <div className="sidebar-brand"><div className="brand-cell"><BrandMark /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER</span></div></div>
       <div className="sidebar-caption">{text.workspace}</div>
       <Menu className="sidebar-menu" theme="dark" mode="inline" selectedKeys={[activeTab]} defaultOpenKeys={["upgrade-optimizer"]} onClick={({ key }) => { if (key !== "upgrade-optimizer") switchTab(key as ActiveTab); }} items={[
@@ -517,7 +524,7 @@ function InputManager() {
           { key: "diamonds", className: "optimizer-menu-diamond", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.diamond.icon} />, label: text.diamonds },
           { key: "tokens", className: "optimizer-menu-token", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.token.icon} />, label: text.tokens },
         ] },
-        { key: "modTree", icon: <ApartmentOutlined />, label: language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations" },
+        { key: "modTree", icon: <ApartmentOutlined />, label: tabLabel("modTree", language) },
         { key: "shipInstall", icon: <RocketOutlined />, label: tabLabel("shipInstall", language) },
         { key: "settings", icon: <SettingOutlined />, label: text.settings },
       ]} />
@@ -532,9 +539,9 @@ function InputManager() {
         </div>
         <Space className="dashboard-header-actions" size={10} wrap><Tag className="app-version-tag">{APP_VERSION}</Tag>{isModTreeTab ? <Tag className="scope-tag" icon={<AppstoreOutlined />}>{text.preOuroboros}</Tag> : isOptimizerTab ? <Tag className={`save-status-tag${optimizerSaveStatus === "failed" ? " is-failed" : ""}`} icon={optimizerSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{optimizerSaveStatus === "failed" ? (language === "ko" ? "저장 실패" : "Not saved") : optimizerSaveStatus === "loading" ? (language === "ko" ? "불러오는 중" : "Loading") : text.autoSaved}</Tag> : <><Tag className={`save-status-tag${inputSaveStatus === "failed" ? " is-failed" : ""}`} icon={inputSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{!ready ? text.loading : inputSaveStatus === "failed" ? text.saveFailed : text.autoSaved}</Tag>{Object.keys(errors).length > 0 && <Text type="warning">{text.invalidCalculationNote}</Text>}</>}</Space>
       </Header>
-      <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}${activeTab === "shipInstall" ? " is-ship-install" : ""}`}><Suspense fallback={<p className="workspace-loading" role="status">{text.loading}</p>}>{activeTab === "shipInstall" ? <ShipInstall language={language} profile={saved} draft={draft} errors={errors} ready={ready} onInput={updateValue} /> : isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></main> : isOptimizerTab ? <main className="optimizer-workspace">
+      <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}${activeTab === "shipInstall" ? " is-ship-install" : ""}`}><Suspense fallback={<p className="workspace-loading" role="status">{text.loading}</p>}>{activeTab === "shipInstall" ? <ShipInstall language={language} profile={saved} draft={draft} errors={errors} ready={ready} onInput={updateValue} /> : isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <div className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></div> : isOptimizerTab ? <div className="optimizer-workspace">
         <UpgradeOptimizer currency={activeTab} language={language} profile={saved} onSaveStatusChange={setOptimizerSaveStatus} />
-      </main> : <main className="input-management-workspace">
+      </div> : <div className="input-management-workspace">
         <section className="input-workspace">
           <Card className="input-card" variant="borderless">
             <div className="weight-preset-toolbar">
@@ -556,7 +563,7 @@ function InputManager() {
           </Card>
           <Card className="input-card" variant="borderless">{fieldPanel(playerFields, "player")}</Card>
         </section>
-      </main>}</Suspense></Content>
+      </div>}</Suspense></Content>
       <nav className="mobile-workspace-nav" aria-label={language === "ko" ? "화면 이동" : "Workspace navigation"}>
         {mobileTabs.map(tab => <button key={tab.key} type="button" className={`mobile-workspace-tab${activeTab === tab.key ? " is-active" : ""}`} title={tabLabel(tab.key, language)} aria-current={activeTab === tab.key ? "page" : undefined} onClick={() => switchTab(tab.key)}><span className="mobile-workspace-tab-icon" aria-hidden="true">{tab.icon}</span><span className="mobile-workspace-tab-label">{language === "ko" ? tab.ko : tab.en}</span></button>)}
       </nav>

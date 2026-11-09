@@ -1,6 +1,7 @@
 /* Theme tokens. Every theme-dependent custom property is defined here once:
    the base block holds the Orbit defaults and each theme block lists only its overrides. */
 .dashboard-shell {
+  --mod-top-ink:var(--mod-top-icon);
   --action-bg:#2169aa;
   --mod-map-bg:#071321;
   --mod-panel-bg:#10223a;
@@ -69,6 +70,7 @@
   --mod-top-icon:#d1efff;
 }
 .dashboard-shell.theme-solar {
+  --mod-top-ink:#174b75;
   --action-bg:#1c6b9c;
   --mod-map-bg:#e9f2f9;
   --mod-panel-bg:#f8fcff;
@@ -200,6 +202,7 @@
   --mod-top-icon:#f0e3ff;
 }
 .dashboard-shell.theme-pearl {
+  --mod-top-ink:#634593;
   --action-bg:#6650ad;
   --mod-map-bg:#efedf8;
   --mod-panel-bg:#faf9ff;

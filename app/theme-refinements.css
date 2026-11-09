@@ -6,7 +6,7 @@
   background-image:radial-gradient(ellipse at 85% 12%,#4b1b2b66,transparent 45%),linear-gradient(125deg,#100b14,#20101b);
 }
 .dashboard-shell.theme-red::before { background:radial-gradient(ellipse at 12% 6%,#c7485a13,transparent 40%); }
-.dashboard-shell.theme-red :is(.weight-card-heading h4,.player-card-heading h4,.player-field,.generator-matrix-row-label) { color:color-mix(in srgb,var(--resource-accent) 55%,var(--content-ink)); }
+.dashboard-shell.theme-red :is(.weight-card-heading h3,.player-card-heading h3,.player-field,.generator-matrix-row-label) { color:color-mix(in srgb,var(--resource-accent) 55%,var(--content-ink)); }
 .dashboard-shell.theme-red :is(.ship-card-heading h4,.ship-field-label) { color:color-mix(in srgb,var(--ship-accent) 55%,var(--content-ink)); }
 
 /* Contrast is a text concern: the original icons and colored borders stay intact. */
@@ -73,7 +73,7 @@
 .dashboard-shell .mod-tree-code-token,
 .dashboard-shell .mod-recommendation-panel .mod-rec-code { color:var(--mod-code-ink); background:var(--mod-code-bg); border-color:var(--mod-code-line); }
 .dashboard-shell .mod-rec-list button.is-top { border-color:var(--mod-top-border); box-shadow:inset 4px 0 var(--mod-top-border); }
-.dashboard-shell .mod-rec-list button.is-top .mod-rec-rank { color:var(--mod-top-icon); background:var(--mod-top-bg); border:1px solid var(--mod-top-border); }
+.dashboard-shell .mod-rec-list button.is-top .mod-rec-rank { color:var(--mod-top-ink); background:var(--mod-top-bg); border:1px solid var(--mod-top-border); }
 
 /* Ant Design portals sit outside .dashboard-shell. Use page-owned tokens there. */
 :root:has(.theme-orbit) { --portal-bg:#10223a; --portal-ink:#eef6ff; --portal-muted:#a6b8ce; --portal-active:#224260; --portal-line:#42617e; }

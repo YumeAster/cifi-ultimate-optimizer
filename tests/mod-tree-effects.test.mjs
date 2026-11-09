@@ -126,7 +126,7 @@ test("bulk construction and all Ultima duration effects have native display rule
 test("three visible columns keep the map centered, help pinned left, and level maximum inline", async () => {
   const read = name => readFile(new URL(`../${name}`, import.meta.url), "utf8");
   const [map, overview, panel, css] = await Promise.all(["features/mod-tree/ModTree.tsx", "features/mod-tree/ModEffectOverview.tsx", "features/mod-tree/ModRecommendationPanel.tsx", "features/mod-tree/mod-tree.css"].map(read));
-  const left = map.indexOf("<ModEffectOverview"), help = map.indexOf('className="mod-tree-map-help"'), canvas = map.indexOf('<div className="mod-tree-canvas-frame"'), right = map.indexOf('<aside className="mod-tree-side-panel"');
+  const left = map.indexOf("<ModEffectOverview"), help = map.indexOf('className="mod-tree-map-help"'), canvas = map.indexOf('<div className="mod-tree-canvas-frame"'), right = map.indexOf('<section className="mod-tree-side-panel"');
   assert.ok(left >= 0 && left < help && help < canvas && canvas < right);
   assert.equal((map.match(/id=\{helpId\}/g) ?? []).length, 1);
   assert.match(css, /grid-template-columns:260px minmax\(0,1fr\) 420px; grid-template-rows:minmax\(min-content,1fr\)/);
@@ -185,7 +185,7 @@ test("content cards distinguish explicit unlocks, existing feature upgrades and 
 test("locked nodes show a separated unlock section with required codes but no level threshold", async () => {
   const panel = await readFile(new URL("../features/mod-tree/ModRecommendationPanel.tsx", import.meta.url), "utf8");
   const css = await readFile(new URL("../features/mod-tree/mod-tree.css", import.meta.url), "utf8");
-  assert.match(panel, /!selected.unlocked && <section className="mod-rec-unlock-conditions"><h5>\{t.unlockConditions\}/);
+  assert.match(panel, /!selected.unlocked && <section className="mod-rec-unlock-conditions"><h4>\{t.unlockConditions\}/);
   assert.match(panel, /selected.missing.map\(code => <button/);
   assert.doesNotMatch(panel, /≥ 1|\{t.prerequisites\}/);
   assert.match(css, /\.mod-rec-unlock-conditions \{[^}]*border-top:1px solid var\(--surface-line\)/);

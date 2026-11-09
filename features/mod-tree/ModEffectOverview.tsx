@@ -14,8 +14,8 @@ export default function ModEffectOverview({ state, profile, language, ready, chi
   const toggleText = collapsed
     ? language === "ko" ? "펼치기" : "Expand"
     : language === "ko" ? "접기" : "Collapse";
-  return <aside className={`mod-tree-overview${collapsed ? " is-collapsed" : ""}`} aria-label={t.overview}>
-    <div className="mod-tree-overview-heading"><h3 title={t.overviewHelp}>{t.overview}</h3><button type="button" className="mod-tree-overview-toggle" aria-expanded={!collapsed} aria-controls={contentId} aria-label={toggleLabel} onClick={onToggle}><span aria-hidden="true" className="mod-tree-overview-toggle-symbol">{collapsed ? "›" : "‹"}</span><span className="mod-tree-overview-toggle-mobile" aria-hidden="true">{toggleText}</span></button></div>
+  return <div className={`mod-tree-overview${collapsed ? " is-collapsed" : ""}`}>
+    <div className="mod-tree-overview-heading"><h2 title={t.overviewHelp}>{t.overview}</h2><button type="button" className="mod-tree-overview-toggle" aria-expanded={!collapsed} aria-controls={contentId} aria-label={toggleLabel} onClick={onToggle}><span aria-hidden="true" className="mod-tree-overview-toggle-symbol">{collapsed ? "›" : "‹"}</span><span className="mod-tree-overview-toggle-mobile" aria-hidden="true">{toggleText}</span></button></div>
     <div id={contentId} className="mod-tree-overview-scroll" tabIndex={collapsed ? -1 : 0} role="region" aria-label={t.overview} hidden={collapsed}>
       {!ready ? <p>{t.loading}</p> : !summary.effects.length ? <p className="mod-rec-help">{t.overviewEmpty}</p> : <div className="mod-tree-overview-effects">{summary.effects.map(effect => {
         const palette = modEffectPresentation(effect.label, effect.iconCategory);
@@ -26,5 +26,5 @@ export default function ModEffectOverview({ state, profile, language, ready, chi
       {ready && summary.uncertain.length > 0 && <div className="mod-tree-overview-warning"><p>{t.overviewPartial}</p><ul>{summary.uncertain.map(item => <li key={item}>{item}</li>)}</ul></div>}
     </div>
     <section className="mod-tree-overview-help" aria-label={t.controls} hidden={collapsed}>{children}</section>
-  </aside>;
+  </div>;
 }

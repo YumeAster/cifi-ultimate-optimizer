@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { App as AntApp, Badge, Button, Input, InputNumber, Popconfirm, Progress, Tag, Tooltip } from "antd";
+import { App as AntApp, Badge, Button, Input, InputNumber, Popconfirm, Progress, Tag } from "antd";
 import { ArrowRightOutlined, CheckCircleFilled, CloseOutlined, LockOutlined, ReloadOutlined, ThunderboltFilled } from "@ant-design/icons";
 import { evaluateUpgrade, parseCifiNumber, rankUpgrades, simulateBudget } from "../../lib/cifi/upgrades/engine";
 import { addCifiDecimals, compareCifiDecimals, decimalToString, parseCifiDecimal, subtractCifiDecimals } from "../../lib/cifi/upgrades/decimal";
@@ -307,7 +307,7 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
           const group = evaluations.filter((evaluation) => evaluation.rule.category === category);
           const complete = group.filter((evaluation) => evaluation.atMax).length;
           return <section className="optimizer-upgrade-group" key={category}>
-            <div className="optimizer-group-heading"><div><h3>{text.category[category]}</h3><p>{complete} / {group.length}</p></div><Progress percent={group.length ? Math.round(complete / group.length * 100) : 0} showInfo={false} size="small" /></div>
+            <div className="optimizer-group-heading"><div><h2>{text.category[category]}</h2><p>{complete} / {group.length}</p></div><Progress percent={group.length ? Math.round(complete / group.length * 100) : 0} showInfo={false} size="small" aria-label={`${text.category[category]} ${complete} / ${group.length}`} /></div>
             <div className="optimizer-upgrade-grid">
               {group.map((evaluation) => {
                 const isSuggested = suggestion?.rule.id === evaluation.rule.id;
@@ -326,11 +326,12 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
                 return <article className={`optimizer-upgrade-card ${isOneTime ? "is-one-time" : "is-repeatable"} ${isSuggested ? "is-suggested" : ""} ${!evaluation.unlocked ? "is-locked" : ""} ${evaluation.atMax ? "is-maxed" : ""}`} style={upgradeCardStyle(visualResources, primaryGenerator, isOneTime ? oneTimeAccent(evaluation.rule.id) : undefined)} data-upgrade-resources={visualResources.join(" ")} key={evaluation.rule.id}>
                   <div className="optimizer-upgrade-heading">
                     {isOneTime ? <span className="one-time-letter" aria-hidden="true">{evaluation.rule.id.slice(0, 1)}</span> : <span className="upgrade-leading-icon">{primaryGenerator ? <GeneratorSourceIcon generator={primaryGenerator} /> : <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION[visualResources[0]].icon} color={UPGRADE_RESOURCE_PRESENTATION[visualResources[0]].accent} />}</span>}
-                    <div className="optimizer-upgrade-title"><div className="optimizer-upgrade-meta"><span>{evaluation.rule.id}</span><span className="optimizer-resource-markers" aria-label={resourceLabels} title={resourceLabels}>{headingIcons.map((palette) => <ResourceIcon icon={palette.icon} color={palette.accent} key={palette.label} />)}</span></div><h4>{evaluation.rule.name}</h4></div>
-                    <Tooltip title={!evaluation.unlocked ? getUnlockReason(evaluation) : undefined}><Tag icon={!evaluation.unlocked ? <LockOutlined /> : evaluation.atMax ? <CheckCircleFilled /> : undefined}>{status}</Tag></Tooltip>
+                    <div className="optimizer-upgrade-title"><div className="optimizer-upgrade-meta"><span>{evaluation.rule.id}</span><span className="optimizer-resource-markers" role="img" aria-label={resourceLabels} title={resourceLabels}>{headingIcons.map((palette) => <ResourceIcon icon={palette.icon} color={palette.accent} key={palette.label} />)}</span></div><h3>{evaluation.rule.name}</h3></div>
+                    <Tag icon={!evaluation.unlocked ? <LockOutlined /> : evaluation.atMax ? <CheckCircleFilled /> : undefined}>{status}</Tag>
+                    {!evaluation.unlocked && <p className="upgrade-unlock-reason">{getUnlockReason(evaluation)}</p>}
                     {isOneTime && evaluation.atMax && <Button className="one-time-cancel" size="small" type="text" icon={<CloseOutlined />} onClick={() => updateLevel(evaluation.rule.id, evaluation.rule.maxLevel, 0)}>{language === "ko" ? "구매 되돌리기" : "Undo purchase"}</Button>}
                   </div>
-                  <div className="upgrade-multiplier-grid" aria-label={text.power}>
+                  <div className="upgrade-multiplier-grid" role="group" aria-label={text.power}>
                     {chips.map((chip) => {
                       const palette = chip.generator ? getGeneratorPresentation(chip.generator) : UPGRADE_RESOURCE_PRESENTATION[chip.resource];
                       const currentEffect = chip.kind === "additive"
@@ -348,7 +349,7 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
                   <div className="upgrade-summary-row"><span><small>{text.efficiency}</small><strong>{formatNumber(evaluation.score)}</strong></span><span><small>{text.nextCost}</small><strong>{evaluation.atMax ? "MAX" : formatNumber(evaluation.costExact)}</strong></span></div>
                   {isOneTime ? <div className="one-time-action">{evaluation.atMax ? <span><CheckCircleFilled /> {text.maxed}</span> : <Button type="primary" disabled={!evaluation.unlocked} onClick={() => updateLevel(evaluation.rule.id, evaluation.rule.maxLevel, 1)}>{language === "ko" ? "구매" : "Buy"}</Button>}</div> : <>
                     <label className="upgrade-level-field"><span>{text.currentLevel}</span><InputNumber min={0} max={evaluation.rule.maxLevel} value={evaluation.level} onChange={(value) => updateLevel(evaluation.rule.id, evaluation.rule.maxLevel, value)} addonAfter={`/ ${evaluation.rule.maxLevel}`} /></label>
-                    <div className="upgrade-preview-actions" aria-label={language === "ko" ? "업그레이드 예상 단계" : "Upgrade preview steps"}>{([1, 5, 10] as const).map((step) => <Button key={step} className={selected === step ? "is-selected" : ""} size="small" onClick={() => setPreviewSteps((current) => ({ ...current, [evaluation.rule.id]: step }))}>+{step}</Button>)}<Button className={selected === "max" ? "is-selected" : ""} size="small" onClick={() => setPreviewSteps((current) => ({ ...current, [evaluation.rule.id]: "max" }))}>MAX</Button><small>{language === "ko" ? `${nextLevels}레벨 적용 예상` : `${nextLevels} levels preview`}</small></div>
+                    <div className="upgrade-preview-actions" role="group" aria-label={language === "ko" ? "업그레이드 예상 단계" : "Upgrade preview steps"}>{([1, 5, 10] as const).map((step) => <Button key={step} className={selected === step ? "is-selected" : ""} aria-pressed={selected === step} size="small" onClick={() => setPreviewSteps((current) => ({ ...current, [evaluation.rule.id]: step }))}>+{step}</Button>)}<Button className={selected === "max" ? "is-selected" : ""} aria-pressed={selected === "max"} size="small" onClick={() => setPreviewSteps((current) => ({ ...current, [evaluation.rule.id]: "max" }))}>MAX</Button><small>{language === "ko" ? `${nextLevels}레벨 적용 예상` : `${nextLevels} levels preview`}</small></div>
                   </>}
                 </article>;
               })}
@@ -358,12 +359,12 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
       </div>
     </div>
 
-    <aside className="optimizer-plan-card">
-      <div className="optimizer-plan-heading"><div><span>{UPGRADE_RULESET_META.sourceVersion}</span><h3>{text.plan}</h3></div><Badge count={plan?.purchases.length ?? 0} showZero /></div>
+    <section className="optimizer-plan-card" aria-label={text.plan}>
+      <div className="optimizer-plan-heading"><div><span>{UPGRADE_RULESET_META.sourceVersion}</span><h2>{text.plan}</h2></div><Badge count={plan?.purchases.length ?? 0} showZero /></div>
       <div className="optimizer-plan-totals"><div><span>{text.spent}</span><strong>{formatNumber(plan?.spent ?? "0")}</strong></div><div><span>{text.remaining}</span><strong>{formatNumber(plan?.remainingBudget ?? parsedBudget.exact)}</strong></div></div>
       {planSummary.length ? <div className="optimizer-plan-list">{planSummary.map((item, index) => <div className="optimizer-plan-item" key={item.id}><span>{index + 1}</span><div><strong>{item.name}</strong><small>{formatNumber(item.cost)}</small></div><b>+{item.count}</b></div>)}</div> : <div className="optimizer-plan-empty">{text.planEmpty}</div>}
       {plan?.stoppedReason === "max-steps" && <p className="optimizer-plan-warning">{text.planLimited}</p>}
       <Popconfirm title={text.applyPlanConfirm(plan?.purchases.length ?? 0)} okText={text.applyPlan} cancelText={language === "ko" ? "취소" : "Cancel"} onConfirm={applyPlan} disabled={!plan?.purchases.length}><Button className="optimizer-apply-plan" type="primary" disabled={!plan?.purchases.length}>{text.applyPlan}</Button></Popconfirm>
-    </aside>
+    </section>
   </section>;
 }

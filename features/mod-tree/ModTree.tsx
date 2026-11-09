@@ -52,6 +52,20 @@ const subscribeMobileTree = (onChange: () => void) => {
 };
 const mobileTreeSnapshot = () => window.matchMedia(mobileTreeQuery).matches;
 const graphNodeLookup = new Map(nodes.map((node) => [node.key, node]));
+const directions: Record<string, Point> = { ArrowLeft: { x: -1, y: 0 }, ArrowRight: { x: 1, y: 0 }, ArrowUp: { x: 0, y: -1 }, ArrowDown: { x: 0, y: 1 } };
+/** Nearest node in an arrow direction; sideways distance counts double so moves stay on the visual row or column. */
+function neighbourNode(from: ModTreeNode, key: string): ModTreeNode | undefined {
+  const direction = directions[key];
+  let best: ModTreeNode | undefined, bestScore = Infinity;
+  for (const node of nodes) {
+    const dx = node.x - from.x, dy = node.y - from.y;
+    const along = dx * direction.x + dy * direction.y;
+    if (node === from || along <= 0) continue;
+    const score = along + 2 * Math.abs(dx * direction.y + dy * direction.x);
+    if (score < bestScore) { best = node; bestScore = score; }
+  }
+  return best;
+}
 const ModTreeGraph = memo(function ModTreeGraph({ language, selectedId, ready, evaluatedByCode, recommendedCodes, topRecommendation, filtered, matchingIds, onSelect }: {
   language: Language; selectedId: string; ready: boolean; evaluatedByCode: Map<string, ModEvaluation>;
   recommendedCodes: Set<string>; topRecommendation?: string; filtered: boolean; matchingIds: Set<string>;
@@ -156,7 +170,22 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
     if (recommendations.applyOne(code)) setPurchaseNotice(`${recommendationCopy[language].purchaseDone}: ${code}`);
   };
 
+  // Two touch pointers pinch-zoom around their midpoint; one pointer keeps the existing drag.
+  const touches = useRef(new Map<number, Point>());
+  const pinchRef = useRef<{ distance: number; viewport: Viewport; anchor: Point } | null>(null);
+  const trackTouch = (event: PointerEvent<SVGSVGElement>) => {
+    if (event.pointerType !== "touch") return false;
+    touches.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (touches.current.size !== 2) return false;
+    const [a, b] = [...touches.current.values()];
+    const anchor = svgPoint(event.currentTarget, (a.x + b.x) / 2, (a.y + b.y) / 2);
+    if (!anchor) return false;
+    pinchRef.current = { distance: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)), viewport: viewportRef.current, anchor };
+    dragRef.current = null; setIsDragging(false); pendingDoubleClick.current = null;
+    return true;
+  };
   const onPointerDown = (event: PointerEvent<SVGSVGElement>) => {
+    if (trackTouch(event)) return;
     if (event.button !== 0 || !event.isPrimary || dragRef.current) return;
     pendingDoubleClick.current = null;
     const point = svgPoint(event.currentTarget, event.clientX, event.clientY);
@@ -166,6 +195,13 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
     event.currentTarget.setPointerCapture(event.pointerId);
   };
   const onPointerMove = (event: PointerEvent<SVGSVGElement>) => {
+    const pinch = pinchRef.current;
+    if (pinch && touches.current.has(event.pointerId)) {
+      touches.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      const [a, b] = [...touches.current.values()];
+      setViewport(zoomViewport(pinch.viewport, pinch.viewport.scale * Math.hypot(a.x - b.x, a.y - b.y) / pinch.distance, pinch.anchor));
+      return;
+    }
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
     const point = svgPoint(event.currentTarget, event.clientX, event.clientY);
@@ -181,6 +217,8 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
     });
   };
   const endDrag = (event: PointerEvent<SVGSVGElement>, cancelled = false) => {
+    touches.current.delete(event.pointerId);
+    if (touches.current.size < 2) pinchRef.current = null;
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
     dragRef.current = null;
@@ -200,6 +238,18 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
   };
   const onMapKeyDown = (event: KeyboardEvent<SVGSVGElement>) => {
     if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const focusedKey = event.target instanceof Element ? event.target.closest("[data-node-key]")?.getAttribute("data-node-key") : null;
+    const focusedNode = focusedKey ? nodeLookup.get(focusedKey) : undefined;
+    if (focusedNode && directions[event.key]) {
+      // On a node, arrows move to the neighbouring node; on the map itself they pan.
+      event.preventDefault();
+      const next = neighbourNode(focusedNode, event.key);
+      if (!next) return;
+      setSelectedId(next.key);
+      setViewport((current) => focusViewport(next, current.scale, canvas));
+      requestAnimationFrame(() => svgRef.current?.querySelector<SVGGElement>(`[data-node-key="${next.key}"]`)?.focus());
+      return;
+    }
     const movement: Record<string, Point> = { ArrowLeft: { x: 70, y: 0 }, ArrowRight: { x: -70, y: 0 }, ArrowUp: { x: 0, y: 70 }, ArrowDown: { x: 0, y: -70 } };
     if (movement[event.key]) {
       event.preventDefault();
@@ -209,7 +259,7 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
     else if (event.key === "Home" || event.key === "0") { event.preventDefault(); setViewport(fitNodes(nodes)); }
   };
 
-  return <main className="mod-tree-workspace mod-tree-v2">
+  return <div className="mod-tree-workspace mod-tree-v2">
     <section className="mod-tree-surface" aria-label={isKorean ? "Mod Tree 그래프" : "Mod Tree graph"}>
       <header className="mod-tree-toolbar">
         <label className="mod-tree-search"><SearchOutlined /><span className="mod-tree-visually-hidden">{isKorean ? "맵 코드 또는 업그레이드 이름 검색" : "Search map code or upgrade name"}</span><input value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && matches[0]) { event.preventDefault(); selectNode(matches[0], true); } }} placeholder={isKorean ? "코드·이름 검색 (A01, C5u…)" : "Code or name (A01, C5u…)"} /></label>
@@ -220,7 +270,7 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
       </header>
       <div className={`mod-tree-map-layout${overviewOpen ? "" : " is-overview-collapsed"}`}>
         <ModEffectOverview state={recommendations.state} profile={gameDisplay.displayProfile} language={language} ready={recommendations.ready} collapsed={!overviewOpen} contentId={overviewContentId} onToggle={() => mobileTree ? setMobileOverviewOpen(open => !open) : setDesktopOverviewOpen(open => !open)}>
-          <div id={helpId} className="mod-tree-map-help">{isKorean ? "드래그로 이동 · 휠로 확대 · 키보드 방향키 / + − / Home" : "Drag to move · Scroll to zoom · Arrow keys / + − / Home"}<span>{recommendationCopy[language].doubleClickHelp}</span>
+          <div id={helpId} className="mod-tree-map-help">{isKorean ? "드래그로 이동 · 휠이나 두 손가락으로 확대 · 방향키로 지도 이동(노드 선택 중에는 이웃 노드로 이동) / + − / Home" : "Drag to move · Scroll or pinch to zoom · Arrow keys pan the map (or move between nodes when one is focused) / + − / Home"}<span>{recommendationCopy[language].doubleClickHelp}</span>
             <div className="mod-tree-state-legend" aria-label={isKorean ? "노드 상태" : "Node states"}>{[
               ["locked", isKorean ? "잠김" : "Locked"], ["available", isKorean ? "미구매" : "Unpurchased"],
               ["owned", isKorean ? "구매함" : "Purchased"], ["unaffordable", isKorean ? "MP 부족 −" : "Insufficient MP −"],
@@ -237,13 +287,13 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
             </g>
           </svg>
         </div>
-        <aside className="mod-tree-side-panel">
+        <section className="mod-tree-side-panel" aria-label={isKorean ? "업그레이드 추천과 노드 정보" : "Recommendations and node details"}>
           {gameDisplay.storageFailed && <p role="status" className="mod-rec-error">{isKorean ? "효과 표시 기준 저장 실패 · 새로고침 전 진행도를 확인해 주세요." : "Effect snapshot could not be saved. Check progress before reloading."}</p>}
           <ModRecommendationPanel language={language} selectedCode={selectedId} recommendationCount={visibleRecommendationCount} profile={gameDisplay.displayProfile} model={recommendations} onPurchase={purchaseNode} onValidityChange={setRecommendationsVisible} onSelect={code => { const node = nodeLookup.get(code); if (node) { setQuery(""); selectNode(node, true); } }} />
           {filtered && <section className="mod-tree-search-results" aria-label={isKorean ? "검색 결과" : "Search results"}><h3 role="status">{isKorean ? `검색 결과 ${matches.length}개` : `${matches.length} results`}</h3>{matches.length ? <ul>{matches.map((node) => <li key={node.key}><button type="button" className={selectedId === node.key ? "is-current" : ""} onClick={() => selectNode(node, true)}><b className="mod-tree-code-token">{node.label}</b><span>{node.name}</span></button></li>)}</ul> : <p>{isKorean ? "일치하는 노드가 없습니다. 다른 코드나 이름으로 찾아보세요." : "No matching nodes. Try another code or name."}</p>}</section>}
-        </aside>
+        </section>
       </div>
       <p className="mod-tree-source-note">{isKorean ? "코드와 위치는 시트·제공된 지도·캡처를 기준으로 구성했습니다. 확인되지 않은 연결과 잠금 이후 확장 영역은 표시하지 않습니다." : "Codes and positions follow the sheet and supplied map captures. Unconfirmed connections and post-unlock expansion areas are not shown."}</p>
     </section>
-  </main>;
+  </div>;
 }
