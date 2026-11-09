@@ -25,7 +25,8 @@ export type InstallDefinition = Readonly<{
   unlockAt: number;
   icon: string;
   effects: readonly InstallEffectRule[];
-  verification?: string;
+  /** A tooltip conflict keeps the verified calculation coefficient and shows the mismatch. */
+  verification?: "native-base-and-tooltip" | "native-calculation-tooltip-conflict";
   notes?: readonly string[];
   provenance?: unknown;
 }>;

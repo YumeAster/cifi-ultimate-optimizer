@@ -24,18 +24,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: base,
-    title: "CIFI Ultimate Optimizer — Mod Tree 입력값 관리",
-    description: "Mod Tree의 가중치와 진행도 입력값을 기기별로 관리합니다.",
+    title: "CIFI Ultimate Optimizer",
+    description: "Mod Tree·다이아/토큰 업그레이드·Ship Install 추천과 진행도 입력을 브라우저에 저장해 관리하는 CIFI 계산 도구입니다.",
     openGraph: {
-      title: "CIFI Ultimate Optimizer — Mod Tree 입력값 관리",
-      description: "가중치 프리셋과 진행도 입력을 기기별로 관리합니다.",
-      images: [{ url: socialImage, width: 1200, height: 630, alt: "CIFI Ultimate Optimizer" }],
+      title: "CIFI Ultimate Optimizer",
+      description: "Mod Tree·다이아/토큰 업그레이드·Ship Install 추천과 진행도 입력을 브라우저에 저장해 관리하는 CIFI 계산 도구입니다.",
+      images: [{ url: socialImage, width: 1730, height: 909, alt: "CIFI Ultimate Optimizer" }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "CIFI Ultimate Optimizer — Mod Tree 입력값 관리",
-      description: "가중치 프리셋과 진행도 입력을 기기별로 관리합니다.",
+      title: "CIFI Ultimate Optimizer",
+      description: "Mod Tree·다이아/토큰 업그레이드·Ship Install 추천과 진행도 입력을 브라우저에 저장해 관리하는 CIFI 계산 도구입니다.",
       images: [socialImage],
     },
   };

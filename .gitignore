@@ -52,3 +52,6 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# Optional locally generated Cloudflare runtime declarations (npm run types:runtime)
+/worker-configuration.d.ts

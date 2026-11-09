@@ -112,8 +112,8 @@ test("removes starter preview assets and keeps the social card", async () => {
   assert.match(styles, /theme-solar/);
   assert.match(styles, /theme-nebula/);
   assert.match(styles, /theme-pearl/);
-  assert.match(styles, /solar-frost-orbit-v2\.png/);
-  assert.match(styles, /pearl-moon-orbit-v2\.png/);
+  assert.match(styles, /solar-frost-orbit-v2\.webp/);
+  assert.match(styles, /pearl-moon-orbit-v2\.webp/);
   assert.match(styles, /backdrop-filter:blur\(28px\)/);
   assert.match(styles, /theme-select\.ant-select/);
   assert.match(styles, /ant-select-content/);

@@ -7,7 +7,7 @@ import { recommendationCopy } from "./recommendationCopy";
 
 export default function ModEffectOverview({ state, profile, language, ready, children, collapsed, onToggle, contentId }: { state: ModState; profile: PlayerProfile; language: "ko" | "en"; ready: boolean; children: ReactNode; collapsed: boolean; onToggle: () => void; contentId: string }) {
   const t = recommendationCopy[language];
-  const summary = useMemo(() => summarizeModEffects(state, profile), [state.levels, profile]);
+  const summary = useMemo(() => summarizeModEffects(state, profile), [state, profile]);
   const toggleLabel = collapsed
     ? language === "ko" ? "총합 펼치기" : "Expand totals"
     : language === "ko" ? "총합 접기" : "Collapse totals";

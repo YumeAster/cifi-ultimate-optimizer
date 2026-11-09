@@ -167,3 +167,5 @@
 .dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar .ant-input::placeholder { color:var(--content-muted); }
 .dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar .ant-btn:disabled { color:var(--content-muted)!important; background:var(--input-bg)!important; border-color:var(--surface-line)!important; box-shadow:none!important; opacity:.7; }
 .dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar .ant-tag { color:var(--content-ink); background:var(--selected-bg); border-color:var(--surface-line); }
+
+.workspace-loading { margin: 0; padding: 24px; color: var(--content-muted, inherit); }

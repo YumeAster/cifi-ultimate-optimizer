@@ -1,6 +1,6 @@
 # CIFI Ultimate Optimizer v0.4.5
 
-A local-first web prototype for CIFI player progression input and Weight presets.
+A local-first CIFI calculator for Mod Tree, Diamond/Token upgrade, and Ship Install recommendations, built on shared progression inputs and Weight presets.
 
 입력값과 프리셋은 각 브라우저에만 저장되며 이 저장소에는 포함하지 않는다.
 
@@ -12,11 +12,10 @@ A local-first web prototype for CIFI player progression input and Weight presets
 
 ```bash
 npm install
-npm run dev
-npm run build
+npm run pages:dev
 ```
 
-This starter does not use `wrangler.jsonc`.
+The released site is the static GitHub Pages build (`npm run pages:build`). The vinext server build (`npm run build`) is kept for rendered-page tests and local server checks.
 
 ## Local Preview (Windows)
 
@@ -63,72 +62,13 @@ node --experimental-strip-types tests/mod-tree-recommendations.test.mjs
 - The selected Loadout can undo the last recorded one-level purchase (including a bulk recommendation step) or reset its levels and saved order after confirmation. Direct level edits clear that Loadout's purchase history.
 - Settings can export and import all known app-local data as a JSON backup. Import backs up current data first, asks for confirmation, and replaces only this app's keys; no file is uploaded to a server.
 
-## Included Shape
+## Known Limits
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
-```
-
-## Optional Dispatch-Owned ChatGPT Sign-In
-
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
-
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+- Ship Install does not read Gear, Badge, research, or evolution multipliers automatically; enter a modifier when you need them. Zero-progress correction rules that are not verified use the entered value as is.
+- Mod maximum levels follow the static sheet. Dynamic maximum-level extensions such as Inscryption are not modeled yet.
+- Install and Mod effects come from native game data, but no purchase was measured in the live game (`runtimeVerified: false`).
+- Hephaestus 8 uses the native calculation coefficient (1%); its in-game tooltip shows 0.01%.
+- Two native-data cross-check tests need a local audit manifest that is not published, so they are skipped in public CI.
 
 ## Useful Commands
 
@@ -139,24 +79,23 @@ Mod Tree 아이콘은 `public/assets/mod-tree/`에서 한 번만 관리한다. �
 - `npm test`: build, then discover and run every `tests/**/*.test.mjs` suite (rendered page, Mod Tree, optimizer, and assets)
 - `npm run test:all`: run all suites against the existing build; rebuild first after source changes
 - `npm run test:mod-tree`: run the Mod Tree suite without a production build
-- `npm run typecheck`: check TypeScript, including ES2020 decimal arithmetic and Worker runtime types
-- `npm run types:runtime`: regenerate the checked-in Cloudflare runtime declarations after a server build or runtime compatibility change
+- `npm run typecheck`: check TypeScript on a clean checkout, without generated runtime declarations
+- `npm run lint`: run ESLint (CI runs it together with typecheck, tests, and the Pages build)
+- `npm run types:runtime`: optionally generate full Cloudflare runtime declarations locally after a server build; the file is ignored by Git
 - `npm run pages:dev`: start the GitHub Pages version locally
 - `npm run pages:build`: create the static GitHub Pages release output
-- `npm run db:generate`: generate Drizzle migrations after schema changes
 
 ## Branch and Release Workflow
 
-- `develop`: default branch for routine development and local review.
-- `feature/*`, `fix/*`, `refactor/*`: short-lived branches merged into `develop`.
-- `main`: approved production source only. Promote `develop` through a pull request after release approval.
-- A pull request into `main` runs the complete validation build without deploying.
-- A successful push to `main` deploys `dist-pages/` to GitHub Pages through GitHub Actions.
-- `gh-pages` is retained temporarily as a rollback reference while the Actions deployment is being verified.
+- `develop`: default branch for routine development and local review. Start every routine change from the latest `develop`.
+- `feature/*`, `fix/*`, `refactor/*`: short-lived branches merged into `develop` after local review with `npm run pages:dev`.
+- `main`: approved release source only. After the user explicitly approves a release (`배포 승인`), open a `develop -> main` pull request and merge it only after `Validate source and static build` succeeds.
+- `hotfix/*`: emergency production repairs branch from `main`, merge into `main`, and then merge back into `develop` so the two never diverge.
+- Pull requests and pushes to `develop` and `main` run typecheck, lint, tests, and the static build. Only a push to `main` deploys `dist-pages/` to GitHub Pages through GitHub Actions.
+- `gh-pages` is kept as a rollback reference to the last manual deployment. Do not publish to it.
 
-For routine work, review locally with `npm run pages:dev`. Do not promote or deploy until the user explicitly approves the release.
+After a release, confirm the Actions run, the Pages environment, the public URL response, and the current asset references before treating the deployment as done.
 
 ## Learn More
 
 - [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)

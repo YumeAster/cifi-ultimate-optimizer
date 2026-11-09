@@ -21,9 +21,13 @@ export function useModRecommendations(profile: PlayerProfile) {
       }
     } catch { setStorageFailed(true); }
     setReady(true);
-    return () => { generation.current++; };
+    const counter = generation;
+    return () => { counter.current++; };
   }, []);
-  useEffect(() => { generation.current++; setPlan(null); setBusy(false); setUndo(null); }, [profile]);
+  // A profile change invalidates any plan, pending calculation, and undo point.
+  const [planProfile, setPlanProfile] = useState(profile);
+  if (planProfile !== profile) { setPlanProfile(profile); setPlan(null); setBusy(false); setUndo(null); }
+  useEffect(() => { generation.current++; }, [profile]);
   const commit = (next: ModState, keepUndo = false) => {
     if (!ready) return;
     const validated = restoreModState(next);

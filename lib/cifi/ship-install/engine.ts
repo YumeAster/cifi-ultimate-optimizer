@@ -21,7 +21,7 @@ export const INSTALL_RESOURCE_LABELS: Readonly<Record<InstallResource, string>> 
 };
 const ZERO = parseGameEffectDecimal("0"), ONE = parseGameEffectDecimal("1");
 const unique = <T,>(values: readonly T[]) => [...new Set(values)];
-const isModelIssue = (key: string) => key === "scoreRange" || /:(?:scoreModel|effectRange|effectVerification)$/.test(key);
+const isModelIssue = (key: string) => key === "scoreRange" || /:(?:scoreModel|effectRange)$/.test(key);
 const mainResources = new Set<InstallResource>(["modPoints", "shards", "research", "academyPoints", "materials"]);
 const auxiliary = (resource: InstallResource) => resource === "cells" || /^mk[1-9]$/.test(resource) || resource === "allGenerators" || resource === "hardware" || resource === "software";
 const unitWeights = { cells: "1", modPoints: "1", shards: "1", research: "1", academyPoints: "1", materials: "1" } as const;
@@ -130,8 +130,6 @@ export function installEffects(context: ShipInstallContext, position: number, ne
     let currentValue: GameEffectDecimal | null = null, nextValue: GameEffectDecimal | null = null;
     for (const [level, isNext] of [[currentLevel, false], [next, true]] as const) {
       try {
-        // Conflicting native tooltip/base values must not be sold as a verified game effect.
-        if (node.verification === "native-tooltip-conflict" && level > 0) throw new MissingShipInput([`${node.id}:effectVerification`]);
         const value = directValue(node, rule, level, context);
         if (isNext) nextValue = value; else currentValue = value;
       } catch (error) {

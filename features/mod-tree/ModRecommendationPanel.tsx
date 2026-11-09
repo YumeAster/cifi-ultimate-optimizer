@@ -19,8 +19,12 @@ export default function ModRecommendationPanel({ language, selectedCode, recomme
   const [budgetDirty, setBudgetDirty] = useState(false);
   const budgetDirtyRef = useRef(false);
   const [level, setLevel] = useState(String(state.levels[selectedCode] ?? 0));
-  useEffect(() => { setBudget(formatModBudget(state.budget)); budgetDirtyRef.current = false; setBudgetDirty(false); }, [state.budget]);
-  useEffect(() => { setLevel(String(state.levels[selectedCode] ?? 0)); }, [selectedCode, state.levels]);
+  // Resynchronize drafts while rendering when the stored source changes, instead of a follow-up effect render.
+  const [budgetSource, setBudgetSource] = useState(state.budget);
+  if (budgetSource !== state.budget) { setBudgetSource(state.budget); setBudget(formatModBudget(state.budget)); setBudgetDirty(false); }
+  useEffect(() => { budgetDirtyRef.current = false; }, [state.budget]);
+  const [levelSource, setLevelSource] = useState({ code: selectedCode, levels: state.levels });
+  if (levelSource.code !== selectedCode || levelSource.levels !== state.levels) { setLevelSource({ code: selectedCode, levels: state.levels }); setLevel(String(state.levels[selectedCode] ?? 0)); }
   let budgetError = false, levelError = false;
   // Keep incomplete typed input separate until Enter/blur. Stored balances,
   // including restored saves and purchase remainders, are already rounded.
@@ -35,7 +39,7 @@ export default function ModRecommendationPanel({ language, selectedCode, recomme
   const paused = !ready || budgetDirty || levelError;
   useEffect(() => { onValidityChange(!paused); }, [paused, onValidityChange]);
   const selected = evaluations.find(row => row.code === selectedCode);
-  const effectPairs = useMemo(() => compareModEffects(selectedCode, state, profile), [selectedCode, state.levels, profile]);
+  const effectPairs = useMemo(() => compareModEffects(selectedCode, state, profile), [selectedCode, state, profile]);
   const commitBudget = () => {
     if (!ready || !budgetDirtyRef.current) return;
     try {

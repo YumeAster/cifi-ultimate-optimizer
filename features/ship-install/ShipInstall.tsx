@@ -1,7 +1,6 @@
 "use client";
 
 /* Native ship PNGs are shared by the static Vite and server entry points. */
-/* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { SHIPS, SHIP_MAX_EVOLUTION, INSTALL_ROWS, getShipInstalls } from "../../lib/cifi/ship-install/catalog";

@@ -273,3 +273,11 @@ test("plans are deterministic, bounded, and every prefix is legally purchasable"
   assert.equal(limited.steps.length, 3);
   assert.equal(limited.stopped, "limit");
 });
+
+test("Hephaestus 8 uses its calculation coefficient despite the tooltip conflict", () => {
+  const state = context({ ship: "Hephaestus", levels: { 8: 2 } });
+  const [effect] = installEffects(state, 8);
+  assert.equal(node("Hephaestus", 8).verification, "native-calculation-tooltip-conflict");
+  assert.deepEqual(effect.missing, []);
+  assert.ok(effect.current !== null && effect.next !== null);
+});

@@ -26,7 +26,9 @@ test("the static social preview points to an existing PNG", async () => {
   const html = await readFile(resolve(pagesRoot, "index.html"), "utf8");
   const image = html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/);
   assert.ok(image, "social image metadata is missing");
-  await assertPng(resolve(publicRoot, image[1]));
+  const pagesUrl = "https://yumeaster.github.io/cifi-ultimate-optimizer/";
+  assert.ok(image[1].startsWith(pagesUrl), "social crawlers need an absolute image URL");
+  await assertPng(resolve(publicRoot, image[1].slice(pagesUrl.length)));
 });
 
 test("every resource icon resolves in both deployment modes", async () => {

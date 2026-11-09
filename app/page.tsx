@@ -1,17 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography } from "antd";
 import koKR from "antd/locale/ko_KR";
 import { AppstoreOutlined, CheckCircleFilled, DatabaseOutlined, DeleteOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
-import ModTree from "../features/mod-tree/ModTree";
 import { GAME_DISPLAY_EXTRA_INPUTS as gameDisplayInputs, migrateGameDisplayInputs } from "../lib/cifi/mod-tree/gameDisplayInputs";
 import { recommendationCopy } from "../features/mod-tree/recommendationCopy";
 import { DEFAULT_RECOMMENDATION_COUNT, MOD_RECOMMENDATION_COUNT_KEY, RECOMMENDATION_COUNTS, restoreRecommendationCount } from "../lib/cifi/mod-tree/preferences";
-import UpgradeOptimizer from "../features/upgrade-optimizer/UpgradeOptimizer";
 import ResourceIcon from "../features/upgrade-optimizer/ResourceIcon";
 import { UPGRADE_RESOURCE_PRESENTATION, type UpgradeVisualResource } from "../features/upgrade-optimizer/resourcePresentation";
-import ShipInstall from "../features/ship-install/ShipInstall";
 import DataTransfer from "../features/settings/DataTransfer";
 import { SHIP_INSTALL_EXTRA_FIELDS, SHIP_INSTALL_POST_OURO_FIELDS } from "../lib/cifi/ship-install/profile";
 import { getInputFieldHelp, inputFieldLabels, inputSectionCopy, localizedText } from "./content/inputCopy";
@@ -21,6 +18,11 @@ import { calculationProfile, commitInputEdit, inputProfileSave, restoreCalculati
 import "./site-audit.css";
 import "./scrollbars.css";
 import "./theme-refinements.css";
+
+// Workspaces outside the default input tab load on first use to keep the initial bundle small.
+const ModTree = lazy(() => import("../features/mod-tree/ModTree"));
+const UpgradeOptimizer = lazy(() => import("../features/upgrade-optimizer/UpgradeOptimizer"));
+const ShipInstall = lazy(() => import("../features/ship-install/ShipInstall"));
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
@@ -185,6 +187,10 @@ const mobileTabs = [
   { key: "settings", icon: <SettingOutlined />, ko: "설정", en: "Settings" },
 ] as const;
 
+function createWeightPresetId() {
+  return `weight-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 function InputManager() {
   const { message } = AntApp.useApp();
   const initialValues = useMemo(() => createInitialValues(), []);
@@ -341,7 +347,7 @@ function InputManager() {
     const name = createNew ? presetName.trim() : selectedPreset!.name;
     if (!name) return void message.error(text.enterPresetName);
     if (createNew && weightPresets.some(preset => preset.name === name)) return void message.error(text.duplicatePreset);
-    const id = createNew ? `weight-${Date.now()}-${Math.random().toString(36).slice(2, 10)}` : selectedPreset!.id;
+    const id = createNew ? createWeightPresetId() : selectedPreset!.id;
     try {
       const next = storeWeightPreset(weightPresets, id, name, profileRef.current.draft, recommendedWeights, new Date().toISOString(), rows => window.localStorage.setItem(presetStorageKey, JSON.stringify(rows)));
       setWeightPresets(next); setSelectedPresetId(id); setPresetName("");
@@ -505,7 +511,7 @@ function InputManager() {
         </div>
         <Space className="dashboard-header-actions" size={10} wrap><Tag className="app-version-tag">{APP_VERSION}</Tag>{isModTreeTab ? <Tag color="red" icon={<AppstoreOutlined />}>PRE-OUROBOROS</Tag> : isOptimizerTab ? <Tag color={optimizerSaveStatus === "failed" ? "red" : "blue"} icon={optimizerSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{optimizerSaveStatus === "failed" ? (language === "ko" ? "저장 실패" : "Not saved") : optimizerSaveStatus === "loading" ? (language === "ko" ? "불러오는 중" : "Loading") : text.autoSaved}</Tag> : <><Tag color={inputSaveStatus === "failed" ? "red" : "green"} icon={inputSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{!ready ? text.loading : inputSaveStatus === "failed" ? text.saveFailed : text.autoSaved}</Tag>{Object.keys(errors).length > 0 && <Text type="warning">{text.invalidCalculationNote}</Text>}</>}</Space>
       </Header>
-      <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}${activeTab === "shipInstall" ? " is-ship-install" : ""}`}>{activeTab === "shipInstall" ? <ShipInstall language={language} profile={saved} draft={draft} errors={errors} ready={ready} onInput={updateValue} /> : isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></main> : isOptimizerTab ? <main className="optimizer-workspace">
+      <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}${activeTab === "shipInstall" ? " is-ship-install" : ""}`}><Suspense fallback={<p className="workspace-loading" role="status">{text.loading}</p>}>{activeTab === "shipInstall" ? <ShipInstall language={language} profile={saved} draft={draft} errors={errors} ready={ready} onInput={updateValue} /> : isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></main> : isOptimizerTab ? <main className="optimizer-workspace">
         <UpgradeOptimizer currency={activeTab} language={language} profile={saved} onSaveStatusChange={setOptimizerSaveStatus} />
       </main> : <main className="input-management-workspace">
         <section className="input-workspace">
@@ -528,7 +534,7 @@ function InputManager() {
           </Card>
           <Card className="input-card" variant="borderless">{fieldPanel(playerFields, "player")}</Card>
         </section>
-      </main>}</Content>
+      </main>}</Suspense></Content>
       <nav className="mobile-workspace-nav" aria-label={language === "ko" ? "화면 이동" : "Workspace navigation"}>
         {mobileTabs.map(tab => <button key={tab.key} type="button" className={`mobile-workspace-tab${activeTab === tab.key ? " is-active" : ""}`} aria-label={tabLabel(tab.key, language)} aria-current={activeTab === tab.key ? "page" : undefined} onClick={() => switchTab(tab.key)}><span className="mobile-workspace-tab-icon" aria-hidden="true">{tab.icon}</span><span className="mobile-workspace-tab-label" aria-hidden="true">{language === "ko" ? tab.ko : tab.en}</span></button>)}
       </nav>
