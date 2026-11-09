@@ -15,9 +15,15 @@ import { getInputFieldHelp, inputFieldLabels, inputSectionCopy, localizedText } 
 import { isRecord, researchCountExceedsTotal, restoreWeightPresets, validateInput, type FieldKind, type WeightPreset } from "./content/profileValidation";
 import { DEFAULT_WEIGHT_PRESET_ID, DEFAULT_WEIGHT_VALUES, commitWeightPreset, matchingWeightPreset, storeWeightPreset } from "./content/weightPresets";
 import { calculationProfile, commitInputEdit, inputProfileSave, restoreCalculationProfile } from "./content/inputProfile";
+// One stylesheet order for both the Pages and server builds. Feature styles stay in
+// the initial bundle so lazy workspaces cannot change the cascade when they load.
+import "./themes.css";
+import "../features/mod-tree/mod-tree.css";
+import "../features/ship-install/ship-install.css";
 import "./site-audit.css";
 import "./scrollbars.css";
 import "./theme-refinements.css";
+import "./globals.css";
 
 // Workspaces outside the default input tab load on first use to keep the initial bundle small.
 const ModTree = lazy(() => import("../features/mod-tree/ModTree"));

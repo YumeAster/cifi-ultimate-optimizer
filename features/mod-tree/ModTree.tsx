@@ -9,7 +9,6 @@ import {
   type ModTreeNode,
 } from "../../lib/cifi/mod-tree/graph";
 import { fitViewportToBounds, focusViewport, MAX_TREE_SCALE, MIN_TREE_SCALE, panViewport, zoomViewport, type Point, type Viewport } from "../../lib/cifi/mod-tree/viewport";
-import "./mod-tree.css";
 import ModTreeIcon from "./ModTreeIcon";
 import { nodeContentLayout, nodeFramePath, nodeLevelText, nodePresentation, nodeProgress, nodeUnaffordable } from "../../lib/cifi/mod-tree/presentation";
 import { recommendationCopy } from "./recommendationCopy";

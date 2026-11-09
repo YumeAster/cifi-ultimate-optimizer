@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import PrototypeApp from "../../app/page";
-import "../../app/globals.css";
 
 const root = typeof document === "undefined" ? null : document.getElementById("root");
 

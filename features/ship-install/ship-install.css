@@ -1,5 +1,5 @@
 .dashboard-content.is-ship-install { padding: 14px; }
-.ship-install { display:grid; grid-template-columns:150px minmax(0,1fr); min-height:760px; border:1px solid var(--surface-line); border-radius:16px; background:var(--mod-panel-bg); color:var(--content-ink); overflow:hidden; font-size:12px; }
+.ship-install { display:grid; grid-template-columns:150px minmax(0,1fr); border:1px solid var(--surface-line); border-radius:16px; background:var(--mod-panel-bg); color:var(--content-ink); overflow:hidden; font-size:12px; }
 .ship-install * { box-sizing:border-box; }
 .ship-install button,.ship-install input,.ship-install select { font:inherit; color:var(--content-ink); }
 .ship-install button { cursor:pointer; border:1px solid var(--surface-line); border-radius:6px; background:var(--input-bg); padding:8px 10px; }

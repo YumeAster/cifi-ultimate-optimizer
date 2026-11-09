@@ -17,7 +17,6 @@ import {
 } from "../../lib/cifi/ship-install/persistence";
 import { MOD_STORAGE_KEY, restoreModState } from "../../lib/cifi/mod-tree/recommendations";
 import { publicAssetUrl } from "../../lib/cifi/publicAssetUrl";
-import "./ship-install.css";
 
 type Props = {
   language: "ko" | "en"; ready: boolean;

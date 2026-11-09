@@ -17,7 +17,7 @@ test("red is a persistent fifth theme without changing existing theme keys or al
 });
 
 test("each node palette covers artwork, maxed and MP-shortage states without recoloring source assets", async () => {
-  const css = await read("app/theme-refinements.css");
+  const css = await read("app/themes.css");
   const mapCss = await read("features/mod-tree/mod-tree.css");
   const icon = await read("features/mod-tree/ModTreeIcon.tsx");
   const view = await read("features/mod-tree/ModTree.tsx");
@@ -58,7 +58,7 @@ test("map and portal palettes cover all themes while original resource icons sta
 
 test("each theme keeps purchasable, unaffordable, completed, and recommendation states visually distinct", async () => {
   const [css, view, copy] = await Promise.all([
-    read("app/theme-refinements.css"),
+    Promise.all([read("app/themes.css"), read("app/theme-refinements.css")]).then(parts => parts.join("\n")),
     read("features/mod-tree/ModTree.tsx"),
     read("features/mod-tree/recommendationCopy.ts"),
   ]);
