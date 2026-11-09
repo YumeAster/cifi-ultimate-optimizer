@@ -23,7 +23,7 @@
 .mod-tree-overview-effects { display:grid; grid-template-columns:minmax(0,1fr); gap:7px; }
 .mod-tree-overview-effects .mod-rec-effect-chip.upgrade-multiplier-chip { display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:8px; min-width:0; padding:9px 10px; }
 .mod-tree-overview-effects .upgrade-chip-label { min-width:0; white-space:nowrap; }
-.mod-tree-overview-effects .upgrade-chip-label small { font-size:11px; }
+.mod-tree-overview-effects .upgrade-chip-label small { font-size:9px; }
 .mod-tree-overview-effects .mod-rec-effect-chip.upgrade-multiplier-chip strong { display:inline-flex; align-items:center; gap:2px; flex:0 0 auto; white-space:nowrap; font-size:13px; }
 .mod-tree-overview-help { flex:0 0 auto; max-height:45%; overflow-y:auto; background:var(--item-bg); }
 .mod-tree-overview-warning { color:var(--content-muted); font-size:11px; overflow-wrap:anywhere; }
@@ -230,6 +230,3 @@
 }
 .mod-rec-confirm { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px; padding:10px 12px; border:1px solid var(--surface-line); border-radius:10px; background:var(--item-bg); }
 .mod-rec-confirm p { flex:1 1 100%; margin:0; }
-/* Locked nodes also differ by a dashed frame, not only by colour. */
-.mod-tree-v2 .mod-tree-node.progress-locked .mod-tree-node-frame { stroke-dasharray:2.4 1.6; }
-.mod-tree-v2 .mod-tree-legend-item.state-locked i { border-style:dashed; }

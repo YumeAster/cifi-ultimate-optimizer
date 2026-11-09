@@ -99,7 +99,7 @@ test("Ship Install UI exposes double-click and fresh-recommendation bulk control
   const view = await readFile(new URL("../features/ship-install/ShipInstall.tsx", import.meta.url), "utf8");
   assert.match(view, /onDoubleClick=\{event => \{ event\.preventDefault\(\); buy\(position\); \}\}/);
   assert.match(view, /onClick=\{\(\) => buy\(detail\.position\)\}/);
-  assert.match(view, /추천 전체 반영/);
+  assert.match(view, /추천 일괄 적용/);
   assert.match(view, /applyConfirm && canApplyPlan/, "bulk apply asks for confirmation first");
   assert.match(view, /applyShipInstallRecommendation\(stateRef\.current, context, plan\)/);
 });

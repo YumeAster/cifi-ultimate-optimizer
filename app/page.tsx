@@ -177,7 +177,7 @@ function groupLabel(group: FieldGroup, language: Language) {
 
 function tabLabel(tab: ActiveTab, language: Language) {
   const text = localizedText[language];
-  if (tab === "shipInstall") return language === "ko" ? "함선 Install" : "Ship Install";
+  if (tab === "shipInstall") return "Ship Install";
   if (tab === "settings") return text.settings;
   if (tab === "modTree") return language === "ko" ? "Mod Tree 추천" : "Mod Tree";
   if (tab === "diamonds") return text.diamonds;
@@ -236,7 +236,7 @@ function InputManager() {
     : isOptimizerTab ? `${tabLabel(activeTab, language)} ${text.upgradeOptimizer}`
     : tabLabel(activeTab, language);
   const headerDescription = activeTab === "settings" ? text.settingsDescription
-    : isOptimizerTab ? text.optimizerDescription : isModTreeTab ? text.modTreeDescription : activeTab === "shipInstall" ? text.shipInstallDescription : text.profileDescription;
+    : isOptimizerTab ? text.optimizerDescription : isModTreeTab || activeTab === "shipInstall" ? null : text.profileDescription;
   const headerGroup = activeTab === "settings" ? text.groupSettings : isOptimizerTab ? text.groupOptimizer
     : isModTreeTab ? text.groupModTree : activeTab === "shipInstall" ? text.groupShip : text.groupProfile;
 
