@@ -275,3 +275,11 @@ button,input { font:inherit; }
 /* Disabled buttons share one muted style in every theme. */
 .dashboard-shell .ant-btn:disabled,.dashboard-shell .ant-btn:disabled:hover { color:var(--content-muted); background:var(--input-bg); border-color:var(--surface-line); box-shadow:none; opacity:.7; cursor:not-allowed; }
 .dashboard-shell .brand-cell { color:#fff; background:linear-gradient(145deg,color-mix(in srgb,var(--ui-accent) 70%,#0b2440),color-mix(in srgb,var(--ui-accent) 45%,#061325)); }
+/* Header status tags use theme tokens: one look for saved state, one for failures. */
+.dashboard-shell .save-status-tag,.dashboard-shell .scope-tag { margin:0; font-size:12px; font-weight:700; }
+.dashboard-shell .save-status-tag { color:color-mix(in srgb,#35c47f 70%,var(--chrome-ink)); background:color-mix(in srgb,#35c47f 14%,var(--chrome-bg)); border-color:color-mix(in srgb,#35c47f 45%,transparent); }
+.dashboard-shell .save-status-tag.is-failed { color:color-mix(in srgb,#ff5f6d 72%,var(--chrome-ink)); background:color-mix(in srgb,#ff5f6d 14%,var(--chrome-bg)); border-color:color-mix(in srgb,#ff5f6d 50%,transparent); }
+.dashboard-shell .scope-tag { color:var(--chrome-muted); background:color-mix(in srgb,var(--chrome-bg) 84%,transparent); border-color:var(--chrome-line); }
+/* Settings buttons follow the active theme instead of Ant's white default. */
+.dashboard-shell .settings-workspace .ant-btn-default:not(:disabled) { color:var(--content-ink); background:var(--item-bg); border-color:var(--surface-line); }
+.dashboard-shell .settings-workspace .ant-btn-default:not(:disabled):hover { color:var(--content-ink); background:color-mix(in srgb,var(--ui-accent) 12%,var(--item-bg)); border-color:var(--ui-accent); }

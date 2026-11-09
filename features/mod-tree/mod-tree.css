@@ -227,3 +227,5 @@
 @media (prefers-reduced-motion:reduce) {
   .mod-tree-v2 .mod-tree-recommendation-ripple { animation:none; opacity:0; }
 }
+.mod-rec-confirm { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px; padding:10px 12px; border:1px solid var(--surface-line); border-radius:10px; background:var(--item-bg); }
+.mod-rec-confirm p { flex:1 1 100%; margin:0; }

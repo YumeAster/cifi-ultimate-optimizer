@@ -17,11 +17,12 @@ export default function ModTreeTools({ language, paused, onSelect, model }: Prop
   const [steps, setSteps] = useState(25);
   const [bulk, setBulk] = useState("");
   const [notice, setNotice] = useState("");
+  const [pendingRestore, setPendingRestore] = useState<{ name: string; state: ReturnType<typeof restoreModState>; revision: number } | null>(null);
   const operation = useRef(0);
   const toolbar = useRef<HTMLElement>(null);
   useEffect(() => () => { operation.current++; }, []);
   const titles = { plan: t.planTitle, bulk: t.bulk, backup: t.backupTitle, source: t.source };
-  const close = () => { operation.current++; setActive(null); setNotice(""); };
+  const close = () => { operation.current++; setActive(null); setNotice(""); setPendingRestore(null); };
   const exportBackup = () => {
     const url = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: "application/json" }));
     const link = document.createElement("a"); link.href = url; link.download = "cifi-mod-tree.json"; link.click();
@@ -52,7 +53,7 @@ export default function ModTreeTools({ language, paused, onSelect, model }: Prop
                 if (!modLevelLimit(match[1]) || !Number.isSafeInteger(level) || level < 0 || level > modLevelLimit(match[1])) throw new Error("Invalid level");
                 seen.add(match[1]); levels[match[1]] = level;
               }
-              model.commit({ ...state, levels }); setBulk(""); setNotice(t.bulkApplied);
+              model.commit({ ...state, levels }, true); setBulk(""); setNotice(t.bulkApplied);
             } catch { setNotice(t.bulkInvalid); }
           }}>{t.bulkApply}</button>
         </section>}
@@ -66,9 +67,13 @@ export default function ModTreeTools({ language, paused, onSelect, model }: Prop
               const imported = restoreModState(JSON.parse(await file.text()));
               if (operation.current !== request) return;
               if (model.getRevision() !== revision) { setNotice(t.restoreCancelled); return; }
-              model.commit(imported); setNotice(t.restored);
+              setPendingRestore({ name: file.name, state: imported, revision }); setNotice("");
             } catch { if (operation.current === request) setNotice(t.restoreInvalid); }
           }} /></label>
+          {pendingRestore && <div className="mod-rec-confirm" role="group" aria-label={t.restoreConfirmTitle}><p>{t.restoreConfirm(pendingRestore.name)}</p><button type="button" onClick={() => setPendingRestore(null)}>{t.cancel}</button><button type="button" className="mod-rec-action" disabled={paused} onClick={() => {
+            if (model.getRevision() !== pendingRestore.revision) { setPendingRestore(null); setNotice(t.restoreCancelled); return; }
+            model.commit(pendingRestore.state, true); setPendingRestore(null); setNotice(t.restored);
+          }}>{t.restoreApply}</button></div>}
         </section>}
         {active === "source" && <section aria-label={t.source}><p>{MOD_RECOMMENDATION_VERSION}</p><p className="mod-rec-help">{t.method}</p><p className="mod-rec-help">{t.profileHelp}</p><p className="mod-rec-help">{t.effectValueHelp}</p><p className="mod-rec-help">{t.budgetHelp}</p><a href={MOD_RECOMMENDATION_SOURCE} target="_blank" rel="noreferrer">Mod Tree Cultivator · ModCalc Local / ModRef Local</a><p>{language === "ko" ? "효과 표시: 게임 v0.7.3.63 캡처 우선 · Wiki 보조 대조" : "Effect display: game v0.7.3.63 captures first · Wiki cross-check"}</p><a href="https://cifi.fandom.com/wiki/Loop_Modifications" target="_blank" rel="noreferrer">CIFI Wiki · Loop Modifications</a></section>}
         {notice && <p role="status" className="mod-rec-help">{notice}</p>}

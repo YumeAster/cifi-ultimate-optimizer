@@ -3,6 +3,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { App as AntApp, Badge, Button, Card, ConfigProvider, Input, Layout, Menu, Popconfirm, Select, Space, Tag, Tooltip, Typography } from "antd";
 import koKR from "antd/locale/ko_KR";
+import enUS from "antd/locale/en_US";
 import { ApartmentOutlined, AppstoreOutlined, CheckCircleFilled, DeleteOutlined, EditOutlined, RocketOutlined, SaveOutlined, SettingOutlined, TrophyOutlined, WarningFilled } from "@ant-design/icons";
 import { GAME_DISPLAY_EXTRA_INPUTS as gameDisplayInputs, migrateGameDisplayInputs } from "../lib/cifi/mod-tree/gameDisplayInputs";
 import { recommendationCopy } from "../features/mod-tree/recommendationCopy";
@@ -57,7 +58,7 @@ const weightFields: FieldDefinition[] = [
 
 const generatorFields: FieldDefinition[] = Array.from({ length: 8 }, (_, index) => {
   const generator = index + 1;
-  return { key: `manualMk${generator}`, label: `Manual mk${generator}`, kind: "short" as const, group: "player" as const, generator };
+  return { key: `manualMk${generator}`, label: `Manual MK${generator}`, kind: "short" as const, group: "player" as const, generator };
 });
 const generatorTechnologyFields: FieldDefinition[] = Array.from({ length: 8 }, (_, index) => {
   const generator = index + 1;
@@ -176,7 +177,7 @@ function groupLabel(group: FieldGroup, language: Language) {
 
 function tabLabel(tab: ActiveTab, language: Language) {
   const text = localizedText[language];
-  if (tab === "shipInstall") return "Ship Install";
+  if (tab === "shipInstall") return language === "ko" ? "함선 Install" : "Ship Install";
   if (tab === "settings") return text.settings;
   if (tab === "modTree") return language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations";
   if (tab === "diamonds") return text.diamonds;
@@ -188,7 +189,7 @@ const mobileTabs = [
   { key: "inputs", icon: <EditOutlined />, ko: "입력", en: "Inputs" },
   { key: "diamonds", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.diamond.icon} />, ko: "다이아", en: "Diamond" },
   { key: "tokens", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.token.icon} />, ko: "토큰", en: "Token" },
-  { key: "modTree", icon: <ApartmentOutlined />, ko: "모드", en: "Mod Tree" },
+  { key: "modTree", icon: <ApartmentOutlined />, ko: "Mod Tree", en: "Mod Tree" },
   { key: "shipInstall", icon: <RocketOutlined />, ko: "함선", en: "Ship" },
   { key: "settings", icon: <SettingOutlined />, ko: "설정", en: "Settings" },
 ] as const;
@@ -218,6 +219,7 @@ function InputManager() {
     setActiveTab(tab);
   };
   const [ready, setReady] = useState(false);
+  const [presetIssue, setPresetIssue] = useState("");
   const [weightPresets, setWeightPresets] = useState<WeightPreset[]>([]);
   const [presetName, setPresetName] = useState("");
   const [selectedPresetId, setSelectedPresetId] = useState<string | null>(defaultPresetId);
@@ -234,7 +236,9 @@ function InputManager() {
     : isOptimizerTab ? `${tabLabel(activeTab, language)} ${text.upgradeOptimizer}`
     : tabLabel(activeTab, language);
   const headerDescription = activeTab === "settings" ? text.settingsDescription
-    : isOptimizerTab ? text.optimizerDescription : isModTreeTab || activeTab === "shipInstall" ? null : text.profileDescription;
+    : isOptimizerTab ? text.optimizerDescription : isModTreeTab ? text.modTreeDescription : activeTab === "shipInstall" ? text.shipInstallDescription : text.profileDescription;
+  const headerGroup = activeTab === "settings" ? text.groupSettings : isOptimizerTab ? text.groupOptimizer
+    : isModTreeTab ? text.groupModTree : activeTab === "shipInstall" ? text.groupShip : text.groupProfile;
 
   useEffect(() => {
     const restored = { ...initialValues };
@@ -347,21 +351,23 @@ function InputManager() {
   const applyPreset = (presetId = selectedPresetId) => {
     if (!ready) return;
     const presetValues = presetId === defaultPresetId ? recommendedWeights : weightPresets.find((preset) => preset.id === presetId)?.values;
-    if (!presetValues || !presetId) return void message.error(text.missingPreset);
+    setPresetIssue("");
+    if (!presetValues || !presetId) return void setPresetIssue(text.missingPreset);
     try {
       const current = profileRef.current;
       const currentSaved = calculationProfile(current.draft, current.saved, allFields, recommendedWeights);
       const next = commitWeightPreset(current.draft, currentSaved, presetValues, recommendedWeights, presetId, payload => window.localStorage.setItem(inputStorageKey, JSON.stringify(payload)));
       acceptProfile(next, presetId);
-    } catch { message.error(text.presetApplyFailed); }
+    } catch { setPresetIssue(text.presetApplyFailed); }
   };
   const saveWeightPreset = (createNew = false) => {
     if (!ready) return;
-    if (weightFields.some(field => Boolean(errors[field.key]))) return void message.error(text.validationFailed);
-    if (!createNew && !selectedPreset) return void message.info(text.choosePresetToSave);
+    setPresetIssue("");
+    if (weightFields.some(field => Boolean(errors[field.key]))) return void setPresetIssue(text.validationFailed);
+    if (!createNew && !selectedPreset) return void setPresetIssue(text.choosePresetToSave);
     const name = createNew ? presetName.trim() : selectedPreset!.name;
-    if (!name) return void message.error(text.enterPresetName);
-    if (createNew && weightPresets.some(preset => preset.name === name)) return void message.error(text.duplicatePreset);
+    if (!name) return void setPresetIssue(text.enterPresetName);
+    if (createNew && weightPresets.some(preset => preset.name === name)) return void setPresetIssue(text.duplicatePreset);
     const id = createNew ? createWeightPresetId() : selectedPreset!.id;
     try {
       const next = storeWeightPreset(weightPresets, id, name, profileRef.current.draft, recommendedWeights, new Date().toISOString(), rows => window.localStorage.setItem(presetStorageKey, JSON.stringify(rows)));
@@ -372,7 +378,7 @@ function InputManager() {
       // not misreport that the weight preset itself was lost.
       try { persistCurrentProfile(id); }
       catch { setInputSaveStatus("failed"); message.warning(text.saveFailed); }
-    } catch { message.error(text.presetSaveFailed); }
+    } catch { setPresetIssue(text.presetSaveFailed); }
   };
   const deleteSelectedPreset = () => {
     if (!ready || !selectedPreset) return;
@@ -387,7 +393,7 @@ function InputManager() {
       try { persistCurrentProfile(nextAppliedId); }
       catch { setInputSaveStatus("failed"); }
       message.success(`“${selectedPreset.name}” ${text.presetDeleted}`);
-    } catch { message.error(text.presetDeleteFailed); }
+    } catch { setPresetIssue(text.presetDeleteFailed); }
   };
 
   const resourceCardStyle = (palette: ResourcePalette) => ({
@@ -501,7 +507,7 @@ function InputManager() {
       </div>
     </Card>
   );
-  return <Layout className={`dashboard-shell theme-${theme}`}>
+  return <ConfigProvider locale={language === "ko" ? koKR : enUS}><Layout className={`dashboard-shell theme-${theme}`}>
     <Sider className="dashboard-sider" width={272} trigger={null}>
       <div className="sidebar-brand"><div className="brand-cell"><BrandMark /></div><div><strong>CIFI ULTIMATE</strong><span>OPTIMIZER</span></div></div>
       <div className="sidebar-caption">{text.workspace}</div>
@@ -512,7 +518,7 @@ function InputManager() {
           { key: "tokens", className: "optimizer-menu-token", icon: <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION.token.icon} />, label: text.tokens },
         ] },
         { key: "modTree", icon: <ApartmentOutlined />, label: language === "ko" ? "Mod Tree 추천" : "Mod Tree Recommendations" },
-        { key: "shipInstall", icon: <RocketOutlined />, label: "Ship Install" },
+        { key: "shipInstall", icon: <RocketOutlined />, label: tabLabel("shipInstall", language) },
         { key: "settings", icon: <SettingOutlined />, label: text.settings },
       ]} />
       <div className="sidebar-foot"><div className="sidebar-foot-chip"><span className="sidebar-foot-dot" />{text.localProfile}</div><p>{text.localProfileNote}</p></div>
@@ -520,11 +526,11 @@ function InputManager() {
     <Layout className="dashboard-main">
       <Header className="dashboard-header">
         <div className="dashboard-header-copy">
-          <Text className="header-eyebrow">{isOptimizerTab ? "UPGRADE OPTIMIZER" : isModTreeTab ? "MOD TREE" : activeTab === "shipInstall" ? "SHIP AUTOMATION" : activeTab === "settings" ? "SETTINGS" : "PLAYER PROFILE"} / {tabLabel(activeTab, language).toUpperCase()}</Text>
+          <Text className="header-eyebrow">{headerGroup}</Text>
           <Title level={1} className="dashboard-page-title">{headerTitle}</Title>
           {headerDescription && <Paragraph className="dashboard-header-description">{headerDescription}</Paragraph>}
         </div>
-        <Space className="dashboard-header-actions" size={10} wrap><Tag className="app-version-tag">{APP_VERSION}</Tag>{isModTreeTab ? <Tag color="red" icon={<AppstoreOutlined />}>PRE-OUROBOROS</Tag> : isOptimizerTab ? <Tag color={optimizerSaveStatus === "failed" ? "red" : "blue"} icon={optimizerSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{optimizerSaveStatus === "failed" ? (language === "ko" ? "저장 실패" : "Not saved") : optimizerSaveStatus === "loading" ? (language === "ko" ? "불러오는 중" : "Loading") : text.autoSaved}</Tag> : <><Tag color={inputSaveStatus === "failed" ? "red" : "green"} icon={inputSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{!ready ? text.loading : inputSaveStatus === "failed" ? text.saveFailed : text.autoSaved}</Tag>{Object.keys(errors).length > 0 && <Text type="warning">{text.invalidCalculationNote}</Text>}</>}</Space>
+        <Space className="dashboard-header-actions" size={10} wrap><Tag className="app-version-tag">{APP_VERSION}</Tag>{isModTreeTab ? <Tag className="scope-tag" icon={<AppstoreOutlined />}>{text.preOuroboros}</Tag> : isOptimizerTab ? <Tag className={`save-status-tag${optimizerSaveStatus === "failed" ? " is-failed" : ""}`} icon={optimizerSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{optimizerSaveStatus === "failed" ? (language === "ko" ? "저장 실패" : "Not saved") : optimizerSaveStatus === "loading" ? (language === "ko" ? "불러오는 중" : "Loading") : text.autoSaved}</Tag> : <><Tag className={`save-status-tag${inputSaveStatus === "failed" ? " is-failed" : ""}`} icon={inputSaveStatus === "failed" ? <WarningFilled /> : <CheckCircleFilled />}>{!ready ? text.loading : inputSaveStatus === "failed" ? text.saveFailed : text.autoSaved}</Tag>{Object.keys(errors).length > 0 && <Text type="warning">{text.invalidCalculationNote}</Text>}</>}</Space>
       </Header>
       <Content className={`dashboard-content${isModTreeTab ? " is-mod-tree" : ""}${activeTab === "shipInstall" ? " is-ship-install" : ""}`}><Suspense fallback={<p className="workspace-loading" role="status">{text.loading}</p>}>{activeTab === "shipInstall" ? <ShipInstall language={language} profile={saved} draft={draft} errors={errors} ready={ready} onInput={updateValue} /> : isModTreeTab ? <ModTree language={language} profile={saved} recommendationCount={modRecommendationCount} /> : activeTab === "settings" ? <main className="settings-workspace"><section className="settings-primary">{settingsPanel()}</section></main> : isOptimizerTab ? <main className="optimizer-workspace">
         <UpgradeOptimizer currency={activeTab} language={language} profile={saved} onSaveStatusChange={setOptimizerSaveStatus} />
@@ -540,10 +546,11 @@ function InputManager() {
                 {activePresetId === selectedPresetId && activePresetId !== null ? <Tag>{text.presetApplied}</Tag> : <Text className="weight-preset-status">{text.presetEdited}</Text>}
               </div>
               <div className="weight-preset-create-row">
-                <Input aria-label={text.newPreset} value={presetName} maxLength={32} placeholder={text.newPreset} onChange={event => setPresetName(event.target.value)} onPressEnter={() => saveWeightPreset(true)} disabled={!ready} />
+                <Input aria-label={text.newPreset} value={presetName} maxLength={32} placeholder={text.newPreset} onChange={event => { setPresetName(event.target.value); setPresetIssue(""); }} onPressEnter={() => saveWeightPreset(true)} disabled={!ready} />
                 <Button onClick={() => saveWeightPreset(true)} disabled={!ready || !presetName.trim() || weightFields.some(field => Boolean(errors[field.key]))}>{text.createPreset}</Button>
                 <Text type="secondary">{text.presetHelp}</Text>
               </div>
+              {presetIssue && <p className="weight-preset-issue" role="alert">{presetIssue}</p>}
             </div>
             {fieldPanel(weightFields, "weights")}
           </Card>
@@ -551,10 +558,10 @@ function InputManager() {
         </section>
       </main>}</Suspense></Content>
       <nav className="mobile-workspace-nav" aria-label={language === "ko" ? "화면 이동" : "Workspace navigation"}>
-        {mobileTabs.map(tab => <button key={tab.key} type="button" className={`mobile-workspace-tab${activeTab === tab.key ? " is-active" : ""}`} aria-label={tabLabel(tab.key, language)} aria-current={activeTab === tab.key ? "page" : undefined} onClick={() => switchTab(tab.key)}><span className="mobile-workspace-tab-icon" aria-hidden="true">{tab.icon}</span><span className="mobile-workspace-tab-label" aria-hidden="true">{language === "ko" ? tab.ko : tab.en}</span></button>)}
+        {mobileTabs.map(tab => <button key={tab.key} type="button" className={`mobile-workspace-tab${activeTab === tab.key ? " is-active" : ""}`} title={tabLabel(tab.key, language)} aria-current={activeTab === tab.key ? "page" : undefined} onClick={() => switchTab(tab.key)}><span className="mobile-workspace-tab-icon" aria-hidden="true">{tab.icon}</span><span className="mobile-workspace-tab-label">{language === "ko" ? tab.ko : tab.en}</span></button>)}
       </nav>
     </Layout>
-  </Layout>;
+  </Layout></ConfigProvider>;
 }
 
 export default function Home() {

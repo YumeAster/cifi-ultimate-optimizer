@@ -240,10 +240,10 @@ export default function ModTree({ language, profile = emptyProfile, recommendati
         <aside className="mod-tree-side-panel">
           {gameDisplay.storageFailed && <p role="status" className="mod-rec-error">{isKorean ? "효과 표시 기준 저장 실패 · 새로고침 전 진행도를 확인해 주세요." : "Effect snapshot could not be saved. Check progress before reloading."}</p>}
           <ModRecommendationPanel language={language} selectedCode={selectedId} recommendationCount={visibleRecommendationCount} profile={gameDisplay.displayProfile} model={recommendations} onPurchase={purchaseNode} onValidityChange={setRecommendationsVisible} onSelect={code => { const node = nodeLookup.get(code); if (node) { setQuery(""); selectNode(node, true); } }} />
-          {filtered && <section className="mod-tree-search-results" aria-label={isKorean ? "검색 결과" : "Search results"}><h3 role="status">{isKorean ? `검색 결과 ${matches.length}개` : `${matches.length} results`}</h3>{matches.length ? <ul>{matches.map((node) => <li key={node.key}><button type="button" className={selectedId === node.key ? "is-current" : ""} onClick={() => selectNode(node, true)}><b className="mod-tree-code-token">{node.label}</b><span>{node.name}</span></button></li>)}</ul> : <p>{isKorean ? "일치하는 노드가 없어. 다른 코드나 이름으로 찾아봐." : "No matching nodes. Try another code or name."}</p>}</section>}
+          {filtered && <section className="mod-tree-search-results" aria-label={isKorean ? "검색 결과" : "Search results"}><h3 role="status">{isKorean ? `검색 결과 ${matches.length}개` : `${matches.length} results`}</h3>{matches.length ? <ul>{matches.map((node) => <li key={node.key}><button type="button" className={selectedId === node.key ? "is-current" : ""} onClick={() => selectNode(node, true)}><b className="mod-tree-code-token">{node.label}</b><span>{node.name}</span></button></li>)}</ul> : <p>{isKorean ? "일치하는 노드가 없습니다. 다른 코드나 이름으로 찾아보세요." : "No matching nodes. Try another code or name."}</p>}</section>}
         </aside>
       </div>
-      <p className="mod-tree-source-note">{isKorean ? "코드와 위치는 시트·제공한 지도·캡처를 기준으로 구성했어. 미확인 연결과 잠금 이후 확장 영역은 표시하지 않아." : "Codes and positions follow the sheet and supplied map captures. Unconfirmed connections and post-unlock expansion areas are not shown."}</p>
+      <p className="mod-tree-source-note">{isKorean ? "코드와 위치는 시트·제공된 지도·캡처를 기준으로 구성했습니다. 확인되지 않은 연결과 잠금 이후 확장 영역은 표시하지 않습니다." : "Codes and positions follow the sheet and supplied map captures. Unconfirmed connections and post-unlock expansion areas are not shown."}</p>
     </section>
   </main>;
 }

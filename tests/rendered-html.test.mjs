@@ -69,7 +69,7 @@ test("removes starter preview assets and keeps the social card", async () => {
   assert.match(page, /localizedText/);
   assert.match(page, /languageStorageKey/);
   assert.match(inputCopy, /가중치와 플레이어 진행도/);
-  assert.match(inputCopy, /Manual mk 진행도/);
+  assert.match(inputCopy, /Manual MK 진행도/);
   assert.match(inputCopy, /MK별 Hardware Tech와 Software Tech/);
   assert.match(page, /hardwareTechMk/);
   assert.match(page, /generator-tech-matrix/);
@@ -126,7 +126,7 @@ test("removes starter preview assets and keeps the social card", async () => {
   assert.match(styles, /overflow-y:auto/);
   assert.match(styles, /upgrade-optimizer/);
   assert.match(styles, /optimizer-upgrade-grid/);
-  assert.match(styles, /\.optimizer-upgrade-grid \{ display:grid; grid-template-columns:repeat\(4,minmax\(0,1fr\)\); gap:12px; \}/);
+  assert.match(styles, /\.optimizer-upgrade-grid \{ display:grid; grid-template-columns:repeat\(auto-fill,minmax\(min\(100%,210px\),1fr\)\); gap:12px; \}/);
   assert.match(styles, /optimizer-menu-diamond/);
   assert.match(styles, /--optimizer-accent:#ff4fc3/);
   assert.match(styles, /--upgrade-accent/);

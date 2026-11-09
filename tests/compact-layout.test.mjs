@@ -40,7 +40,9 @@ test("mobile workspace navigation is a bottom icon dock with accessible page nam
     readFile(new URL("../app/site-audit.css", import.meta.url), "utf8"),
   ]);
   assert.ok(page.indexOf('<nav className="mobile-workspace-nav"') > page.indexOf('</Content>'));
-  assert.match(page, /mobileTabs\.map\(tab => <button[^>]*aria-label=\{tabLabel\(tab\.key, language\)\}[^>]*aria-current=/);
+  // The visible short label is the accessible name; the full tab name stays available as a tooltip.
+  assert.match(page, /mobileTabs\.map\(tab => <button[^>]*title=\{tabLabel\(tab\.key, language\)\}[^>]*aria-current=/);
+  assert.doesNotMatch(page, /mobile-workspace-tab-label" aria-hidden/);
   assert.doesNotMatch(page, /mobile-workspace-nav[^\n]*<Select/);
   assert.match(css, /\.dashboard-shell \.mobile-workspace-nav \{[^}]*display:grid; grid-template-columns:repeat\(6,minmax\(0,1fr\)\)/);
   assert.match(css, /\.mobile-workspace-tab:focus-visible/);

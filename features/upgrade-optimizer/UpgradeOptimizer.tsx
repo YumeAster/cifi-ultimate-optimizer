@@ -109,7 +109,7 @@ const copy = {
     budget: "보유 재화", time: "일일 플레이 시간", hours: "시간", profileLink: "진행도 연동", profileLinkNote: "플레이어 진행도와 함선 승무원 입력으로 해금을 판정합니다.", generators: "MK", ships: "함선",
     next: "다음 추천", noNext: "현재 예산으로 구매할 수 있는 업그레이드가 없습니다.", enterBudget: "보유 재화를 입력하면 구매 순서를 계산합니다.",
     currentLevel: "현재 레벨", nextCost: "다음 비용", power: "효과 배율", efficiency: "효율 점수", locked: "잠김", maxed: "완료", available: "구매 가능", suggested: "추천",
-    plan: "예산 구매 계획", purchases: "회 구매", spent: "사용", remaining: "잔여", applyOne: "추천 1회 반영", applyPlan: "계획 전체 반영", reset: "현재 재화 초기화", resetConfirm: "이 재화의 예산과 모든 업그레이드 레벨을 초기화할까요?",
+    plan: "예산 구매 계획", purchases: "회 구매", spent: "사용", remaining: "잔여", applyOne: "추천 1회 반영", applyPlan: "계획 전체 반영", applyPlanConfirm: (count: number) => `계획한 ${count}회 구매를 업그레이드 레벨과 보유 재화에 반영할까요? 실제 게임은 바뀌지 않습니다.`, reset: "현재 재화 초기화", resetConfirm: "이 재화의 예산과 모든 업그레이드 레벨을 초기화할까요?",
     planEmpty: "구매 가능한 항목이 없습니다.", planLimited: "계산 한도 5,000회에서 멈췄습니다. 계획을 반영한 뒤 남은 예산을 다시 계산해 주세요.",
     category: { generator: "Generator", special: "특수", oneTimer: "일회성", largeOneTimer: "대형 일회성", tier1: "Tier 1", tier2: "Tier 2", tier3: "Tier 3" },
     unlockGenerator: "진행도 입력에서 {id} 구매 기록이 필요합니다.", unlockShip: "함선 진행도에서 {id} 승무원이 필요합니다.", unlockTier2: "Tier 1 누적 레벨 10,000이 필요합니다.", unlockTier3: "Tier 1·2 누적 레벨 30,000이 필요합니다.", unlockLarge: "24개 일회성 다이아 업그레이드를 모두 구매해야 합니다.",
@@ -119,7 +119,7 @@ const copy = {
     budget: "Available currency", time: "Daily play time", hours: "hours", profileLink: "Progress link", profileLinkNote: "Unlocks use Player Progress and ship Crew inputs.", generators: "MK", ships: "Ships",
     next: "Next recommendation", noNext: "No upgrade is affordable with the current budget.", enterBudget: "Enter a budget to calculate the purchase order.",
     currentLevel: "Current level", nextCost: "Next cost", power: "Power", efficiency: "Efficiency", locked: "Locked", maxed: "Complete", available: "Available", suggested: "Suggested",
-    plan: "Budget purchase plan", purchases: "purchases", spent: "Spent", remaining: "Remaining", applyOne: "Apply one purchase", applyPlan: "Apply full plan", reset: "Reset this currency", resetConfirm: "Reset this currency budget and every upgrade level?",
+    plan: "Budget purchase plan", purchases: "purchases", spent: "Spent", remaining: "Remaining", applyOne: "Apply one purchase", applyPlan: "Apply full plan", applyPlanConfirm: (count: number) => `Apply ${count} planned purchases to upgrade levels and the stored budget? The game is unchanged.`, reset: "Reset this currency", resetConfirm: "Reset this currency budget and every upgrade level?",
     planEmpty: "No upgrades can be purchased.", planLimited: "Stopped at the 5,000 purchase calculation limit. Apply the plan, then calculate the remaining budget again.",
     category: { generator: "Generator", special: "Special", oneTimer: "One-Timer", largeOneTimer: "Large One-Timer", tier1: "Tier 1", tier2: "Tier 2", tier3: "Tier 3" },
     unlockGenerator: "Record a {id} purchase in Player Progress.", unlockShip: "Enter Crew for {id} in Ship Progress.", unlockTier2: "Requires 10,000 total Tier 1 levels.", unlockTier3: "Requires 30,000 total Tier 1 and 2 levels.", unlockLarge: "Requires all 24 Diamond One-Timers.",
@@ -328,7 +328,7 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
                     {isOneTime ? <span className="one-time-letter" aria-hidden="true">{evaluation.rule.id.slice(0, 1)}</span> : <span className="upgrade-leading-icon">{primaryGenerator ? <GeneratorSourceIcon generator={primaryGenerator} /> : <ResourceIcon icon={UPGRADE_RESOURCE_PRESENTATION[visualResources[0]].icon} color={UPGRADE_RESOURCE_PRESENTATION[visualResources[0]].accent} />}</span>}
                     <div className="optimizer-upgrade-title"><div className="optimizer-upgrade-meta"><span>{evaluation.rule.id}</span><span className="optimizer-resource-markers" aria-label={resourceLabels} title={resourceLabels}>{headingIcons.map((palette) => <ResourceIcon icon={palette.icon} color={palette.accent} key={palette.label} />)}</span></div><h4>{evaluation.rule.name}</h4></div>
                     <Tooltip title={!evaluation.unlocked ? getUnlockReason(evaluation) : undefined}><Tag icon={!evaluation.unlocked ? <LockOutlined /> : evaluation.atMax ? <CheckCircleFilled /> : undefined}>{status}</Tag></Tooltip>
-                    {isOneTime && evaluation.atMax && <Button className="one-time-cancel" size="small" type="text" icon={<CloseOutlined />} onClick={() => updateLevel(evaluation.rule.id, evaluation.rule.maxLevel, 0)}>{language === "ko" ? "구매 취소" : "Undo"}</Button>}
+                    {isOneTime && evaluation.atMax && <Button className="one-time-cancel" size="small" type="text" icon={<CloseOutlined />} onClick={() => updateLevel(evaluation.rule.id, evaluation.rule.maxLevel, 0)}>{language === "ko" ? "구매 되돌리기" : "Undo purchase"}</Button>}
                   </div>
                   <div className="upgrade-multiplier-grid" aria-label={text.power}>
                     {chips.map((chip) => {
@@ -363,7 +363,7 @@ export default function UpgradeOptimizer({ currency: tab, language, profile, onS
       <div className="optimizer-plan-totals"><div><span>{text.spent}</span><strong>{formatNumber(plan?.spent ?? "0")}</strong></div><div><span>{text.remaining}</span><strong>{formatNumber(plan?.remainingBudget ?? parsedBudget.exact)}</strong></div></div>
       {planSummary.length ? <div className="optimizer-plan-list">{planSummary.map((item, index) => <div className="optimizer-plan-item" key={item.id}><span>{index + 1}</span><div><strong>{item.name}</strong><small>{formatNumber(item.cost)}</small></div><b>+{item.count}</b></div>)}</div> : <div className="optimizer-plan-empty">{text.planEmpty}</div>}
       {plan?.stoppedReason === "max-steps" && <p className="optimizer-plan-warning">{text.planLimited}</p>}
-      <Button className="optimizer-apply-plan" type="primary" disabled={!plan?.purchases.length} onClick={applyPlan}>{text.applyPlan}</Button>
+      <Popconfirm title={text.applyPlanConfirm(plan?.purchases.length ?? 0)} okText={text.applyPlan} cancelText={language === "ko" ? "취소" : "Cancel"} onConfirm={applyPlan} disabled={!plan?.purchases.length}><Button className="optimizer-apply-plan" type="primary" disabled={!plan?.purchases.length}>{text.applyPlan}</Button></Popconfirm>
     </aside>
   </section>;
 }

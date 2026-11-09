@@ -141,3 +141,4 @@
 .dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-toolbar .ant-tag { color:var(--content-ink); background:var(--selected-bg); border-color:var(--surface-line); }
 
 .workspace-loading { margin: 0; padding: 24px; color: var(--content-muted, inherit); }
+.dashboard-shell .dashboard-content:not(.is-mod-tree) .weight-preset-issue { margin:8px 0 0; color:color-mix(in srgb,#ff5f6d 72%,var(--content-ink)); font-size:13px; font-weight:650; }

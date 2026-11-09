@@ -39,7 +39,7 @@ export const inputFieldLabels = {
 } as const;
 
 export const inputSectionCopy = {
-  generator: { title: "Generator", enTitle: "Generator", description: "Manual mk 진행도입니다.", enDescription: "Manual mk progress." },
+  generator: { title: "Generator", enTitle: "Generator", description: "Manual MK 진행도입니다.", enDescription: "Manual MK progress." },
   level: { title: "레벨", enTitle: "Level", description: "Level과 LP 진행 상태입니다.", enDescription: "Current Level and LP progress." },
   technology: { title: "Tech", enTitle: "Tech", description: "MK별 Hardware Tech와 Software Tech입니다.", enDescription: "Hardware and Software Tech for each MK." },
   loop: { title: "Loop", enTitle: "Loop", description: "Loop 및 MP 진행 상태입니다.", enDescription: "Current Loop and MP progress." },
@@ -52,7 +52,7 @@ export const localizedText = {
   ko: {
     saveWeights: "가중치 저장", createPreset: "프리셋 추가", presetEdited: "프리셋에 저장하지 않은 가중치", choosePresetToSave: "새 프리셋을 추가하거나 저장할 프리셋을 선택해 주세요.", loading: "불러오는 중", invalidCalculationNote: "입력은 보존되며, 오류 항목은 마지막 유효값으로 계산합니다.",
     presetApplied: "적용 중", customWeights: "현재 계산: 사용자 설정 가중치", presetApplyFailed: "프리셋을 적용하지 못했습니다. 기존 입력값과 적용 상태는 유지됩니다.",
-    workspace: "작업 공간", inputManager: "입력값 관리", playerInput: "입력값 관리", weights: "가중치", playerProgress: "플레이어 진행도 입력", shipProgress: "함선 진행도", upgradeOptimizer: "업그레이드 옵티마이저", diamonds: "다이아몬드", tokens: "토큰", optimizerDescription: "현재 진행도와 자원 가중치를 기준으로 가장 효율적인 구매 순서를 계산합니다.", settings: "설정", settingsDescription: "화면 테마와 표시 언어를 관리합니다.", appearance: "화면 테마", displayLanguage: "표시 언어", localProfile: "로컬 프로필", localProfileNote: "현재 기기에만 저장됩니다.",
+    workspace: "작업 공간", inputManager: "입력값 관리", playerInput: "입력값 관리", weights: "가중치", playerProgress: "플레이어 진행도 입력", shipProgress: "함선 진행도", upgradeOptimizer: "업그레이드 옵티마이저", diamonds: "다이아몬드", tokens: "토큰", optimizerDescription: "현재 진행도와 자원 가중치를 기준으로 가장 효율적인 구매 순서를 계산합니다.", modTreeDescription: "보유 MP와 노드 레벨로 다음에 올릴 Mod를 추천합니다. Ouroboros 이전 지도만 다룹니다.", shipInstallDescription: "함선별 Install 포인트 배분과 구매 순서를 계산합니다.", groupProfile: "플레이어 프로필", groupOptimizer: "업그레이드 옵티마이저", groupModTree: "Mod 업그레이드", groupShip: "함선 자동화", groupSettings: "환경 설정", preOuroboros: "Ouroboros 이전", settings: "설정", settingsDescription: "화면 테마와 표시 언어를 관리합니다.", appearance: "화면 테마", displayLanguage: "표시 언어", localProfile: "로컬 프로필", localProfileNote: "현재 기기에만 저장됩니다.",
     saved: "저장됨", autoSaved: "자동 저장", changed: "개 변경됨", restore: "되돌리기", save: "입력값 저장", currentProfile: "현재 프로필", profileTitle: "Mod Tree Profile", profileDescription: "가중치와 플레이어 진행도를 관리합니다. 입력값은 변경 즉시 자동 저장됩니다.", theme: "테마",
     prioritySettings: "가중치 설정", playerProfile: "플레이어 진행도", shipProfile: "함선 진행도", weightsDescription: "각 자원의 우선순위를 설정합니다. 입력값은 자동 저장되고 계산에 바로 반영됩니다.", playerDescription: "현재 게임 수치를 입력하세요. 추천 계산과 효과 표시에서 함께 사용합니다.", shipDescription: "무료 보너스를 포함한 게임 화면의 현재 랭크와 승무원 수를 입력하세요.", rank: "랭크", crew: "승무원", rankAndCrew: "랭크 · 승무원",
     displayInputConflict: "기존 입력란의 값을 우선 사용합니다. 값이 다른 이전 별도 입력도 보존했습니다.", softwareNeedsReview: "이전 Software 총합은 보존했습니다. MK1~8 입력과 MK9~12 합계를 확인해 주세요.",
@@ -63,7 +63,7 @@ export const localizedText = {
   en: {
     saveWeights: "Save weights", createPreset: "Add preset", presetEdited: "Weights not saved to a preset", choosePresetToSave: "Add a new preset or select a saved preset to update.", loading: "Loading", invalidCalculationNote: "Edits are retained; invalid fields use their last valid value in calculations.",
     presetApplied: "Applied", customWeights: "Current calculations: custom weights", presetApplyFailed: "Could not apply the preset. Existing inputs and applied weights are unchanged.",
-    workspace: "WORKSPACE", inputManager: "Input Manager", playerInput: "Input Management", weights: "Weights", playerProgress: "Player Progress Input", shipProgress: "Ship Progress", upgradeOptimizer: "Upgrade Optimizer", diamonds: "Diamonds", tokens: "Tokens", optimizerDescription: "Calculate the most efficient purchase order from your progress and resource weights.", settings: "Settings", settingsDescription: "Manage the dashboard theme and display language.", appearance: "Appearance", displayLanguage: "Display language", localProfile: "Local profile", localProfileNote: "Saved only in this browser.",
+    workspace: "WORKSPACE", inputManager: "Input Manager", playerInput: "Input Management", weights: "Weights", playerProgress: "Player Progress Input", shipProgress: "Ship Progress", upgradeOptimizer: "Upgrade Optimizer", diamonds: "Diamonds", tokens: "Tokens", optimizerDescription: "Calculate the most efficient purchase order from your progress and resource weights.", modTreeDescription: "Recommends the next Mod to level from your MP and node levels. Covers the pre-Ouroboros map only.", shipInstallDescription: "Plan Install point allocation and purchase order for each ship.", groupProfile: "Player profile", groupOptimizer: "Upgrade optimizer", groupModTree: "Mod upgrades", groupShip: "Ship automation", groupSettings: "Preferences", preOuroboros: "Pre-Ouroboros", settings: "Settings", settingsDescription: "Manage the dashboard theme and display language.", appearance: "Appearance", displayLanguage: "Display language", localProfile: "Local profile", localProfileNote: "Saved only in this browser.",
     saved: "Saved", autoSaved: "Auto-saved", changed: "changed", restore: "Restore", save: "Save inputs", currentProfile: "CURRENT PROFILE", profileTitle: "Mod Tree Profile", profileDescription: "Manage resource priorities and player progress. Inputs are auto-saved on every change.", theme: "Theme",
     prioritySettings: "WEIGHT SETTINGS", playerProfile: "PLAYER PROFILE", shipProfile: "SHIP PROFILE", weightsDescription: "Set each resource priority. Inputs are auto-saved and update calculations immediately.", playerDescription: "Enter current game values. Recommendations and effect previews share these inputs.", shipDescription: "Enter the current Rank and Crew shown in-game, including free bonuses.", rank: "Rank", crew: "Crew", rankAndCrew: "Rank & Crew",
     displayInputConflict: "Existing shared inputs take priority. Different legacy display values have also been preserved.", softwareNeedsReview: "The legacy Software total has been preserved. Check MK1–8 inputs and the MK9–12 subtotal.",
@@ -104,8 +104,8 @@ export function getInputFieldHelp(field: FieldForHelp, language: InputLanguage) 
     ? `현재 MK${field.generator} Software Tech 레벨을 입력하세요. Hardware Tech와는 별개이며, 효과 표시용 Software 합계에도 자동 반영합니다.`
     : `Enter the current MK${field.generator} Software Tech level, separate from Hardware Tech. It is also included automatically in game-effect totals.`;
   if (field.generator) return language === "ko"
-    ? `현재 보유한 Manual mk${field.generator} Generator 수량을 입력하세요. 업그레이드 해금 판정에 사용됩니다.`
-    : `Enter the current number of Manual mk${field.generator} Generators you own. This is used for upgrade unlock checks.`;
+    ? `현재 보유한 Manual MK${field.generator} Generator 수량을 입력하세요. 업그레이드 해금 판정에 사용됩니다.`
+    : `Enter the current number of Manual MK${field.generator} Generators you own. This is used for upgrade unlock checks.`;
   if (field.group === "ship") {
     const ship = field.label.replace(/ (Rank|Crew)$/, "");
     const isRank = field.label.endsWith("Rank");
@@ -127,6 +127,6 @@ export function getInputFieldLabel(inputKey: string, language: InputLanguage): s
   const software = /^softwareTechMk([1-8])$/.exec(key);
   if (software) return `MK${software[1]} Software Tech`;
   const manual = /^manualMk([1-8])$/.exec(key);
-  if (manual) return `Manual mk${manual[1]}`;
+  if (manual) return `Manual MK${manual[1]}`;
   return key;
 }
