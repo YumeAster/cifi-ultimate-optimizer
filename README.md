@@ -1,24 +1,5 @@
-# CIFI Ultimate Optimizer v0.4.5
 
-A local-first CIFI calculator for Mod Tree, Diamond/Token upgrade, and Ship Install recommendations, built on shared progression inputs and Weight presets.
-
-입력값과 프리셋은 각 브라우저에만 저장되며 이 저장소에는 포함하지 않는다.
-
-## Prerequisites
-
-- Node.js `>=22.13.0`
-
-## Quick Start
-
-```bash
-npm install
-npm run pages:dev
-```
-
-The released site is the static GitHub Pages build (`npm run pages:build`). The vinext server build (`npm run build`) is kept for rendered-page tests and local server checks.
-
-## Local Preview (Windows)
-
+The released site is the static GitHub Pages build (`npm run pages:build`). The vinext server build (`npm run build`) is kept for rendered-page tests and loca
 - `CIFI 서버 실행기.bat`: 이 PC 전용 서버를 새 창에서 시작하고 브라우저를 연다. 서버 창에서 `Ctrl+C`로 종료한다.
 - `start-local-server.bat`: 현재 창에서 이 PC 전용 서버를 실행한다.
 - `start-lan-test-server.bat`: 같은 Wi-Fi/LAN의 다른 기기에서 접속할 테스트 서버를 실행한다. 공개 인터넷용 서버가 아니며, 공유기나 방화벽 설정을 자동 변경하지 않는다. 신뢰하는 사설망에서만 사용한다.
