@@ -1,5 +1,4 @@
-@echo off
-setlocal EnableExtensions DisableDelayedExpansion
+@echo cal EnableExtensions DisableDelayedExpansion
 
 cd /d "%~dp0"
 
@@ -10,7 +9,7 @@ if not exist "node_modules\.bin\vite.cmd" (
   echo.
   echo [ERROR] Project Vite was not found.
   echo Run npm install in this folder once, then start this launcher again.
-  echo.
+  ech
   pause
   exit /b 1
 )
